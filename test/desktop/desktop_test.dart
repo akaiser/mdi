@@ -20,7 +20,7 @@ void main() {
         ),
       );
 
-      expect(find.byType(DesktopItems), findsNothing);
+      expect(find.byType(DesktopItems), findsOneWidget);
       expect(find.byType(Window), findsNothing);
       expect(find.byType(Dock), findsNothing);
     });
