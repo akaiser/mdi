@@ -1,0 +1,5 @@
+include: package:akaiser_flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    - hash_and_equals

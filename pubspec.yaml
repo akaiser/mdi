@@ -1,0 +1,24 @@
+name: mdi
+description: A new Flutter project.
+publish_to: none
+version: 0.0.1
+
+environment:
+  sdk: ">=2.15.0 <3.0.0"
+  flutter: ">=2.8.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  akaiser_flutter_lints:
+    git: https://github.com/akaiser/akaiser_flutter_lints.git
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  assets:
+    - images/
+  uses-material-design: true
+
