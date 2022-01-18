@@ -1,10 +1,10 @@
-name: Build
+name: Test
 on:
   push:
-    branches:
+    branches-ignore:
       - main
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -12,4 +12,5 @@ jobs:
         with:
           flutter-version: '2.8.0'
           channel: 'stable'
-      - run: flutter build web
+      - run: flutter analyze
+      - run: flutter test
