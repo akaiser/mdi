@@ -14,7 +14,7 @@ void main() {
         'renders $DesktopItems but no $Window and $Dock '
         'if there are no windows opened', (tester) async {
       await tester.pumpWidgetEx(
-        Desktop(
+        const Desktop(
           groupedApps: groupedApps,
           standaloneApps: standaloneApps,
         ),
