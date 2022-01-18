@@ -12,4 +12,10 @@ jobs:
         with:
           flutter-version: '2.8.0'
           channel: 'stable'
-      - run: flutter build web
+      - name: Build
+        run: flutter build web
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GHP_TOKEN }}
+          publish_dir: ./build/web
