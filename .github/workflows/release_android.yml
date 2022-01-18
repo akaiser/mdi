@@ -2,7 +2,7 @@ name: Release Android
 on:
   push:
     tags:
-      - "mdi-v*.*.*"
+      - "v*.*.*"
 jobs:
   release:
     runs-on: ubuntu-latest
