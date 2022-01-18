@@ -2,9 +2,9 @@ name: Release Android
 on:
   push:
     tags:
-      - "mid-v*.*.*"
+      - "mdi-v*.*.*"
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
