@@ -21,12 +21,14 @@ class _SomeGridViewState extends State<SomeGridView> {
           padding: const EdgeInsets.only(
             left: _cellPadding * 2,
             top: _cellPadding * 2,
+            right: _cellPadding * 2,
           ),
           child: ColoredBox(
             color: Colors.white,
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
                       onPressed: () {
@@ -44,6 +46,7 @@ class _SomeGridViewState extends State<SomeGridView> {
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
                       onPressed: () {
