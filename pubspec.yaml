@@ -1,6 +1,5 @@
 name: mdi
-description: A new Flutter project.
-publish_to: none
+description: Some widgets playground based on a desktop like UI.
 version: 0.0.1
 
 environment:
