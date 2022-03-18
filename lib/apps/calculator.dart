@@ -1,5 +1,3 @@
-import 'dart:async' show Stream, StreamController;
-
 import 'package:flutter/material.dart';
 
 const _backgroundColor = Color.fromRGBO(42, 31, 62, 1);
@@ -25,37 +23,37 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-  String _value = '0';
-  late StreamController<String> _valueNotifier;
+  late ValueNotifier<String> _valueNotifier;
 
   @override
   void initState() {
     super.initState();
-    _valueNotifier = StreamController();
+    _valueNotifier = ValueNotifier('0');
   }
 
   @override
   void dispose() {
-    _valueNotifier.close();
+    _valueNotifier.dispose();
     super.dispose();
   }
 
   void _addValue(String value) {
-    if (_value == '0') {
+    var newValue = _valueNotifier.value;
+    if (newValue == '0') {
       if (['1', '2', '3', '4', '5', '6', '7', '8', '9'].contains(value)) {
-        _value = value;
+        newValue = value;
       } else if (value == ',' || _unicodeMappings.containsValue(value)) {
-        _value += value;
+        newValue += value;
       }
     } else if (value == 'C') {
-      _value = '0';
+      newValue = '0';
     } else if (value == '=') {
-      _value = '42'; // TODO :)
+      newValue = '42'; // TODO :)
     } else {
-      _value += value;
+      newValue += value;
     }
 
-    _valueNotifier.sink.add(_value);
+    _valueNotifier.value = newValue;
   }
 
   @override
@@ -66,7 +64,7 @@ class _CalculatorState extends State<Calculator> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-            child: _Output(_valueNotifier.stream),
+            child: _Output(_valueNotifier),
           ),
           Expanded(
             child: Row(
@@ -150,18 +148,18 @@ class _CalculatorState extends State<Calculator> {
 
 class _Output extends StatelessWidget {
   const _Output(
-    this.valueStream, {
+    this.valueNotifier, {
     Key? key,
   }) : super(key: key);
 
-  final Stream<String> valueStream;
+  final ValueNotifier<String> valueNotifier;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: valueStream,
-      builder: (context, snapshot) => Text(
-        snapshot.hasData ? '${snapshot.data}' : '0',
+    return ValueListenableBuilder<String>(
+      valueListenable: valueNotifier,
+      builder: (context, value, _) => Text(
+        value,
         style: const TextStyle(
           fontSize: 44,
           color: _textColor,
