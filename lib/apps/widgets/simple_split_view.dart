@@ -1,4 +1,3 @@
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 
 class SimpleSplitView extends StatelessWidget {
@@ -7,13 +6,17 @@ class SimpleSplitView extends StatelessWidget {
     required this.right,
     this.dividerWidth = 4,
     this.dividerColor = const Color.fromRGBO(78, 74, 82, 1),
+    this.leftViewVisible = true,
     Key? key,
   }) : super(key: key);
 
   final Widget left;
   final Widget right;
+
   final double dividerWidth;
   final Color dividerColor;
+
+  final bool leftViewVisible;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,8 @@ class SimpleSplitView extends StatelessWidget {
         right: right,
         dividerWidth: dividerWidth,
         dividerColor: dividerColor,
-        maxWidth: constrains.maxWidth,
+        leftViewVisible: leftViewVisible,
+        leftWidthMax: constrains.maxWidth - dividerWidth,
       ),
     );
   }
@@ -35,69 +39,88 @@ class _SimpleSplitView extends StatefulWidget {
     required this.right,
     required this.dividerWidth,
     required this.dividerColor,
-    required this.maxWidth,
+    required this.leftViewVisible,
+    required this.leftWidthMax,
     Key? key,
-  })  : leftWidthMax = maxWidth - dividerWidth,
+  })  : leftWidthOnInit = leftWidthMax / 3.5,
         super(key: key);
 
   final Widget left;
   final Widget right;
   final double dividerWidth;
   final Color dividerColor;
-  final double maxWidth;
-
+  final bool leftViewVisible;
   final double leftWidthMax;
+
+  final double leftWidthOnInit;
 
   @override
   _SimpleSplitViewState createState() => _SimpleSplitViewState();
 }
 
 class _SimpleSplitViewState extends State<_SimpleSplitView> {
-  double _leftWidth = 0;
+  late ValueNotifier<double> _leftWidthNotifier;
 
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance!.addPostFrameCallback((_) {
-      setState(() => _leftWidth = widget.leftWidthMax / 3);
-    });
+    _leftWidthNotifier = ValueNotifier(widget.leftWidthOnInit);
   }
 
-  double get _leftWidthCalculated {
-    return widget.leftWidthMax - _leftWidth < 0
+  @override
+  void dispose() {
+    _leftWidthNotifier.dispose();
+    super.dispose();
+  }
+
+  double _leftWidthCalculated(double leftWidth) {
+    return widget.leftWidthMax - leftWidth < 0
         ? widget.leftWidthMax
-        : _leftWidth;
+        : leftWidth;
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(
-          width: _leftWidthCalculated,
-          child: widget.left,
-        ),
-        MouseRegion(
-          cursor: SystemMouseCursors.resizeLeftRight,
-          child: GestureDetector(
-            onPanUpdate: (details) {
-              var leftWidthTemp = _leftWidth + details.delta.dx;
-              if (leftWidthTemp < 0) {
-                leftWidthTemp = 0;
-              } else if (leftWidthTemp > widget.leftWidthMax) {
-                leftWidthTemp = widget.leftWidthMax;
-              }
-              if (_leftWidth != leftWidthTemp) {
-                setState(() => _leftWidth = leftWidthTemp);
-              }
-            },
-            child: ColoredBox(
-              color: widget.dividerColor,
-              child: SizedBox(width: widget.dividerWidth),
-            ),
+        if (widget.leftViewVisible)
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ValueListenableBuilder<double>(
+                valueListenable: _leftWidthNotifier,
+                builder: (context, leftWidth, child) {
+                  final leftWidthCalculated = _leftWidthCalculated(leftWidth);
+                  return SizedBox(
+                    width: leftWidthCalculated,
+                    child: leftWidthCalculated > 0 ? child : null,
+                  );
+                },
+                child: widget.left,
+              ),
+              MouseRegion(
+                cursor: SystemMouseCursors.resizeLeftRight,
+                child: GestureDetector(
+                  onPanUpdate: (details) {
+                    final leftWidthCurrent = _leftWidthNotifier.value;
+                    var leftWidthTemp = leftWidthCurrent + details.delta.dx;
+                    if (leftWidthTemp < 0) {
+                      leftWidthTemp = 0;
+                    } else if (leftWidthTemp > widget.leftWidthMax) {
+                      leftWidthTemp = widget.leftWidthMax;
+                    }
+                    if (leftWidthCurrent != leftWidthTemp) {
+                      _leftWidthNotifier.value = leftWidthTemp;
+                    }
+                  },
+                  child: ColoredBox(
+                    color: widget.dividerColor,
+                    child: SizedBox(width: widget.dividerWidth),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
         Expanded(child: widget.right),
       ],
     );
