@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mdi/_extensions/build_context.dart';
 import 'package:mdi/_prefs.dart';
@@ -38,117 +37,126 @@ class Window extends StatefulWidget {
 
 class _WindowState extends State<Window> {
   final _random = Random();
-  double _dx = 0, _dxLast = 0;
-  double _dy = 0, _dyLast = 0;
-  double _width = 0, _widthLast = 0;
-  double _height = 0, _heightLast = 0;
+  final _dx = ValueNotifier<double>(0);
+  final _dy = ValueNotifier<double>(0);
+  final _width = ValueNotifier<double>(0);
+  final _height = ValueNotifier<double>(0);
+
+  double _dxLast = 0;
+  double _dyLast = 0;
+  double _widthLast = 0;
+  double _heightLast = 0;
 
   bool _isMinimized = false, _isMaximized = false;
 
-  late StreamSubscription unHideWindowSub;
+  late StreamSubscription _unHideWindowSub;
 
   @override
   void initState() {
     super.initState();
-
-    unHideWindowSub = widget.unHideWindowStream
+    _unHideWindowSub = widget.unHideWindowStream
         .where((event) => widget.key! == event)
-        .listen((_) => _unMinimize());
+        .listen((_) => _onMinimizeTap());
+  }
 
-    SchedulerBinding.instance!.addPostFrameCallback((_) {
-      final screenSize = context.screenSize;
-      final screenWidth = screenSize.width;
-      final screenHeight = screenSize.height;
+  @override
+  void didChangeDependencies() {
+    final screenSize = context.screenSize;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
 
-      setState(() {
-        _width = widget.width ?? screenWidth * 0.6;
-        _height = widget.height ?? (screenHeight - dockHeight) * 0.6;
-        _checkMinSize();
+    _width.value = widget.width ?? screenWidth * 0.6;
+    _height.value = widget.height ?? (screenHeight - dockHeight) * 0.6;
+    _checkMinSize();
 
-        _dx = _random.nextDouble() * (screenWidth - _width);
-        _dy = _random.nextDouble() * (screenHeight - dockHeight - _height);
-      });
-    });
+    _dx.value = _random.nextDouble() * (screenWidth - _width.value);
+    _dy.value =
+        _random.nextDouble() * (screenHeight - dockHeight - _height.value);
+    super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    unHideWindowSub.cancel();
+    _unHideWindowSub.cancel();
     super.dispose();
   }
 
   void _onDragTop(double dy) {
-    _dy += dy;
-    _height -= dy;
+    _dy.value += dy;
+    _height.value -= dy;
     _checkMinSize();
   }
 
   void _onDragRight(double dx) {
-    _width += dx;
+    _width.value += dx;
     _checkMinSize();
   }
 
   void _onDragBottom(double dy) {
-    _height += dy;
+    _height.value += dy;
     _checkMinSize();
   }
 
   void _onDragLeft(double dx) {
-    _dx += dx;
-    _width -= dx;
+    _dx.value += dx;
+    _width.value -= dx;
     _checkMinSize();
   }
 
   void _checkMinSize() {
-    if (_width < windowMinWidth) {
-      _width = windowMinWidth;
+    if (_width.value < windowMinWidth) {
+      _width.value = windowMinWidth;
     }
 
-    if (_height < windowMinHeight) {
-      _height = windowMinHeight;
+    if (_height.value < windowMinHeight) {
+      _height.value = windowMinHeight;
     }
   }
 
-  void _unMinimize() {
+  void _onMinimizeTap() {
     setState(() => _isMinimized = !_isMinimized);
     if (_isMinimized) {
       widget.onMinimizeTap();
     }
   }
 
-  void _unMaximize() {
+  void _onMaximizeTap() {
     setState(() {
       if (_isMaximized) {
         _isMaximized = false;
-        _width = _widthLast;
-        _height = _heightLast;
-        _dx = _dxLast;
-        _dy = _dyLast;
+        _width.value = _widthLast;
+        _height.value = _heightLast;
+        _dx.value = _dxLast;
+        _dy.value = _dyLast;
       } else {
         _isMaximized = true;
-        _widthLast = _width;
-        _heightLast = _height;
-        _dxLast = _dx;
-        _dyLast = _dy;
+        _widthLast = _width.value;
+        _heightLast = _height.value;
+        _dxLast = _dx.value;
+        _dyLast = _dy.value;
 
         final screenSize = context.screenSize;
-        _width = screenSize.width + windowOuterPadding * 2;
-        _height = screenSize.height - dockHeight + windowOuterPadding * 2;
-        _dx = _dy = -windowOuterPadding;
+        _width.value = screenSize.width + windowOuterPadding * 2;
+        _height.value = screenSize.height - dockHeight + windowOuterPadding * 2;
+        _dx.value = _dy.value = -windowOuterPadding;
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_width == 0 && _height == 0) {
+    if (_width.value == 0 && _height.value == 0) {
       return const SizedBox();
     }
 
-    return AnimatedPositioned(
-      left: _dx,
-      top: _dy,
-      duration: windowTransitionMillis,
+    return AnimatedBuilder(
+      animation: Listenable.merge([_dx, _dy]),
+      builder: (context, child) => AnimatedPositioned(
+        duration: windowTransitionMillis,
+        left: _dx.value,
+        top: _dy.value,
+        child: child!,
+      ),
       child: Visibility(
         maintainState: true,
         visible: !_isMinimized,
@@ -156,11 +164,14 @@ class _WindowState extends State<Window> {
           onPointerDown: (_) => widget.whenFocusRequested(),
           child: Stack(
             children: [
-              AnimatedContainer(
-                width: _width,
-                height: _height,
-                duration: windowTransitionMillis,
-                padding: const EdgeInsets.all(windowOuterPadding),
+              AnimatedBuilder(
+                animation: Listenable.merge([_width, _height]),
+                builder: (context, child) => AnimatedContainer(
+                  duration: windowTransitionMillis,
+                  width: _width.value,
+                  height: _height.value,
+                  child: child,
+                ),
                 child: _WindowDecoration(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -169,13 +180,13 @@ class _WindowState extends State<Window> {
                         widget.title,
                         isFixedSizeWindow: widget.isFixedSize,
                         isMaximizedWindow: _isMaximized,
-                        onTitleBarDrag: (dx, dy) => setState(() {
-                          _dx += dx;
-                          _dy += dy;
-                        }),
+                        onTitleBarDrag: (dx, dy) {
+                          _dx.value += dx;
+                          _dy.value += dy;
+                        },
                         onCloseTap: widget.onCloseTap,
-                        onMinimizeTap: _unMinimize,
-                        onMaximizeTap: _unMaximize,
+                        onMinimizeTap: _onMinimizeTap,
+                        onMaximizeTap: _onMaximizeTap,
                       ),
                       const ColoredBox(
                         color: windowBodySeparatorColor,
@@ -194,65 +205,61 @@ class _WindowState extends State<Window> {
               if (!widget.isFixedSize) ...[
                 // left
                 _BorderDragArea(
-                  onHorizontalDragUpdate: (details) => setState(
-                    () => _onDragLeft(details.delta.dx),
-                  ),
+                  onHorizontalDragUpdate: (details) =>
+                      _onDragLeft(details.delta.dx),
                   right: null,
                 ),
                 // right
                 _BorderDragArea(
-                  onHorizontalDragUpdate: (details) => setState(
-                    () => _onDragRight(details.delta.dx),
-                  ),
+                  onHorizontalDragUpdate: (details) =>
+                      _onDragRight(details.delta.dx),
                   left: null,
                 ),
                 // top
                 _BorderDragArea(
-                  onVerticalDragUpdate: (details) => setState(
-                    () => _onDragTop(details.delta.dy),
-                  ),
+                  onVerticalDragUpdate: (details) =>
+                      _onDragTop(details.delta.dy),
                   bottom: null,
                 ),
                 // bottom
                 _BorderDragArea(
-                  onVerticalDragUpdate: (details) => setState(
-                    () => _onDragBottom(details.delta.dy),
-                  ),
+                  onVerticalDragUpdate: (details) =>
+                      _onDragBottom(details.delta.dy),
                   top: null,
                 ),
                 // top-left
                 _CornerDragArea(
-                  onPanUpdate: (details) => setState(() {
+                  onPanUpdate: (details) {
                     _onDragTop(details.delta.dy);
                     _onDragLeft(details.delta.dx);
-                  }),
+                  },
                   right: null,
                   bottom: null,
                 ),
                 // top-right
                 _CornerDragArea(
-                  onPanUpdate: (details) => setState(() {
+                  onPanUpdate: (details) {
                     _onDragTop(details.delta.dy);
                     _onDragRight(details.delta.dx);
-                  }),
+                  },
                   bottom: null,
                   left: null,
                 ),
                 // bottom-right
                 _CornerDragArea(
-                  onPanUpdate: (details) => setState(() {
+                  onPanUpdate: (details) {
                     _onDragBottom(details.delta.dy);
                     _onDragRight(details.delta.dx);
-                  }),
+                  },
                   top: null,
                   left: null,
                 ),
                 // bottom-left
                 _CornerDragArea(
-                  onPanUpdate: (details) => setState(() {
+                  onPanUpdate: (details) {
                     _onDragBottom(details.delta.dy);
                     _onDragLeft(details.delta.dx);
-                  }),
+                  },
                   top: null,
                   right: null,
                 ),
@@ -275,13 +282,16 @@ class _WindowDecoration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: windowDecoration,
-      child: Padding(
-        padding: const EdgeInsets.all(1),
-        child: ClipRRect(
-          borderRadius: windowBorderRadius,
-          child: child,
+    return Padding(
+      padding: const EdgeInsets.all(windowOuterPadding),
+      child: DecoratedBox(
+        decoration: windowDecoration,
+        child: Padding(
+          padding: const EdgeInsets.all(1),
+          child: ClipRRect(
+            borderRadius: windowBorderRadius,
+            child: child,
+          ),
         ),
       ),
     );
