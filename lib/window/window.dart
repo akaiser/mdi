@@ -47,7 +47,8 @@ class _WindowState extends State<Window> {
   double _widthLast = 0;
   double _heightLast = 0;
 
-  bool _isMinimized = false, _isMaximized = false;
+  final _isMinimized = ValueNotifier<bool>(false);
+  final _isMaximized = ValueNotifier<bool>(false);
 
   late StreamSubscription _unHideWindowSub;
 
@@ -77,6 +78,12 @@ class _WindowState extends State<Window> {
 
   @override
   void dispose() {
+    _dx.dispose();
+    _dy.dispose();
+    _width.dispose();
+    _height.dispose();
+    _isMinimized.dispose();
+    _isMaximized.dispose();
     _unHideWindowSub.cancel();
     super.dispose();
   }
@@ -114,33 +121,31 @@ class _WindowState extends State<Window> {
   }
 
   void _onMinimizeTap() {
-    setState(() => _isMinimized = !_isMinimized);
-    if (_isMinimized) {
+    _isMinimized.value = !_isMinimized.value;
+    if (_isMinimized.value) {
       widget.onMinimizeTap();
     }
   }
 
   void _onMaximizeTap() {
-    setState(() {
-      if (_isMaximized) {
-        _isMaximized = false;
-        _width.value = _widthLast;
-        _height.value = _heightLast;
-        _dx.value = _dxLast;
-        _dy.value = _dyLast;
-      } else {
-        _isMaximized = true;
-        _widthLast = _width.value;
-        _heightLast = _height.value;
-        _dxLast = _dx.value;
-        _dyLast = _dy.value;
+    if (_isMaximized.value) {
+      _isMaximized.value = false;
+      _width.value = _widthLast;
+      _height.value = _heightLast;
+      _dx.value = _dxLast;
+      _dy.value = _dyLast;
+    } else {
+      _isMaximized.value = true;
+      _widthLast = _width.value;
+      _heightLast = _height.value;
+      _dxLast = _dx.value;
+      _dyLast = _dy.value;
 
-        final screenSize = context.screenSize;
-        _width.value = screenSize.width + windowOuterPadding * 2;
-        _height.value = screenSize.height - dockHeight + windowOuterPadding * 2;
-        _dx.value = _dy.value = -windowOuterPadding;
-      }
-    });
+      final screenSize = context.screenSize;
+      _width.value = screenSize.width + windowOuterPadding * 2;
+      _height.value = screenSize.height - dockHeight + windowOuterPadding * 2;
+      _dx.value = _dy.value = -windowOuterPadding;
+    }
   }
 
   @override
@@ -157,114 +162,117 @@ class _WindowState extends State<Window> {
         top: _dy.value,
         child: child!,
       ),
-      child: Visibility(
-        maintainState: true,
-        visible: !_isMinimized,
-        child: Listener(
-          onPointerDown: (_) => widget.whenFocusRequested(),
-          child: Stack(
-            children: [
-              AnimatedBuilder(
-                animation: Listenable.merge([_width, _height]),
-                builder: (context, child) => AnimatedContainer(
-                  duration: windowTransitionMillis,
-                  width: _width.value,
-                  height: _height.value,
-                  child: child,
-                ),
-                child: _WindowDecoration(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      TitleBar(
-                        widget.title,
-                        isFixedSizeWindow: widget.isFixedSize,
-                        isMaximizedWindow: _isMaximized,
-                        onTitleBarDrag: (dx, dy) {
-                          _dx.value += dx;
-                          _dy.value += dy;
-                        },
-                        onCloseTap: widget.onCloseTap,
-                        onMinimizeTap: _onMinimizeTap,
-                        onMaximizeTap: _onMaximizeTap,
-                      ),
-                      const ColoredBox(
-                        color: windowBodySeparatorColor,
-                        child: SizedBox(height: 1),
-                      ),
-                      Expanded(
-                        child: ColoredBox(
-                          color: windowBodyColor,
-                          child: widget.app,
+      child: AnimatedBuilder(
+        animation: _isMinimized,
+        builder: (context, child) => Visibility(
+          maintainState: true,
+          visible: !_isMinimized.value,
+          child: Listener(
+            onPointerDown: (_) => widget.whenFocusRequested(),
+            child: Stack(
+              children: [
+                AnimatedBuilder(
+                  animation: Listenable.merge([_width, _height]),
+                  builder: (context, child) => AnimatedContainer(
+                    duration: windowTransitionMillis,
+                    width: _width.value,
+                    height: _height.value,
+                    child: child,
+                  ),
+                  child: _WindowDecoration(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TitleBar(
+                          widget.title,
+                          isFixedSizeWindow: widget.isFixedSize,
+                          onTitleBarDrag: (dx, dy) {
+                            _dx.value += dx;
+                            _dy.value += dy;
+                          },
+                          onCloseTap: widget.onCloseTap,
+                          onMinimizeTap: _onMinimizeTap,
+                          onMaximizeTap: _onMaximizeTap,
+                          isMaximizedNotifier: _isMaximized,
                         ),
-                      ),
-                    ],
+                        const ColoredBox(
+                          color: windowBodySeparatorColor,
+                          child: SizedBox(height: 1),
+                        ),
+                        Expanded(
+                          child: ColoredBox(
+                            color: windowBodyColor,
+                            child: widget.app,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              if (!widget.isFixedSize) ...[
-                // left
-                _BorderDragArea(
-                  onHorizontalDragUpdate: (details) =>
-                      _onDragLeft(details.delta.dx),
-                  right: null,
-                ),
-                // right
-                _BorderDragArea(
-                  onHorizontalDragUpdate: (details) =>
-                      _onDragRight(details.delta.dx),
-                  left: null,
-                ),
-                // top
-                _BorderDragArea(
-                  onVerticalDragUpdate: (details) =>
-                      _onDragTop(details.delta.dy),
-                  bottom: null,
-                ),
-                // bottom
-                _BorderDragArea(
-                  onVerticalDragUpdate: (details) =>
-                      _onDragBottom(details.delta.dy),
-                  top: null,
-                ),
-                // top-left
-                _CornerDragArea(
-                  onPanUpdate: (details) {
-                    _onDragTop(details.delta.dy);
-                    _onDragLeft(details.delta.dx);
-                  },
-                  right: null,
-                  bottom: null,
-                ),
-                // top-right
-                _CornerDragArea(
-                  onPanUpdate: (details) {
-                    _onDragTop(details.delta.dy);
-                    _onDragRight(details.delta.dx);
-                  },
-                  bottom: null,
-                  left: null,
-                ),
-                // bottom-right
-                _CornerDragArea(
-                  onPanUpdate: (details) {
-                    _onDragBottom(details.delta.dy);
-                    _onDragRight(details.delta.dx);
-                  },
-                  top: null,
-                  left: null,
-                ),
-                // bottom-left
-                _CornerDragArea(
-                  onPanUpdate: (details) {
-                    _onDragBottom(details.delta.dy);
-                    _onDragLeft(details.delta.dx);
-                  },
-                  top: null,
-                  right: null,
-                ),
+                if (!widget.isFixedSize) ...[
+                  // left
+                  _BorderDragArea(
+                    onHorizontalDragUpdate: (details) =>
+                        _onDragLeft(details.delta.dx),
+                    right: null,
+                  ),
+                  // right
+                  _BorderDragArea(
+                    onHorizontalDragUpdate: (details) =>
+                        _onDragRight(details.delta.dx),
+                    left: null,
+                  ),
+                  // top
+                  _BorderDragArea(
+                    onVerticalDragUpdate: (details) =>
+                        _onDragTop(details.delta.dy),
+                    bottom: null,
+                  ),
+                  // bottom
+                  _BorderDragArea(
+                    onVerticalDragUpdate: (details) =>
+                        _onDragBottom(details.delta.dy),
+                    top: null,
+                  ),
+                  // top-left
+                  _CornerDragArea(
+                    onPanUpdate: (details) {
+                      _onDragTop(details.delta.dy);
+                      _onDragLeft(details.delta.dx);
+                    },
+                    right: null,
+                    bottom: null,
+                  ),
+                  // top-right
+                  _CornerDragArea(
+                    onPanUpdate: (details) {
+                      _onDragTop(details.delta.dy);
+                      _onDragRight(details.delta.dx);
+                    },
+                    bottom: null,
+                    left: null,
+                  ),
+                  // bottom-right
+                  _CornerDragArea(
+                    onPanUpdate: (details) {
+                      _onDragBottom(details.delta.dy);
+                      _onDragRight(details.delta.dx);
+                    },
+                    top: null,
+                    left: null,
+                  ),
+                  // bottom-left
+                  _CornerDragArea(
+                    onPanUpdate: (details) {
+                      _onDragBottom(details.delta.dy);
+                      _onDragLeft(details.delta.dx);
+                    },
+                    top: null,
+                    right: null,
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

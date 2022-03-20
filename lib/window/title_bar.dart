@@ -6,22 +6,22 @@ class TitleBar extends StatelessWidget {
   const TitleBar(
     this.title, {
     required this.isFixedSizeWindow,
-    required this.isMaximizedWindow,
     required this.onTitleBarDrag,
     required this.onCloseTap,
     required this.onMinimizeTap,
     required this.onMaximizeTap,
+    required this.isMaximizedNotifier,
     Key? key,
   }) : super(key: key);
 
   final String title;
 
   final bool isFixedSizeWindow;
-  final bool isMaximizedWindow;
   final void Function(double dx, double dy) onTitleBarDrag;
   final VoidCallback onCloseTap;
   final VoidCallback onMinimizeTap;
   final VoidCallback onMaximizeTap;
+  final ValueNotifier<bool> isMaximizedNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +58,14 @@ class TitleBar extends StatelessWidget {
                   ),
                   if (!isFixedSizeWindow) ...[
                     const SizedBox(width: titleBarIconsSpace),
-                    _TitleBarButton(
-                      isMaximizedWindow ? Icons.fullscreen : Icons.crop_square,
-                      onTap: onMaximizeTap,
+                    AnimatedBuilder(
+                      animation: isMaximizedNotifier,
+                      builder: (context, child) => _TitleBarButton(
+                        isMaximizedNotifier.value
+                            ? Icons.fullscreen
+                            : Icons.crop_square,
+                        onTap: onMaximizeTap,
+                      ),
                     ),
                   ],
                 ],
