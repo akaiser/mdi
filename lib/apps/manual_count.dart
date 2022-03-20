@@ -12,7 +12,6 @@ class _ManualCountState extends State<ManualCount> {
 
   @override
   Widget build(BuildContext context) {
-    print('###### BUILD Manual Count');
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
