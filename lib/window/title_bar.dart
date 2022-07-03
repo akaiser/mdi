@@ -11,8 +11,8 @@ class TitleBar extends StatelessWidget {
     required this.onCloseTap,
     required this.onMinimizeTap,
     required this.onMaximizeTap,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
 
@@ -77,8 +77,7 @@ class _TitleBarButton extends StatelessWidget {
   const _TitleBarButton(
     this.icon, {
     required this.onTap,
-    Key? key,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback onTap;

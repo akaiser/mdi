@@ -7,8 +7,8 @@ class SimpleSplitView extends StatelessWidget {
     this.dividerWidth = 4,
     this.dividerColor = const Color.fromRGBO(78, 74, 82, 1),
     this.leftViewVisible = true,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget left;
   final Widget right;
@@ -41,9 +41,7 @@ class _SimpleSplitView extends StatefulWidget {
     required this.dividerColor,
     required this.leftViewVisible,
     required this.leftWidthMax,
-    Key? key,
-  })  : leftWidthOnInit = leftWidthMax / 3.5,
-        super(key: key);
+  }) : leftWidthOnInit = leftWidthMax / 3.5;
 
   final Widget left;
   final Widget right;

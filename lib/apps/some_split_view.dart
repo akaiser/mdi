@@ -3,7 +3,7 @@ import 'package:mdi/apps/auto_count.dart';
 import 'package:mdi/apps/widgets/simple_split_view.dart';
 
 class SomeSplitView extends StatelessWidget {
-  const SomeSplitView({Key? key}) : super(key: key);
+  const SomeSplitView({super.key});
 
   @override
   Widget build(BuildContext context) {

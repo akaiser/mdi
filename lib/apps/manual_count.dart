@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ManualCount extends StatefulWidget {
-  const ManualCount({Key? key}) : super(key: key);
+  const ManualCount({super.key});
 
   @override
   _ManualCountState createState() => _ManualCountState();

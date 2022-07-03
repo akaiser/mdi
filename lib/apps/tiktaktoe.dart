@@ -25,7 +25,7 @@ enum _Type { X, O }
 const _dialogDelay = Duration(milliseconds: 300);
 
 class TikTakToe extends StatefulWidget {
-  const TikTakToe({Key? key}) : super(key: key);
+  const TikTakToe({super.key});
 
   @override
   _TikTakToeState createState() => _TikTakToeState();
