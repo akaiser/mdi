@@ -45,7 +45,7 @@ class _WindowState extends State<Window> {
 
   bool _isMinimized = false, _isMaximized = false;
 
-  late StreamSubscription unHideWindowSub;
+  late StreamSubscription<void> unHideWindowSub;
 
   @override
   void initState() {
@@ -55,7 +55,7 @@ class _WindowState extends State<Window> {
         .where((event) => widget.key! == event)
         .listen((_) => _unMinimize());
 
-    SchedulerBinding.instance!.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       final screenSize = context.screenSize;
       final screenWidth = screenSize.width;
       final screenHeight = screenSize.height;
@@ -266,10 +266,7 @@ class _WindowState extends State<Window> {
 }
 
 class _WindowDecoration extends StatelessWidget {
-  const _WindowDecoration({
-    required this.child,
-    Key? key,
-  }) : super(key: key);
+  const _WindowDecoration({required this.child});
 
   final Widget child;
 

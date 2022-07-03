@@ -16,7 +16,7 @@ const _unicodeMappings = {
 };
 
 class Calculator extends StatefulWidget {
-  const Calculator({Key? key}) : super(key: key);
+  const Calculator({super.key});
 
   @override
   State<Calculator> createState() => _CalculatorState();
@@ -48,7 +48,7 @@ class _CalculatorState extends State<Calculator> {
     } else if (value == 'C') {
       newValue = '0';
     } else if (value == '=') {
-      newValue = '42'; // TODO :)
+      newValue = '42'; // :)
     } else {
       newValue += value;
     }
@@ -147,10 +147,7 @@ class _CalculatorState extends State<Calculator> {
 }
 
 class _Output extends StatelessWidget {
-  const _Output(
-    this.valueNotifier, {
-    Key? key,
-  }) : super(key: key);
+  const _Output(this.valueNotifier);
 
   final ValueNotifier<String> valueNotifier;
 
@@ -178,22 +175,22 @@ class _Button extends StatelessWidget {
     this.buttonType,
     this.onPressed, {
     this.flex = 1,
-    Key? key,
-  }) : super(key: key);
+  });
 
   final String text;
   final int flex;
   final _ButtonType? buttonType;
-  final Function(String value)? onPressed;
+  final ValueSetter<String>? onPressed;
 
   Color get buttonColor {
     switch (buttonType) {
+      case null:
+      case _ButtonType.number:
+        return _buttonColorNumber;
       case _ButtonType.operation:
         return _buttonColorOperation;
       case _ButtonType.misc:
         return _buttonColorMisc;
-      default:
-        return _buttonColorNumber;
     }
   }
 

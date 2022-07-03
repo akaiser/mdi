@@ -8,10 +8,9 @@ class SimpleGridView extends StatelessWidget {
     this.cellPadding,
     this.gridBackgroundColor,
     this.cellBackgroundColor,
-    Key? key,
-  })  : assert(columnCount > 0),
-        assert(rowCount > 0),
-        super(key: key);
+    super.key,
+  })  : assert(columnCount > 0, 'columnCount must be greater than 0'),
+        assert(rowCount > 0, 'rowCount must be greater than 0');
 
   final int columnCount;
   final int rowCount;

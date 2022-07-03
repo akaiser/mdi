@@ -37,7 +37,7 @@ final windowDecoration = BoxDecoration(
   color: _windowBackgroundColor,
   border: _windowBorder,
   borderRadius: windowBorderRadius,
-  // TODO: this has quite some performance implications
+  // TODO(albert): this has quite some performance implications
   boxShadow: kElevationToShadow[4],
   //boxShadow: null,
 );

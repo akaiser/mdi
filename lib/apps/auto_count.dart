@@ -3,7 +3,7 @@ import 'dart:async' show Timer;
 import 'package:flutter/widgets.dart';
 
 class AutoCount extends StatefulWidget {
-  const AutoCount({Key? key}) : super(key: key);
+  const AutoCount({super.key});
 
   @override
   _AutoCountState createState() => _AutoCountState();

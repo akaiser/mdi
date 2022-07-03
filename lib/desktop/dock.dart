@@ -9,8 +9,8 @@ class Dock extends StatelessWidget {
     required this.minimizedWindowKeys,
     required this.windows,
     required this.onItemTap,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final List<Key> windowKeys;
   final List<Key> minimizedWindowKeys;
@@ -53,8 +53,7 @@ class _DockItem extends StatelessWidget {
     required this.isActive,
     required this.isMinimized,
     required this.onItemTap,
-    Key? key,
-  }) : super(key: key);
+  });
 
   final String title;
   final bool isActive;

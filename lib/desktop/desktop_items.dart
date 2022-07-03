@@ -8,9 +8,11 @@ class DesktopItems extends StatelessWidget {
     required this.groupedApps,
     required this.standaloneApps,
     required this.onItemTap,
-    Key? key,
-  })  : assert(groupedApps.length > 0 || standaloneApps.length > 0),
-        super(key: key);
+    super.key,
+  }) : assert(
+          groupedApps.length > 0 || standaloneApps.length > 0,
+          'one should provide apps!',
+        );
 
   final Map<String, List<DesktopApp>> groupedApps;
   final List<DesktopApp> standaloneApps;
@@ -53,10 +55,7 @@ class DesktopItems extends StatelessWidget {
 }
 
 class _DesktopItems extends StatelessWidget {
-  const _DesktopItems({
-    required this.children,
-    Key? key,
-  }) : super(key: key);
+  const _DesktopItems({required this.children});
 
   final Iterable<Widget> children;
 
@@ -77,8 +76,7 @@ class _DesktopItem extends StatelessWidget {
   const _DesktopItem(
     this.desktopApp, {
     required this.onTap,
-    Key? key,
-  }) : super(key: key);
+  });
 
   final DesktopApp desktopApp;
   final VoidCallback onTap;

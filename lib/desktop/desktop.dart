@@ -10,8 +10,8 @@ class Desktop extends StatefulWidget {
   const Desktop({
     required this.groupedApps,
     required this.standaloneApps,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Map<String, List<DesktopApp>> groupedApps;
   final List<DesktopApp> standaloneApps;
@@ -97,7 +97,7 @@ class _DesktopState extends State<Desktop> {
     return Stack(
       fit: StackFit.expand,
       children: [
-        // TODO: test this
+        // TODO(albert): test this
         if (groupedApps.isNotEmpty || standaloneApps.isNotEmpty)
           DesktopItems(
             groupedApps: groupedApps,

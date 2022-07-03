@@ -4,7 +4,7 @@ import 'package:mdi/apps/widgets/simple_grid_view.dart';
 const _cellPadding = 4.0;
 
 class SomeGridView extends StatefulWidget {
-  const SomeGridView({Key? key}) : super(key: key);
+  const SomeGridView({super.key});
 
   @override
   State<SomeGridView> createState() => _SomeGridViewState();
