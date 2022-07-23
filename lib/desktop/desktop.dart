@@ -62,7 +62,11 @@ class _DesktopState extends State<Desktop> {
     }
   }
 
-  void _addWindow(DesktopApp desktopApp) {
+  void _addWindow(
+    DesktopApp desktopApp,
+    double screenWidth,
+    double screenHeight,
+  ) {
     final key = UniqueKey();
     final window = Window(
       key: key,
@@ -82,6 +86,8 @@ class _DesktopState extends State<Desktop> {
       unHideWindowStream: _unHideWindowNotifier.stream,
       width: desktopApp.width,
       height: desktopApp.height,
+      screenWidth: screenWidth,
+      screenHeight: screenHeight,
       isFixedSize: desktopApp.isFixedSize,
     );
     setState(() {
@@ -94,28 +100,35 @@ class _DesktopState extends State<Desktop> {
   Widget build(BuildContext context) {
     final groupedApps = widget.groupedApps;
     final standaloneApps = widget.standaloneApps;
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        // TODO(albert): test this
-        if (groupedApps.isNotEmpty || standaloneApps.isNotEmpty)
-          DesktopItems(
-            groupedApps: groupedApps,
-            standaloneApps: standaloneApps,
-            onItemTap: _addWindow,
-          ),
-        ..._windows.values,
-        if (_windows.isNotEmpty)
-          Dock(
-            windowKeys: _windowKeys,
-            minimizedWindowKeys: _minimizedWindowKeys,
-            windows: _windows,
-            onItemTap: (key) {
-              _unMinimize(key);
-              _rebuildOnChange();
-            },
-          ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            if (groupedApps.isNotEmpty || standaloneApps.isNotEmpty)
+              DesktopItems(
+                groupedApps: groupedApps,
+                standaloneApps: standaloneApps,
+                onItemTap: (desktopApp) => _addWindow(
+                  desktopApp,
+                  constraints.maxWidth,
+                  constraints.maxHeight,
+                ),
+              ),
+            ..._windows.values,
+            if (_windows.isNotEmpty)
+              Dock(
+                windowKeys: _windowKeys,
+                minimizedWindowKeys: _minimizedWindowKeys,
+                windows: _windows,
+                onItemTap: (key) {
+                  _unMinimize(key);
+                  _rebuildOnChange();
+                },
+              ),
+          ],
+        );
+      },
     );
   }
 }

@@ -9,7 +9,20 @@ import 'package:mdi/window/window.dart';
 import '../widget_tester.dart';
 
 void main() {
-  group('Desktop', () {
+  group('$Desktop', () {
+    testWidgets('renders nothing if no apps were passed', (tester) async {
+      await tester.pumpWidgetEx(
+        const Desktop(
+          groupedApps: {},
+          standaloneApps: [],
+        ),
+      );
+
+      expect(find.byType(DesktopItems), findsNothing);
+      expect(find.byType(Window), findsNothing);
+      expect(find.byType(Dock), findsNothing);
+    });
+
     testWidgets(
         'renders $DesktopItems but no $Window and $Dock '
         'if there are no windows opened', (tester) async {

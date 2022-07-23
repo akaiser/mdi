@@ -37,9 +37,11 @@ class _App extends StatelessWidget {
               image: mainBackgroundImage,
             ),
           ),
-          child: Desktop(
-            groupedApps: groupedApps,
-            standaloneApps: standaloneApps,
+          child: SafeArea(
+            child: Desktop(
+              groupedApps: groupedApps,
+              standaloneApps: standaloneApps,
+            ),
           ),
         ),
       ),

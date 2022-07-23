@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mdi/_extensions/build_context.dart';
 import 'package:mdi/_prefs.dart';
 import 'package:mdi/window/title_bar.dart';
 
@@ -18,6 +17,8 @@ class Window extends StatefulWidget {
     required this.unHideWindowStream,
     required this.width,
     required this.height,
+    required this.screenWidth,
+    required this.screenHeight,
     required this.isFixedSize,
   }) : super(key: key);
 
@@ -30,6 +31,8 @@ class Window extends StatefulWidget {
 
   final double? width;
   final double? height;
+  final double screenWidth;
+  final double screenHeight;
   final bool isFixedSize;
 
   @override
@@ -56,17 +59,15 @@ class _WindowState extends State<Window> {
         .listen((_) => _unMinimize());
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      final screenSize = context.screenSize;
-      final screenWidth = screenSize.width;
-      final screenHeight = screenSize.height;
-
       setState(() {
-        _width = widget.width ?? screenWidth * 0.6;
-        _height = widget.height ?? (screenHeight - dockHeight) * 0.6;
+        final availableHeight = widget.screenHeight - dockHeight;
+
+        _width = widget.width ?? widget.screenWidth * 0.6;
+        _height = widget.height ?? availableHeight * 0.6;
         _checkMinSize();
 
-        _dx = _random.nextDouble() * (screenWidth - _width);
-        _dy = _random.nextDouble() * (screenHeight - dockHeight - _height);
+        _dx = _random.nextDouble() * (widget.screenWidth - _width);
+        _dy = _random.nextDouble() * (availableHeight - _height);
       });
     });
   }
@@ -131,9 +132,8 @@ class _WindowState extends State<Window> {
         _dxLast = _dx;
         _dyLast = _dy;
 
-        final screenSize = context.screenSize;
-        _width = screenSize.width + windowOuterPadding * 2;
-        _height = screenSize.height - dockHeight + windowOuterPadding * 2;
+        _width = widget.screenWidth + windowOuterPadding * 2;
+        _height = widget.screenHeight - dockHeight + windowOuterPadding * 2;
         _dx = _dy = -windowOuterPadding;
       }
     });
