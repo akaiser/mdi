@@ -10,7 +10,7 @@ class TitleBar extends StatelessWidget {
     required this.onTitleBarDrag,
     required this.onCloseTap,
     required this.onMinimizeTap,
-    required this.onMaximizeTap,
+    required this.onToggleMaximizeTap,
     super.key,
   });
 
@@ -21,7 +21,7 @@ class TitleBar extends StatelessWidget {
   final void Function(double dx, double dy) onTitleBarDrag;
   final VoidCallback onCloseTap;
   final VoidCallback onMinimizeTap;
-  final VoidCallback onMaximizeTap;
+  final VoidCallback onToggleMaximizeTap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,7 @@ class TitleBar extends StatelessWidget {
         details.delta.dx,
         details.delta.dy,
       ),
+      onDoubleTap: onToggleMaximizeTap,
       child: ColoredBox(
         color: Colors.transparent,
         child: Padding(
@@ -60,7 +61,7 @@ class TitleBar extends StatelessWidget {
                     const SizedBox(width: titleBarIconsSpace),
                     _TitleBarButton(
                       isMaximizedWindow ? Icons.fullscreen : Icons.crop_square,
-                      onTap: onMaximizeTap,
+                      onTap: onToggleMaximizeTap,
                     ),
                   ],
                 ],

@@ -24,6 +24,7 @@ const windowTransitionMillis = Duration(milliseconds: 40);
 const windowMinWidth = 84.0;
 const windowMinHeight = 84.0;
 const windowOuterPadding = 4.0;
+const windowOuterPaddingTimes2 = windowOuterPadding * 2;
 
 const windowBodyColor = Color.fromRGBO(35, 31, 41, 1);
 const windowBodySeparatorColor = Color.fromRGBO(0, 0, 0, 1);

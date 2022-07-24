@@ -15,7 +15,7 @@ class Dock extends StatelessWidget {
   final List<Key> windowKeys;
   final List<Key> minimizedWindowKeys;
   final Map<Key, Window> windows;
-  final void Function(Key) onItemTap;
+  final ValueSetter<Key> onItemTap;
 
   @override
   Widget build(BuildContext context) {
