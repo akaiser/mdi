@@ -46,5 +46,5 @@ final windowDecoration = BoxDecoration(
 // TitleBar
 const titleBarIconSize = 14.0;
 const titleBarIconsSpace = 8.0;
-const titleBarPadding = EdgeInsets.fromLTRB(8, 6, 8, 8);
+const titleBarTitlePadding = EdgeInsets.fromLTRB(8, 5, 4, 7);
 const titleBarTextColor = Color.fromRGBO(196, 196, 196, 1);
