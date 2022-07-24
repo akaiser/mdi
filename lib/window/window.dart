@@ -50,7 +50,7 @@ class _WindowState extends State<Window> {
 
   bool _isMinimized = false, _isMaximized = false;
 
-  late StreamSubscription<void> unHideWindowSub;
+  late final StreamSubscription<void> unHideWindowSub;
 
   @override
   void initState() {
