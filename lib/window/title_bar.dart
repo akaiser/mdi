@@ -25,6 +25,50 @@ class TitleBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _TitleBarTitle(
+            title,
+            onTitleBarDrag: onTitleBarDrag,
+            onToggleMaximizeTap: onToggleMaximizeTap,
+          ),
+        ),
+        _TitleBarButton(
+          Icons.remove,
+          onTap: onMinimizeTap,
+        ),
+        if (!isFixedSizeWindow) ...[
+          const SizedBox(width: titleBarIconsSpace),
+          _TitleBarButton(
+            isMaximizedWindow ? Icons.fullscreen : Icons.crop_square,
+            onTap: onToggleMaximizeTap,
+          ),
+        ],
+        const SizedBox(width: titleBarIconsSpace),
+        _TitleBarButton(
+          Icons.close,
+          onTap: onCloseTap,
+        ),
+        const SizedBox(width: titleBarIconsSpace),
+      ],
+    );
+  }
+}
+
+class _TitleBarTitle extends StatelessWidget {
+  const _TitleBarTitle(
+    this.title, {
+    required this.onTitleBarDrag,
+    required this.onToggleMaximizeTap,
+  });
+
+  final String title;
+  final void Function(double dx, double dy) onTitleBarDrag;
+  final VoidCallback onToggleMaximizeTap;
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
       onPanUpdate: (details) => onTitleBarDrag(
         details.delta.dx,
@@ -34,39 +78,14 @@ class TitleBar extends StatelessWidget {
       child: ColoredBox(
         color: Colors.transparent,
         child: Padding(
-          padding: titleBarPadding,
-          child: Stack(
-            alignment: AlignmentDirectional.bottomCenter,
-            children: [
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: context.appTextTheme.h5.copyWith(
-                  color: titleBarTextColor,
-                ),
-              ),
-              Row(
-                children: [
-                  _TitleBarButton(
-                    Icons.close,
-                    onTap: onCloseTap,
-                  ),
-                  const SizedBox(width: titleBarIconsSpace),
-                  _TitleBarButton(
-                    Icons.remove,
-                    onTap: onMinimizeTap,
-                  ),
-                  if (!isFixedSizeWindow) ...[
-                    const SizedBox(width: titleBarIconsSpace),
-                    _TitleBarButton(
-                      isMaximizedWindow ? Icons.fullscreen : Icons.crop_square,
-                      onTap: onToggleMaximizeTap,
-                    ),
-                  ],
-                ],
-              ),
-            ],
+          padding: titleBarTitlePadding,
+          child: Text(
+            title,
+            softWrap: false,
+            overflow: TextOverflow.fade,
+            style: context.appTextTheme.h5.copyWith(
+              color: titleBarTextColor,
+            ),
           ),
         ),
       ),
