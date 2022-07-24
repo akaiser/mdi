@@ -17,10 +17,12 @@ class Window extends StatefulWidget {
     required this.unHideWindowStream,
     required this.width,
     required this.height,
-    required this.screenWidth,
-    required this.screenHeight,
     required this.isFixedSize,
-  }) : super(key: key);
+    required double screenWidth,
+    required double screenHeight,
+  })  : availableWidth = screenWidth + windowOuterPaddingTimes2,
+        availableHeight = screenHeight - dockHeight + windowOuterPaddingTimes2,
+        super(key: key);
 
   final String title;
   final Widget app;
@@ -31,9 +33,9 @@ class Window extends StatefulWidget {
 
   final double? width;
   final double? height;
-  final double screenWidth;
-  final double screenHeight;
   final bool isFixedSize;
+  final double availableWidth;
+  final double availableHeight;
 
   @override
   State<Window> createState() => _WindowState();
@@ -48,7 +50,7 @@ class _WindowState extends State<Window> {
 
   bool _isMinimized = false, _isMaximized = false;
 
-  late StreamSubscription<void> unHideWindowSub;
+  late final StreamSubscription<void> unHideWindowSub;
 
   @override
   void initState() {
@@ -56,18 +58,16 @@ class _WindowState extends State<Window> {
 
     unHideWindowSub = widget.unHideWindowStream
         .where((event) => widget.key! == event)
-        .listen((_) => _unMinimize());
+        .listen((_) => _toggleMinimize());
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        final availableHeight = widget.screenHeight - dockHeight;
-
-        _width = widget.width ?? widget.screenWidth * 0.6;
-        _height = widget.height ?? availableHeight * 0.6;
+        _width = widget.width ?? widget.availableWidth * 0.6;
+        _height = widget.height ?? widget.availableHeight * 0.6;
         _checkMinSize();
 
-        _dx = _random.nextDouble() * (widget.screenWidth - _width);
-        _dy = _random.nextDouble() * (availableHeight - _height);
+        _dx = _random.nextDouble() * (widget.availableWidth - _width);
+        _dy = _random.nextDouble() * (widget.availableHeight - _height);
       });
     });
   }
@@ -110,14 +110,14 @@ class _WindowState extends State<Window> {
     }
   }
 
-  void _unMinimize() {
+  void _toggleMinimize() {
     setState(() => _isMinimized = !_isMinimized);
     if (_isMinimized) {
       widget.onMinimizeTap();
     }
   }
 
-  void _unMaximize() {
+  void _toggleMaximize() {
     setState(() {
       if (_isMaximized) {
         _isMaximized = false;
@@ -132,8 +132,8 @@ class _WindowState extends State<Window> {
         _dxLast = _dx;
         _dyLast = _dy;
 
-        _width = widget.screenWidth + windowOuterPadding * 2;
-        _height = widget.screenHeight - dockHeight + windowOuterPadding * 2;
+        _width = widget.availableWidth;
+        _height = widget.availableHeight;
         _dx = _dy = -windowOuterPadding;
       }
     });
@@ -174,8 +174,8 @@ class _WindowState extends State<Window> {
                           _dy += dy;
                         }),
                         onCloseTap: widget.onCloseTap,
-                        onMinimizeTap: _unMinimize,
-                        onMaximizeTap: _unMaximize,
+                        onMinimizeTap: _toggleMinimize,
+                        onToggleMaximizeTap: _toggleMaximize,
                       ),
                       const ColoredBox(
                         color: windowBodySeparatorColor,

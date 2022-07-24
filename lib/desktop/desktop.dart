@@ -86,9 +86,9 @@ class _DesktopState extends State<Desktop> {
       unHideWindowStream: _unHideWindowNotifier.stream,
       width: desktopApp.width,
       height: desktopApp.height,
+      isFixedSize: desktopApp.isFixedSize,
       screenWidth: screenWidth,
       screenHeight: screenHeight,
-      isFixedSize: desktopApp.isFixedSize,
     );
     setState(() {
       _windowKeys.add(key);

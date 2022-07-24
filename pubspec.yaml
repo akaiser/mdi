@@ -1,6 +1,6 @@
 name: mdi
 description: Some widgets playground based on a desktop like UI.
-version: 0.0.4
+version: 0.0.5
 
 environment:
   sdk: ">=2.17.0 <3.0.0"

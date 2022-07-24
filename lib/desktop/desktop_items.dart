@@ -10,13 +10,14 @@ class DesktopItems extends StatelessWidget {
     required this.onItemTap,
     super.key,
   }) : assert(
+          // TODO(albert): tests!
           groupedApps.length > 0 || standaloneApps.length > 0,
           'one should provide apps!',
         );
 
   final Map<String, List<DesktopApp>> groupedApps;
   final List<DesktopApp> standaloneApps;
-  final void Function(DesktopApp desktopApp) onItemTap;
+  final ValueSetter<DesktopApp> onItemTap;
 
   @override
   Widget build(BuildContext context) {
