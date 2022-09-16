@@ -4,13 +4,12 @@ import 'dart:developer' show log;
 import 'package:flutter/material.dart';
 import 'package:mdi/_data.dart';
 import 'package:mdi/_prefs.dart';
-import 'package:mdi/_util/image.dart';
 import 'package:mdi/desktop/desktop.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await precache(mainBackgroundImage);
+  //await precache(mainBackgroundImage);
 
   runZonedGuarded<void>(
     () => runApp(const _App()),
@@ -22,8 +21,21 @@ Future<void> main() async {
   );
 }
 
-class _App extends StatelessWidget {
+class _App extends StatefulWidget {
   const _App();
+
+  @override
+  State<_App> createState() => _AppState();
+}
+
+class _AppState extends State<_App> {
+
+  // TODO(albert): test if this works
+  @override
+  void didChangeDependencies() {
+    precacheImage(mainBackgroundImage, context);
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {

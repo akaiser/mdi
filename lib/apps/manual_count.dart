@@ -4,7 +4,7 @@ class ManualCount extends StatefulWidget {
   const ManualCount({super.key});
 
   @override
-  _ManualCountState createState() => _ManualCountState();
+  State<ManualCount> createState() => _ManualCountState();
 }
 
 class _ManualCountState extends State<ManualCount> {

@@ -28,7 +28,7 @@ class TikTakToe extends StatefulWidget {
   const TikTakToe({super.key});
 
   @override
-  _TikTakToeState createState() => _TikTakToeState();
+  State<TikTakToe> createState() => _TikTakToeState();
 }
 
 class _TikTakToeState extends State<TikTakToe> {
