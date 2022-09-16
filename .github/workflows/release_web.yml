@@ -1,20 +1,20 @@
 name: Release Web
 on:
   push:
-    branches:
-      - main
+    tags:
+      - "v*.*.*"
 jobs:
-  release:
+  release-web:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.0.5'
+          flutter-version: '3.3.2'
           channel: 'stable'
       - name: Build
         run: flutter build web --base-href /mdi/
-      - name: Deploy
+      - name: Upload
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

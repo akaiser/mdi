@@ -6,7 +6,7 @@ class AutoCount extends StatefulWidget {
   const AutoCount({super.key});
 
   @override
-  _AutoCountState createState() => _AutoCountState();
+  State<AutoCount> createState() => _AutoCountState();
 }
 
 class _AutoCountState extends State<AutoCount> {
