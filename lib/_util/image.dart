@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 
-// TODO(albert): can be deleted after checking main.dart?
 Future<void> precache(ImageProvider provider) {
   final config = ImageConfiguration(
     bundle: rootBundle,
