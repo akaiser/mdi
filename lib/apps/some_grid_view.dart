@@ -11,7 +11,8 @@ class SomeGridView extends StatefulWidget {
 }
 
 class _SomeGridViewState extends State<SomeGridView> {
-  var _columnCount = 2, _rowCount = 2;
+  int _columnCount = 2;
+  int _rowCount = 2;
 
   @override
   Widget build(BuildContext context) {
