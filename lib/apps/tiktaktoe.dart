@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mdi/apps/widgets/simple_grid_view.dart';
 
-const _columnCount = 3, _rowCount = 3;
+const _columnCount = 3;
+const _rowCount = 3;
 const _boardSize = _columnCount * _rowCount;
 const _cellPadding = 4.0;
 

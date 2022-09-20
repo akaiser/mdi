@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_multiple_declarations_per_line
 import 'dart:async';
 import 'dart:math';
 
