@@ -26,8 +26,7 @@ class _App extends StatelessWidget {
   const _App();
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
+  Widget build(BuildContext context) => const MaterialApp(
       title: 'MDI',
       home: Scaffold(
         body: DecoratedBox(
@@ -46,5 +45,4 @@ class _App extends StatelessWidget {
         ),
       ),
     );
-  }
 }

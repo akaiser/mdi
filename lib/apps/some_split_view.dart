@@ -6,8 +6,7 @@ class SomeSplitView extends StatelessWidget {
   const SomeSplitView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const SimpleSplitView(
+  Widget build(BuildContext context) => const SimpleSplitView(
       left: ColoredBox(
         color: Color.fromRGBO(0, 0, 0, 1),
         child: Center(
@@ -19,5 +18,4 @@ class SomeSplitView extends StatelessWidget {
       ),
       right: AutoCount(),
     );
-  }
 }

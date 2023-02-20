@@ -11,8 +11,7 @@ class _ManualCountState extends State<ManualCount> {
   int _count = 0;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -40,5 +39,4 @@ class _ManualCountState extends State<ManualCount> {
         )
       ],
     );
-  }
 }

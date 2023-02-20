@@ -26,6 +26,8 @@ class SimpleGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _cellPadding = cellPadding;
+
     final grid = Column(
       children: List.generate(
         rowCount,
@@ -42,17 +44,18 @@ class SimpleGridView extends StatelessWidget {
                   ),
                 );
 
-                final coloredCell = cellBackgroundColor != null
+                final _cellBackgroundColor = cellBackgroundColor;
+                final coloredCell = _cellBackgroundColor != null
                     ? ColoredBox(
-                        color: cellBackgroundColor!,
+                        color: _cellBackgroundColor,
                         child: cell,
                       )
                     : cell;
 
                 return Expanded(
-                  child: cellPadding != null
+                  child: _cellPadding != null
                       ? Padding(
-                          padding: EdgeInsets.all(cellPadding!),
+                          padding: EdgeInsets.all(_cellPadding),
                           child: coloredCell,
                         )
                       : coloredCell,
@@ -63,16 +66,17 @@ class SimpleGridView extends StatelessWidget {
         ),
       ),
     );
-    final paddedGrid = cellPadding != null
+    final paddedGrid = _cellPadding != null
         ? Padding(
-            padding: EdgeInsets.all(cellPadding!),
+            padding: EdgeInsets.all(_cellPadding),
             child: grid,
           )
         : grid;
 
-    return gridBackgroundColor != null
+    final _gridBackgroundColor = gridBackgroundColor;
+    return _gridBackgroundColor != null
         ? ColoredBox(
-            color: gridBackgroundColor!,
+            color: _gridBackgroundColor,
             child: paddedGrid,
           )
         : paddedGrid;

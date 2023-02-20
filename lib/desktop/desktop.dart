@@ -42,8 +42,11 @@ class _DesktopState extends State<Desktop> {
 
   void _bringToFront(Key key) {
     if (_windows.keys.last != key) {
-      _windows[key] = _windows.remove(key)!;
-      _shouldRebuild = true;
+      final window = _windows.remove(key);
+      if (window != null) {
+        _windows[key] = window;
+        _shouldRebuild = true;
+      }
     }
   }
 
@@ -101,34 +104,32 @@ class _DesktopState extends State<Desktop> {
     final groupedApps = widget.groupedApps;
     final standaloneApps = widget.standaloneApps;
     return LayoutBuilder(
-      builder: (context, constraints) {
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            if (groupedApps.isNotEmpty || standaloneApps.isNotEmpty)
-              DesktopItems(
-                groupedApps: groupedApps,
-                standaloneApps: standaloneApps,
-                onItemTap: (desktopApp) => _addWindow(
-                  desktopApp,
-                  constraints.maxWidth,
-                  constraints.maxHeight,
-                ),
+      builder: (context, constraints) => Stack(
+        fit: StackFit.expand,
+        children: [
+          if (groupedApps.isNotEmpty || standaloneApps.isNotEmpty)
+            DesktopItems(
+              groupedApps: groupedApps,
+              standaloneApps: standaloneApps,
+              onItemTap: (desktopApp) => _addWindow(
+                desktopApp,
+                constraints.maxWidth,
+                constraints.maxHeight,
               ),
-            ..._windows.values,
-            if (_windows.isNotEmpty)
-              Dock(
-                windowKeys: _windowKeys,
-                minimizedWindowKeys: _minimizedWindowKeys,
-                windows: _windows,
-                onItemTap: (key) {
-                  _unMinimize(key);
-                  _rebuildOnChange();
-                },
-              ),
-          ],
-        );
-      },
+            ),
+          ..._windows.values,
+          if (_windows.isNotEmpty)
+            Dock(
+              windowKeys: _windowKeys,
+              minimizedWindowKeys: _minimizedWindowKeys,
+              windows: _windows,
+              onItemTap: (key) {
+                _unMinimize(key);
+                _rebuildOnChange();
+              },
+            ),
+        ],
+      ),
     );
   }
 }

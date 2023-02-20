@@ -29,8 +29,7 @@ class _AutoCountState extends State<AutoCount> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Center(
+  Widget build(BuildContext context) => Center(
       child: Text(
         '$_count',
         style: const TextStyle(
@@ -39,5 +38,4 @@ class _AutoCountState extends State<AutoCount> {
         ),
       ),
     );
-  }
 }
