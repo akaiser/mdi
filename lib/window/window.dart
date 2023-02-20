@@ -51,14 +51,14 @@ class _WindowState extends State<Window> {
 
   bool _isMinimized = false, _isMaximized = false;
 
-  late final StreamSubscription<void> unHideWindowSub;
+  late final StreamSubscription<void> _unHideWindowSubscription;
 
   @override
   void initState() {
     super.initState();
 
-    unHideWindowSub = widget.unHideWindowStream
-        .where((event) => widget.key! == event)
+    _unHideWindowSubscription = widget.unHideWindowStream
+        .where((event) => widget.key == event)
         .listen((_) => _toggleMinimize());
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -75,7 +75,7 @@ class _WindowState extends State<Window> {
 
   @override
   void dispose() {
-    unHideWindowSub.cancel();
+    _unHideWindowSubscription.cancel();
     super.dispose();
   }
 
@@ -272,18 +272,16 @@ class _WindowDecoration extends StatelessWidget {
   final Widget child;
 
   @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: windowDecoration,
-      child: Padding(
-        padding: const EdgeInsets.all(1),
-        child: ClipRRect(
-          borderRadius: windowBorderRadius,
-          child: child,
+  Widget build(BuildContext context) => DecoratedBox(
+        decoration: windowDecoration,
+        child: Padding(
+          padding: const EdgeInsets.all(1),
+          child: ClipRRect(
+            borderRadius: windowBorderRadius,
+            child: child,
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 abstract class _DragArea extends StatelessWidget {
@@ -353,21 +351,20 @@ class _CornerDragArea extends _DragArea {
   final GestureDragUpdateCallback onPanUpdate;
 
   @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      left: left,
-      top: top,
-      right: right,
-      bottom: bottom,
-      child: GestureDetector(
-        onPanUpdate: onPanUpdate,
-        child: MouseRegion(
-          cursor: bottom == null && right == null || top == null && left == null
-              ? SystemMouseCursors.resizeUpLeftDownRight
-              : SystemMouseCursors.resizeUpRightDownLeft,
-          child: const SizedBox(height: 12, width: 12),
+  Widget build(BuildContext context) => Positioned(
+        left: left,
+        top: top,
+        right: right,
+        bottom: bottom,
+        child: GestureDetector(
+          onPanUpdate: onPanUpdate,
+          child: MouseRegion(
+            cursor:
+                bottom == null && right == null || top == null && left == null
+                    ? SystemMouseCursors.resizeUpLeftDownRight
+                    : SystemMouseCursors.resizeUpRightDownLeft,
+            child: const SizedBox(height: 12, width: 12),
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

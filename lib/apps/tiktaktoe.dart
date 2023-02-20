@@ -37,51 +37,49 @@ class _TikTakToeState extends State<TikTakToe> {
   bool _isCrossTurn = true;
 
   @override
-  Widget build(BuildContext context) {
-    return SimpleGridView(
-      columnCount: _columnCount,
-      rowCount: _rowCount,
-      cellBuilder: (context, xIndex, yIndex) {
-        final current = '$xIndex:$yIndex';
-        final existing = _selection[current];
+  Widget build(BuildContext context) => SimpleGridView(
+        columnCount: _columnCount,
+        rowCount: _rowCount,
+        cellBuilder: (context, xIndex, yIndex) {
+          final current = '$xIndex:$yIndex';
+          final existing = _selection[current];
 
-        return GestureDetector(
-          onTap: existing == null
-              ? () async {
-                  setState(
-                    () {
-                      final type = _isCrossTurn ? _Type.X : _Type.O;
-                      _selection[current] = type;
-                      _isCrossTurn = !_isCrossTurn;
-                    },
-                  );
-                  await _lookupWinner();
-                }
-              : null,
-          child: existing != null
-              ? FittedBox(
-                  child: Icon(
-                    existing == _Type.X
-                        ? Icons.close
-                        : Icons.radio_button_unchecked,
-                    color: Colors.white,
-                  ),
-                )
-              : kDebugMode
-                  ? Text(
-                      current,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    )
-                  : null,
-        );
-      },
-      cellPadding: _cellPadding,
-      cellBackgroundColor: Colors.black,
-    );
-  }
+          return GestureDetector(
+            onTap: existing == null
+                ? () {
+                    setState(
+                      () {
+                        final type = _isCrossTurn ? _Type.X : _Type.O;
+                        _selection[current] = type;
+                        _isCrossTurn = !_isCrossTurn;
+                      },
+                    );
+                    _lookupWinner();
+                  }
+                : null,
+            child: existing != null
+                ? FittedBox(
+                    child: Icon(
+                      existing == _Type.X
+                          ? Icons.close
+                          : Icons.radio_button_unchecked,
+                      color: Colors.white,
+                    ),
+                  )
+                : kDebugMode
+                    ? Text(
+                        current,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      )
+                    : null,
+          );
+        },
+        cellPadding: _cellPadding,
+        cellBackgroundColor: Colors.black,
+      );
 
   Future<void> _lookupWinner() async {
     _Type? foundType;
@@ -111,28 +109,26 @@ class _TikTakToeState extends State<TikTakToe> {
     }
   }
 
-  Future<void> _showDialog(String text) {
-    return Future<void>.delayed(
-      _dialogDelay,
-      () => showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-          content: Text(text),
-          actions: [
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  _selection.clear();
-                  _isCrossTurn = true;
-                });
-                Navigator.of(context).pop();
-              },
-              child: const Text('RESTART'),
-            )
-          ],
+  Future<void> _showDialog(String text) => Future<void>.delayed(
+        _dialogDelay,
+        () => showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => AlertDialog(
+            content: Text(text),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    _selection.clear();
+                    _isCrossTurn = true;
+                  });
+                  Navigator.of(context).pop();
+                },
+                child: const Text('RESTART'),
+              )
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

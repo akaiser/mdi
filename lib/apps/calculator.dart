@@ -57,93 +57,91 @@ class _CalculatorState extends State<Calculator> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return ColoredBox(
-      color: _backgroundColor,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-            child: _Output(_valueNotifier),
-          ),
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _Button('C', _ButtonType.misc, _addValue),
-                const _Button('', _ButtonType.misc, null),
-                const _Button('', _ButtonType.misc, null),
-                _Button(
-                  _unicodeMappings['/']!,
-                  _ButtonType.operation,
-                  _addValue,
-                ),
-              ],
+  Widget build(BuildContext context) => ColoredBox(
+        color: _backgroundColor,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+              child: _Output(_valueNotifier),
             ),
-          ),
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _Button('7', _ButtonType.number, _addValue),
-                _Button('8', _ButtonType.number, _addValue),
-                _Button('9', _ButtonType.number, _addValue),
-                _Button(
-                  _unicodeMappings['*']!,
-                  _ButtonType.operation,
-                  _addValue,
-                ),
-              ],
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _Button('C', _ButtonType.misc, _addValue),
+                  const _Button('', _ButtonType.misc, null),
+                  const _Button('', _ButtonType.misc, null),
+                  _Button(
+                    _unicodeMappings['/']!,
+                    _ButtonType.operation,
+                    _addValue,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _Button('4', _ButtonType.number, _addValue),
-                _Button('5', _ButtonType.number, _addValue),
-                _Button('6', _ButtonType.number, _addValue),
-                _Button(
-                  _unicodeMappings['-']!,
-                  _ButtonType.operation,
-                  _addValue,
-                ),
-              ],
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _Button('7', _ButtonType.number, _addValue),
+                  _Button('8', _ButtonType.number, _addValue),
+                  _Button('9', _ButtonType.number, _addValue),
+                  _Button(
+                    _unicodeMappings['*']!,
+                    _ButtonType.operation,
+                    _addValue,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _Button('1', _ButtonType.number, _addValue),
-                _Button('2', _ButtonType.number, _addValue),
-                _Button('3', _ButtonType.number, _addValue),
-                _Button(
-                  _unicodeMappings['+']!,
-                  _ButtonType.operation,
-                  _addValue,
-                ),
-              ],
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _Button('4', _ButtonType.number, _addValue),
+                  _Button('5', _ButtonType.number, _addValue),
+                  _Button('6', _ButtonType.number, _addValue),
+                  _Button(
+                    _unicodeMappings['-']!,
+                    _ButtonType.operation,
+                    _addValue,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _Button('0', _ButtonType.number, _addValue, flex: 2),
-                _Button(',', _ButtonType.number, _addValue),
-                _Button(
-                  _unicodeMappings['=']!,
-                  _ButtonType.operation,
-                  _addValue,
-                ),
-              ],
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _Button('1', _ButtonType.number, _addValue),
+                  _Button('2', _ButtonType.number, _addValue),
+                  _Button('3', _ButtonType.number, _addValue),
+                  _Button(
+                    _unicodeMappings['+']!,
+                    _ButtonType.operation,
+                    _addValue,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _Button('0', _ButtonType.number, _addValue, flex: 2),
+                  _Button(',', _ButtonType.number, _addValue),
+                  _Button(
+                    _unicodeMappings['=']!,
+                    _ButtonType.operation,
+                    _addValue,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
 }
 
 class _Output extends StatelessWidget {
@@ -152,19 +150,17 @@ class _Output extends StatelessWidget {
   final ValueNotifier<String> valueNotifier;
 
   @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder<String>(
-      valueListenable: valueNotifier,
-      builder: (context, value, _) => Text(
-        value,
-        style: const TextStyle(
-          fontSize: 44,
-          color: _textColor,
-          fontWeight: FontWeight.w200,
+  Widget build(BuildContext context) => ValueListenableBuilder<String>(
+        valueListenable: valueNotifier,
+        builder: (context, value, _) => Text(
+          value,
+          style: const TextStyle(
+            fontSize: 44,
+            color: _textColor,
+            fontWeight: FontWeight.w200,
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 enum _ButtonType { number, operation, misc }
@@ -196,10 +192,11 @@ class _Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _onPressed = onPressed;
     return Expanded(
       flex: flex,
       child: TextButton(
-        onPressed: onPressed != null ? () => onPressed!(text) : null,
+        onPressed: _onPressed != null ? () => _onPressed(text) : null,
         style: ButtonStyle(
           padding: MaterialStateProperty.all(EdgeInsets.zero),
           foregroundColor: MaterialStateProperty.all(_textColor),

@@ -20,39 +20,37 @@ class DesktopItems extends StatelessWidget {
   final ValueSetter<DesktopApp> onItemTap;
 
   @override
-  Widget build(BuildContext context) {
-    return _DesktopItems(
-      children: [
-        ...groupedApps.entries
-            .map(
-              (entry) => DesktopApp(
-                entry.key,
-                Icons.folder,
-                _DesktopItems(
-                  children: entry.value.map(
-                    (desktopApp) => _DesktopItem(
-                      desktopApp,
-                      onTap: () => onItemTap(desktopApp),
+  Widget build(BuildContext context) => _DesktopItems(
+        children: [
+          ...groupedApps.entries
+              .map(
+                (entry) => DesktopApp(
+                  entry.key,
+                  Icons.folder,
+                  _DesktopItems(
+                    children: entry.value.map(
+                      (desktopApp) => _DesktopItem(
+                        desktopApp,
+                        onTap: () => onItemTap(desktopApp),
+                      ),
                     ),
                   ),
                 ),
+              )
+              .map(
+                (desktopApp) => _DesktopItem(
+                  desktopApp,
+                  onTap: () => onItemTap(desktopApp),
+                ),
               ),
-            )
-            .map(
-              (desktopApp) => _DesktopItem(
-                desktopApp,
-                onTap: () => onItemTap(desktopApp),
-              ),
+          ...standaloneApps.map(
+            (desktopApp) => _DesktopItem(
+              desktopApp,
+              onTap: () => onItemTap(desktopApp),
             ),
-        ...standaloneApps.map(
-          (desktopApp) => _DesktopItem(
-            desktopApp,
-            onTap: () => onItemTap(desktopApp),
           ),
-        ),
-      ],
-    );
-  }
+        ],
+      );
 }
 
 class _DesktopItems extends StatelessWidget {
@@ -61,16 +59,14 @@ class _DesktopItems extends StatelessWidget {
   final Iterable<Widget> children;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(desktopItemSpacing),
-      child: Wrap(
-        spacing: desktopItemSpacing,
-        runSpacing: desktopItemSpacing,
-        children: [...children],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(desktopItemSpacing),
+        child: Wrap(
+          spacing: desktopItemSpacing,
+          runSpacing: desktopItemSpacing,
+          children: [...children],
+        ),
+      );
 }
 
 class _DesktopItem extends StatelessWidget {
@@ -85,34 +81,32 @@ class _DesktopItem extends StatelessWidget {
   Key get _itemKey => Key(desktopApp.title.toLowerCase().split(' ').join('-'));
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      key: _itemKey,
-      onTap: onTap,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: Column(
-          children: [
-            Icon(
-              desktopApp.icon,
-              color: Colors.lightBlue,
-              size: desktopIconSize,
-            ),
-            Text(
-              desktopApp.title,
-              style: context.appTextTheme.h5.copyWith(
-                shadows: const [
-                  Shadow(
-                    offset: Offset(1, 1),
-                    blurRadius: 6,
-                  ),
-                ],
-                color: Colors.white,
+  Widget build(BuildContext context) => GestureDetector(
+        key: _itemKey,
+        onTap: onTap,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Column(
+            children: [
+              Icon(
+                desktopApp.icon,
+                color: Colors.lightBlue,
+                size: desktopIconSize,
               ),
-            )
-          ],
+              Text(
+                desktopApp.title,
+                style: context.tt.bodyMedium?.copyWith(
+                  shadows: const [
+                    Shadow(
+                      offset: Offset(1, 1),
+                      blurRadius: 6,
+                    ),
+                  ],
+                  color: Colors.white,
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

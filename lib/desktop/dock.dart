@@ -18,33 +18,31 @@ class Dock extends StatelessWidget {
   final ValueSetter<Key> onItemTap;
 
   @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: ColoredBox(
-        color: dockBackgroundColor,
-        child: SizedBox(
-          height: dockHeight,
-          child: ListView.builder(
-            itemCount: windowKeys.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (_, index) {
-              final key = windowKeys[index];
-              final isMinimized = minimizedWindowKeys.contains(key);
-              return _DockItem(
-                windows[key]!.title,
-                isActive: windows.keys.last == key && !isMinimized,
-                isMinimized: isMinimized,
-                onItemTap: () => onItemTap(key),
-              );
-            },
+  Widget build(BuildContext context) => Positioned(
+        bottom: 0,
+        left: 0,
+        right: 0,
+        child: ColoredBox(
+          color: dockBackgroundColor,
+          child: SizedBox(
+            height: dockHeight,
+            child: ListView.builder(
+              itemCount: windowKeys.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (_, index) {
+                final key = windowKeys[index];
+                final isMinimized = minimizedWindowKeys.contains(key);
+                return _DockItem(
+                  windows[key]!.title,
+                  isActive: windows.keys.last == key && !isMinimized,
+                  isMinimized: isMinimized,
+                  onItemTap: () => onItemTap(key),
+                );
+              },
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _DockItem extends StatelessWidget {
@@ -61,23 +59,21 @@ class _DockItem extends StatelessWidget {
   final VoidCallback onItemTap;
 
   @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onItemTap,
-      style: OutlinedButton.styleFrom(
-        backgroundColor: isActive
-            ? dockItemActiveBackgroundColor
-            : dockItemInactiveBackgroundColor,
-        shape: const RoundedRectangleBorder(),
-      ),
-      child: Text(
-        title,
-        style: context.appTextTheme.h5.copyWith(
-          color: isMinimized
-              ? dockItemMinimizedTextColor
-              : dockItemActiveTextColor,
+  Widget build(BuildContext context) => TextButton(
+        onPressed: onItemTap,
+        style: OutlinedButton.styleFrom(
+          backgroundColor: isActive
+              ? dockItemActiveBackgroundColor
+              : dockItemInactiveBackgroundColor,
+          shape: const RoundedRectangleBorder(),
         ),
-      ),
-    );
-  }
+        child: Text(
+          title,
+          style: context.tt.bodyMedium?.copyWith(
+            color: isMinimized
+                ? dockItemMinimizedTextColor
+                : dockItemActiveTextColor,
+          ),
+        ),
+      );
 }

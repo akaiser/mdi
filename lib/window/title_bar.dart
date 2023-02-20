@@ -24,36 +24,34 @@ class TitleBar extends StatelessWidget {
   final VoidCallback onToggleMaximizeTap;
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _TitleBarTitle(
-            title,
-            onTitleBarDrag: onTitleBarDrag,
-            onToggleMaximizeTap: onToggleMaximizeTap,
+  Widget build(BuildContext context) => Row(
+        children: [
+          Expanded(
+            child: _TitleBarTitle(
+              title,
+              onTitleBarDrag: onTitleBarDrag,
+              onToggleMaximizeTap: onToggleMaximizeTap,
+            ),
           ),
-        ),
-        _TitleBarButton(
-          Icons.remove,
-          onTap: onMinimizeTap,
-        ),
-        if (!isFixedSizeWindow) ...[
+          _TitleBarButton(
+            Icons.remove,
+            onTap: onMinimizeTap,
+          ),
+          if (!isFixedSizeWindow) ...[
+            const SizedBox(width: titleBarIconsSpace),
+            _TitleBarButton(
+              isMaximizedWindow ? Icons.fullscreen : Icons.crop_square,
+              onTap: onToggleMaximizeTap,
+            ),
+          ],
           const SizedBox(width: titleBarIconsSpace),
           _TitleBarButton(
-            isMaximizedWindow ? Icons.fullscreen : Icons.crop_square,
-            onTap: onToggleMaximizeTap,
+            Icons.close,
+            onTap: onCloseTap,
           ),
+          const SizedBox(width: titleBarIconsSpace),
         ],
-        const SizedBox(width: titleBarIconsSpace),
-        _TitleBarButton(
-          Icons.close,
-          onTap: onCloseTap,
-        ),
-        const SizedBox(width: titleBarIconsSpace),
-      ],
-    );
-  }
+      );
 }
 
 class _TitleBarTitle extends StatelessWidget {
@@ -68,29 +66,25 @@ class _TitleBarTitle extends StatelessWidget {
   final VoidCallback onToggleMaximizeTap;
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onPanUpdate: (details) => onTitleBarDrag(
-        details.delta.dx,
-        details.delta.dy,
-      ),
-      onDoubleTap: onToggleMaximizeTap,
-      child: ColoredBox(
-        color: Colors.transparent,
-        child: Padding(
-          padding: titleBarTitlePadding,
-          child: Text(
-            title,
-            softWrap: false,
-            overflow: TextOverflow.fade,
-            style: context.appTextTheme.h5.copyWith(
-              color: titleBarTextColor,
+  Widget build(BuildContext context) => GestureDetector(
+        onPanUpdate: (details) => onTitleBarDrag(
+          details.delta.dx,
+          details.delta.dy,
+        ),
+        onDoubleTap: onToggleMaximizeTap,
+        child: ColoredBox(
+          color: Colors.transparent,
+          child: Padding(
+            padding: titleBarTitlePadding,
+            child: Text(
+              title,
+              softWrap: false,
+              overflow: TextOverflow.fade,
+              style: context.tt.bodyMedium?.copyWith(color: titleBarTextColor),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _TitleBarButton extends StatelessWidget {
@@ -103,14 +97,12 @@ class _TitleBarButton extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Icon(
-        icon,
-        size: titleBarIconSize,
-        color: Colors.white,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => GestureDetector(
+        onTap: onTap,
+        child: Icon(
+          icon,
+          size: titleBarIconSize,
+          color: Colors.white,
+        ),
+      );
 }

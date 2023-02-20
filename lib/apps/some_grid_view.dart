@@ -15,71 +15,69 @@ class _SomeGridViewState extends State<SomeGridView> {
   int _rowCount = 2;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            left: _cellPadding * 2,
-            top: _cellPadding * 2,
-            right: _cellPadding * 2,
-          ),
-          child: ColoredBox(
-            color: Colors.white,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        if (_columnCount > 1) {
-                          setState(() => _columnCount--);
-                        }
-                      },
-                      child: const Text('-'),
-                    ),
-                    Text('$_columnCount Columns'),
-                    TextButton(
-                      onPressed: () => setState(() => _columnCount++),
-                      child: const Text('+'),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        if (_rowCount > 1) {
-                          setState(() => _rowCount--);
-                        }
-                      },
-                      child: const Text('-'),
-                    ),
-                    Text('$_rowCount Rows'),
-                    TextButton(
-                      onPressed: () => setState(() => _rowCount++),
-                      child: const Text('+'),
-                    ),
-                  ],
-                ),
-              ],
+  Widget build(BuildContext context) => Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              left: _cellPadding * 2,
+              top: _cellPadding * 2,
+              right: _cellPadding * 2,
+            ),
+            child: ColoredBox(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          if (_columnCount > 1) {
+                            setState(() => _columnCount--);
+                          }
+                        },
+                        child: const Text('-'),
+                      ),
+                      Text('$_columnCount Columns'),
+                      TextButton(
+                        onPressed: () => setState(() => _columnCount++),
+                        child: const Text('+'),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          if (_rowCount > 1) {
+                            setState(() => _rowCount--);
+                          }
+                        },
+                        child: const Text('-'),
+                      ),
+                      Text('$_rowCount Rows'),
+                      TextButton(
+                        onPressed: () => setState(() => _rowCount++),
+                        child: const Text('+'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: SimpleGridView(
-            columnCount: _columnCount,
-            rowCount: _rowCount,
-            cellPadding: _cellPadding,
-            cellBackgroundColor: Colors.blueAccent,
-            cellBuilder: (_, xIndex, yIndex) => Center(
-              child: Text('$xIndex:$yIndex'),
+          Expanded(
+            child: SimpleGridView(
+              columnCount: _columnCount,
+              rowCount: _rowCount,
+              cellPadding: _cellPadding,
+              cellBackgroundColor: Colors.blueAccent,
+              cellBuilder: (_, xIndex, yIndex) => Center(
+                child: Text('$xIndex:$yIndex'),
+              ),
             ),
           ),
-        ),
-      ],
-    );
-  }
+        ],
+      );
 }
