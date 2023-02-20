@@ -27,22 +27,22 @@ class _App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => const MaterialApp(
-      title: 'MDI',
-      home: Scaffold(
-        body: DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: mainBackgroundImage,
+        title: 'MDI',
+        home: Scaffold(
+          body: DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: mainBackgroundImage,
+              ),
             ),
-          ),
-          child: SafeArea(
-            child: Desktop(
-              groupedApps: groupedApps,
-              standaloneApps: standaloneApps,
+            child: SafeArea(
+              child: Desktop(
+                groupedApps: groupedApps,
+                standaloneApps: standaloneApps,
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
 }

@@ -7,15 +7,15 @@ class SomeSplitView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => const SimpleSplitView(
-      left: ColoredBox(
-        color: Color.fromRGBO(0, 0, 0, 1),
-        child: Center(
-          child: Text(
-            'Left',
-            style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+        left: ColoredBox(
+          color: Color.fromRGBO(0, 0, 0, 1),
+          child: Center(
+            child: Text(
+              'Left',
+              style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+            ),
           ),
         ),
-      ),
-      right: AutoCount(),
-    );
+        right: AutoCount(),
+      );
 }

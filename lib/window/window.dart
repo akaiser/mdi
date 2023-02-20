@@ -273,15 +273,15 @@ class _WindowDecoration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => DecoratedBox(
-      decoration: windowDecoration,
-      child: Padding(
-        padding: const EdgeInsets.all(1),
-        child: ClipRRect(
-          borderRadius: windowBorderRadius,
-          child: child,
+        decoration: windowDecoration,
+        child: Padding(
+          padding: const EdgeInsets.all(1),
+          child: ClipRRect(
+            borderRadius: windowBorderRadius,
+            child: child,
+          ),
         ),
-      ),
-    );
+      );
 }
 
 abstract class _DragArea extends StatelessWidget {
@@ -352,18 +352,19 @@ class _CornerDragArea extends _DragArea {
 
   @override
   Widget build(BuildContext context) => Positioned(
-      left: left,
-      top: top,
-      right: right,
-      bottom: bottom,
-      child: GestureDetector(
-        onPanUpdate: onPanUpdate,
-        child: MouseRegion(
-          cursor: bottom == null && right == null || top == null && left == null
-              ? SystemMouseCursors.resizeUpLeftDownRight
-              : SystemMouseCursors.resizeUpRightDownLeft,
-          child: const SizedBox(height: 12, width: 12),
+        left: left,
+        top: top,
+        right: right,
+        bottom: bottom,
+        child: GestureDetector(
+          onPanUpdate: onPanUpdate,
+          child: MouseRegion(
+            cursor:
+                bottom == null && right == null || top == null && left == null
+                    ? SystemMouseCursors.resizeUpLeftDownRight
+                    : SystemMouseCursors.resizeUpRightDownLeft,
+            child: const SizedBox(height: 12, width: 12),
+          ),
         ),
-      ),
-    );
+      );
 }
