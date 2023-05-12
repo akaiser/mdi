@@ -26,7 +26,7 @@ class _DesktopState extends State<Desktop> {
   final _minimizedWindowKeys = <Key>[];
   final _windows = <Key, Window>{};
 
-  late StreamController<Key> _unHideWindowNotifier;
+  late final StreamController<Key> _unHideWindowNotifier;
 
   @override
   void initState() {

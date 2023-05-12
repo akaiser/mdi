@@ -23,7 +23,7 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-  late ValueNotifier<String> _valueNotifier;
+  late final ValueNotifier<String> _valueNotifier;
 
   @override
   void initState() {
