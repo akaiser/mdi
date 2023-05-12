@@ -11,7 +11,7 @@ class AutoCount extends StatefulWidget {
 
 class _AutoCountState extends State<AutoCount> {
   int _count = 0;
-  late Timer _timer;
+  late final Timer _timer;
 
   @override
   void initState() {

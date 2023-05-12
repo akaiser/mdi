@@ -7,20 +7,18 @@ import 'package:mdi/_prefs.dart';
 import 'package:mdi/_util/image.dart';
 import 'package:mdi/desktop/desktop.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await precache(mainBackgroundImage);
-
-  runZonedGuarded<void>(
-    () => runApp(const _App()),
-    (error, stack) => log(
-      'Some explosion here...',
-      error: error,
-      stackTrace: stack,
-    ),
-  );
-}
+Future<void> main() async => runZonedGuarded<Future<void>>(
+      () async {
+        WidgetsFlutterBinding.ensureInitialized();
+        await precache(mainBackgroundImage);
+        runApp(const _App());
+      },
+      (error, stack) => log(
+        'Some explosion here...',
+        error: error,
+        stackTrace: stack,
+      ),
+    );
 
 class _App extends StatelessWidget {
   const _App();
