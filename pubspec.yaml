@@ -18,6 +18,11 @@ dev_dependencies:
 
 flutter:
   assets:
+    - google_fonts/
     - images/
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: google_fonts/Roboto-Regular.ttf
   uses-material-design: true
 

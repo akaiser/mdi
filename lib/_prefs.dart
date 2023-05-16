@@ -11,7 +11,7 @@ const desktopIconSize = 42.0;
 const desktopItemSpacing = 20.0;
 
 // Dock
-const dockHeight = 28.0;
+const dockHeight = 32.0;
 const dockBackgroundColor = Color.fromRGBO(30, 30, 30, 0.7);
 const dockItemActiveBackgroundColor = Color.fromRGBO(108, 65, 165, 0.7);
 const dockItemInactiveBackgroundColor = Colors.transparent;
