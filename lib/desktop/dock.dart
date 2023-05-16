@@ -66,6 +66,7 @@ class _DockItem extends StatelessWidget {
               ? dockItemActiveBackgroundColor
               : dockItemInactiveBackgroundColor,
           shape: const RoundedRectangleBorder(),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
         ),
         child: Text(
           title,

@@ -8,11 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          cache: true
-          channel: "stable"
-          flutter-version: "3.10.0"
+      - uses: ./.github/actions/setup-flutter
       - name: Build
         run: flutter build web --base-href /mdi/
       - name: Upload

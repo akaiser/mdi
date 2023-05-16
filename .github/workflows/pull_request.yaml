@@ -1,6 +1,5 @@
 name: Pull Request
-on:
-  pull_request:
+on: [ pull_request ]
 
 concurrency:
   group: ${{ github.ref }}
@@ -11,11 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          cache: true
-          channel: "stable"
-          flutter-version: "3.10.0"
+      - uses: ./.github/actions/setup-flutter
       - run: flutter analyze
       - run: dart run dart_code_metrics:metrics analyze lib
       - run: dart run dart_code_metrics:metrics check-unused-files lib
@@ -27,9 +22,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          cache: true
-          channel: "stable"
-          flutter-version: "3.10.0"
+      - uses: ./.github/actions/setup-flutter
       - run: flutter test
