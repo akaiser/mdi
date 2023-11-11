@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 // https://developer.apple.com/design/human-interface-guidelines/macos/windows-and-views/window-anatomy/
 
+const appName = 'MDI';
+
 // Main
 //const mainBackgroundImage = AssetImage('images/meiying.jpg');
 const mainBackgroundImage = AssetImage('images/monterey.jpg');
