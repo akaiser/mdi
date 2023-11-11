@@ -1,8 +1,10 @@
 name: Release Desktop
+
 on:
   push:
     tags:
       - "v*.*.*"
+
 jobs:
   release-desktop:
     strategy:

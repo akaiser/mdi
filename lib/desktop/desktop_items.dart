@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mdi/_extensions/build_context.dart';
+import 'package:mdi/_extensions/build_context_ext.dart';
 import 'package:mdi/_prefs.dart';
 import 'package:mdi/desktop/desktop_app.dart';
 
@@ -104,7 +104,7 @@ class _DesktopItem extends StatelessWidget {
                   ],
                   color: Colors.white,
                 ),
-              )
+              ),
             ],
           ),
         ),

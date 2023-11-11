@@ -36,7 +36,7 @@ class _ManualCountState extends State<ManualCount> {
                 child: const Text('+'),
               ),
             ],
-          )
+          ),
         ],
       );
 }

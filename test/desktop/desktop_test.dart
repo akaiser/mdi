@@ -6,12 +6,12 @@ import 'package:mdi/desktop/desktop_items.dart';
 import 'package:mdi/desktop/dock.dart';
 import 'package:mdi/window/window.dart';
 
-import '../widget_tester.dart';
+import '../widget_tester_ext.dart';
 
 void main() {
   group('$Desktop', () {
     testWidgets('renders nothing if no apps were passed', (tester) async {
-      await tester.pumpWidgetEx(
+      await tester.render(
         const Desktop(
           groupedApps: {},
           standaloneApps: [],
@@ -26,7 +26,7 @@ void main() {
     testWidgets(
         'renders $DesktopItems but no $Window and $Dock '
         'if there are no windows opened', (tester) async {
-      await tester.pumpWidgetEx(
+      await tester.render(
         const Desktop(
           groupedApps: groupedApps,
           standaloneApps: standaloneApps,
@@ -41,7 +41,7 @@ void main() {
     testWidgets(
         'renders $DesktopItems and one $Window and $Dock '
         'if one desktop item was tapped', (tester) async {
-      await tester.pumpWidgetEx(
+      await tester.render(
         const Desktop(
           groupedApps: groupedApps,
           standaloneApps: standaloneApps,

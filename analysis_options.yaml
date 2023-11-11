@@ -1,40 +1,12 @@
 include: package:very_good_analysis/analysis_options.yaml
 
-analyzer:
-  plugins:
-    - dart_code_metrics
-
-dart_code_metrics:
-  rules:
-    - always-remove-listener
-    - avoid-border-all
-    - avoid-double-slash-imports
-    - avoid-expanded-as-spacer
-    - avoid-non-null-assertion
-    - avoid-passing-async-when-sync-expected
-    - avoid-redundant-async
-    - avoid-returning-widgets
-    - avoid-shrink-wrap-in-lists
-    - avoid-unnecessary-conditionals
-    - avoid-unnecessary-setstate
-    - avoid-unused-parameters
-    - avoid-wrapping-in-padding
-    - list-all-equatable-fields
-    - missing-test-assertion
-    - no-equal-then-else
-    - prefer-conditional-expressions
-    - prefer-correct-edge-insets-constructor
-    - prefer-define-hero-tag
-    - prefer-immediate-return
-    - prefer-iterable-of
-    - prefer-last
-    - use-setstate-synchronously
-
 linter:
   rules:
     always_put_required_named_parameters_first: false
+    avoid_multiple_declarations_per_line: false
     depend_on_referenced_packages: false
     implicit_call_tearoffs: false
     no_leading_underscores_for_local_identifiers: false
     prefer_expression_function_bodies: true
     public_member_api_docs: false
+    use_key_in_widget_constructors: false

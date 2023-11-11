@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mdi/_extensions/build_context.dart';
+import 'package:mdi/_extensions/build_context_ext.dart';
 import 'package:mdi/_prefs.dart';
 
 class TitleBar extends StatelessWidget {

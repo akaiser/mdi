@@ -1,8 +1,10 @@
 name: Release Android
+
 on:
   push:
     tags:
       - "v*.*.*"
+
 jobs:
   release-android:
     runs-on: ubuntu-latest

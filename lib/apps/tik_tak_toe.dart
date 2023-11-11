@@ -126,7 +126,7 @@ class _TikTakToeState extends State<TikTakToe> {
                   Navigator.of(context).pop();
                 },
                 child: const Text('RESTART'),
-              )
+              ),
             ],
           ),
         ),
