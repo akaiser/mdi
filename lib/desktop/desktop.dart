@@ -65,11 +65,7 @@ class _DesktopState extends State<Desktop> {
     }
   }
 
-  void _addWindow(
-    DesktopApp desktopApp,
-    double screenWidth,
-    double screenHeight,
-  ) {
+  void _addWindow(DesktopApp desktopApp) {
     final key = UniqueKey();
     final window = Window(
       key: key,
@@ -90,8 +86,6 @@ class _DesktopState extends State<Desktop> {
       width: desktopApp.width,
       height: desktopApp.height,
       isFixedSize: desktopApp.isFixedSize,
-      screenWidth: screenWidth,
-      screenHeight: screenHeight,
     );
     setState(() {
       _windowKeys.add(key);
@@ -103,23 +97,19 @@ class _DesktopState extends State<Desktop> {
   Widget build(BuildContext context) {
     final groupedApps = widget.groupedApps;
     final standaloneApps = widget.standaloneApps;
-    return LayoutBuilder(
-      builder: (context, constraints) => Stack(
-        fit: StackFit.expand,
-        children: [
-          if (groupedApps.isNotEmpty || standaloneApps.isNotEmpty)
-            DesktopItems(
-              groupedApps: groupedApps,
-              standaloneApps: standaloneApps,
-              onItemTap: (desktopApp) => _addWindow(
-                desktopApp,
-                constraints.maxWidth,
-                constraints.maxHeight,
-              ),
-            ),
-          ..._windows.values,
-          if (_windows.isNotEmpty)
-            Dock(
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        if (groupedApps.isNotEmpty || standaloneApps.isNotEmpty)
+          DesktopItems(
+            groupedApps: groupedApps,
+            standaloneApps: standaloneApps,
+            onItemTap: _addWindow,
+          ),
+        ..._windows.values,
+        if (_windows.isNotEmpty)
+          ExcludeFocus(
+            child: Dock(
               windowKeys: _windowKeys,
               minimizedWindowKeys: _minimizedWindowKeys,
               windows: _windows,
@@ -128,8 +118,8 @@ class _DesktopState extends State<Desktop> {
                 _rebuildOnChange();
               },
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 }
