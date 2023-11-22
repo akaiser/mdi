@@ -51,7 +51,7 @@ class _UseKeyboardState extends State<UseKeyboard> {
         child: SimpleGridView(
           columnCount: xCount,
           rowCount: yCount,
-          cellPadding: 0.2 /**/,
+          cellPadding: 0.2,
           cellBackgroundColor: Colors.blueAccent,
           cellBuilder: (context, xIndex, yIndex) =>
               xIndex == xCurrent && yIndex == yCurrent
