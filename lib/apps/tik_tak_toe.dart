@@ -100,7 +100,7 @@ class _TikTakToeState extends State<TikTakToe> {
         }
       }
       if (foundType != null) {
-        return _showDialog('The Winner is: ${describeEnum(foundType)}');
+        return _showDialog('The Winner is: ${foundType.name}');
       }
     }
 

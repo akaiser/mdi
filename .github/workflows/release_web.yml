@@ -9,7 +9,7 @@ jobs:
   release-web:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-flutter
       - name: Build
         run: flutter build web --no-web-resources-cdn --base-href /mdi/

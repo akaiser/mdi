@@ -5,6 +5,7 @@ import 'package:mdi/apps/manual_count.dart';
 import 'package:mdi/apps/some_grid_view.dart';
 import 'package:mdi/apps/some_split_view.dart';
 import 'package:mdi/apps/tik_tak_toe.dart';
+import 'package:mdi/apps/use_keyboard.dart';
 import 'package:mdi/desktop/desktop_app.dart';
 
 const groupedApps = <String, List<DesktopApp>>{
@@ -13,6 +14,11 @@ const groupedApps = <String, List<DesktopApp>>{
       'TikTakToe',
       Icons.insert_drive_file,
       TikTakToe(),
+    ),
+    DesktopApp(
+      'Use Keyboard',
+      Icons.keyboard,
+      UseKeyboard(),
     ),
   ],
   'Misc': [

@@ -1,9 +1,9 @@
-// ignore_for_file: avoid_multiple_declarations_per_line
 import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mdi/_extensions/build_context_ext.dart';
 import 'package:mdi/_prefs.dart';
 import 'package:mdi/window/title_bar.dart';
 
@@ -19,11 +19,7 @@ class Window extends StatefulWidget {
     required this.width,
     required this.height,
     required this.isFixedSize,
-    required double screenWidth,
-    required double screenHeight,
-  })  : availableWidth = screenWidth + windowOuterPaddingTimes2,
-        availableHeight = screenHeight - dockHeight + windowOuterPaddingTimes2,
-        super(key: key);
+  }) : super(key: key);
 
   final String title;
   final Widget app;
@@ -35,8 +31,6 @@ class Window extends StatefulWidget {
   final double? width;
   final double? height;
   final bool isFixedSize;
-  final double availableWidth;
-  final double availableHeight;
 
   @override
   State<Window> createState() => _WindowState();
@@ -53,6 +47,14 @@ class _WindowState extends State<Window> {
 
   late final StreamSubscription<void> _unHideWindowSubscription;
 
+  (double, double) get _availableSize {
+    final screenSize = context.screenSize;
+    return (
+      screenSize.width + windowOuterPaddingTimes2,
+      screenSize.height - dockHeight + windowOuterPaddingTimes2,
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -62,13 +64,14 @@ class _WindowState extends State<Window> {
         .listen((_) => _toggleMinimize());
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
+      final (availableWidth, availableHeight) = _availableSize;
       setState(() {
-        _width = widget.width ?? widget.availableWidth * 0.6;
-        _height = widget.height ?? widget.availableHeight * 0.6;
+        _width = widget.width ?? availableWidth * 0.6;
+        _height = widget.height ?? availableHeight * 0.6;
         _checkMinSize();
 
-        _dx = _random.nextDouble() * (widget.availableWidth - _width);
-        _dy = _random.nextDouble() * (widget.availableHeight - _height);
+        _dx = _random.nextDouble() * (availableWidth - _width);
+        _dy = _random.nextDouble() * (availableHeight - _height);
       });
     });
   }
@@ -133,8 +136,9 @@ class _WindowState extends State<Window> {
         _dxLast = _dx;
         _dyLast = _dy;
 
-        _width = widget.availableWidth;
-        _height = widget.availableHeight;
+        final (availableWidth, availableHeight) = _availableSize;
+        _width = availableWidth;
+        _height = availableHeight;
         _dx = _dy = -windowOuterPadding;
       }
     });
