@@ -36,7 +36,7 @@ const groupedApps = <String, List<DesktopApp>>{
   ],
 };
 
-const  standaloneApps = <DesktopApp>[
+const standaloneApps = <DesktopApp>[
   DesktopApp(
     'Auto Counter',
     Icons.insert_drive_file,
