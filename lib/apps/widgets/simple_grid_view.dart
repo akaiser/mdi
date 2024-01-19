@@ -26,8 +26,13 @@ class SimpleGridView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: List.generate(
                 columnCount,
-                (xIndex) =>
-                    Expanded(child: cellBuilder(context, xIndex, yIndex)),
+                (xIndex) => Expanded(
+                  child: cellBuilder(
+                    context,
+                    xIndex,
+                    yIndex,
+                  ),
+                ),
               ),
             ),
           ),
