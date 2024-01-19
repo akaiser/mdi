@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mdi/apps/widgets/simple_grid_view.dart';
 
@@ -37,48 +36,36 @@ class _TikTakToeState extends State<TikTakToe> {
   bool _isCrossTurn = true;
 
   @override
-  Widget build(BuildContext context) => SimpleGridView(
-        columnCount: _columnCount,
-        rowCount: _rowCount,
-        cellBuilder: (context, xIndex, yIndex) {
-          final current = '$xIndex:$yIndex';
-          final existing = _selection[current];
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(_cellPadding),
+        child: SimpleGridView(
+          columnCount: _columnCount,
+          rowCount: _rowCount,
+          cellBuilder: (context, xIndex, yIndex) {
+            final current = '$xIndex:$yIndex';
+            final existing = _selection[current];
 
-          return GestureDetector(
-            onTap: existing == null
-                ? () {
-                    setState(
-                      () {
-                        final type = _isCrossTurn ? _Type.X : _Type.O;
-                        _selection[current] = type;
+            return _Cell(
+              child: existing != null
+                  ? FittedBox(
+                      child: Icon(
+                        existing == _Type.X
+                            ? Icons.close
+                            : Icons.radio_button_unchecked,
+                        color: Colors.white,
+                      ),
+                    )
+                  : GestureDetector(
+                      onTap: () async {
+                        _selection[current] = _isCrossTurn ? _Type.X : _Type.O;
                         _isCrossTurn = !_isCrossTurn;
+                        setState(() {});
+                        await _lookupWinner();
                       },
-                    );
-                    _lookupWinner();
-                  }
-                : null,
-            child: existing != null
-                ? FittedBox(
-                    child: Icon(
-                      existing == _Type.X
-                          ? Icons.close
-                          : Icons.radio_button_unchecked,
-                      color: Colors.white,
                     ),
-                  )
-                : kDebugMode
-                    ? Text(
-                        current,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                      )
-                    : null,
-          );
-        },
-        cellPadding: _cellPadding,
-        cellBackgroundColor: Colors.black,
+            );
+          },
+        ),
       );
 
   Future<void> _lookupWinner() async {
@@ -130,5 +117,18 @@ class _TikTakToeState extends State<TikTakToe> {
             ],
           ),
         ),
+      );
+}
+
+class _Cell extends StatelessWidget {
+  const _Cell({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        margin: const EdgeInsets.all(_cellPadding),
+        color: Colors.black,
+        child: child,
       );
 }

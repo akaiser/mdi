@@ -13,7 +13,7 @@ class UseKeyboard extends StatefulWidget {
 }
 
 class _UseKeyboardState extends State<UseKeyboard> {
-  late final _focus = FocusNode()..requestFocus();
+  late final _focus = FocusNode();
 
   int xCurrent = xCount ~/ 2;
   int yCurrent = yCount ~/ 2;
@@ -24,39 +24,45 @@ class _UseKeyboardState extends State<UseKeyboard> {
     super.dispose();
   }
 
+  void _onKey(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+        if (yCurrent != 0) {
+          setState(() => yCurrent -= 1);
+        }
+      } else if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
+        if (yCurrent != yCount - 1) {
+          setState(() => yCurrent += 1);
+        }
+      } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+        if (xCurrent != 0) {
+          setState(() => xCurrent -= 1);
+        }
+      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+        if (xCurrent != xCount - 1) {
+          setState(() => xCurrent += 1);
+        }
+      }
+    }
+  }
+
   @override
-  Widget build(BuildContext context) => RawKeyboardListener(
-        focusNode: _focus,
-        onKey: (event) {
-          if (event.runtimeType == RawKeyDownEvent) {
-            if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
-              if (yCurrent != 0) {
-                setState(() => yCurrent -= 1);
-              }
-            } else if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
-              if (yCurrent != yCount - 1) {
-                setState(() => yCurrent += 1);
-              }
-            } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
-              if (xCurrent != 0) {
-                setState(() => xCurrent -= 1);
-              }
-            } else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
-              if (xCurrent != xCount - 1) {
-                setState(() => xCurrent += 1);
-              }
-            }
-          }
-        },
-        child: SimpleGridView(
-          columnCount: xCount,
-          rowCount: yCount,
-          cellPadding: 0.2,
-          cellBackgroundColor: Colors.blueAccent,
-          cellBuilder: (context, xIndex, yIndex) =>
-              xIndex == xCurrent && yIndex == yCurrent
-                  ? const ColoredBox(color: Colors.red)
-                  : const SizedBox(),
+  Widget build(BuildContext context) => MouseRegion(
+        // TODO(albert): check if this can be done on higher level
+        // when window receives focus for example.
+        onEnter: (_) => _focus.requestFocus(),
+        child: RawKeyboardListener(
+          focusNode: _focus,
+          autofocus: true,
+          onKey: _onKey,
+          child: SimpleGridView(
+            columnCount: xCount,
+            rowCount: yCount,
+            cellBuilder: (context, xIndex, yIndex) =>
+                xIndex == xCurrent && yIndex == yCurrent
+                    ? const ColoredBox(color: Colors.red)
+                    : const SizedBox(),
+          ),
         ),
       );
 }
