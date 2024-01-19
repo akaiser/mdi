@@ -65,11 +65,21 @@ class _DesktopState extends State<Desktop> {
     }
   }
 
+  String _windowTitle(DesktopApp desktopApp) {
+    final instances = _windows.entries
+        .where((entry) => entry.value.title == desktopApp.title)
+        .length;
+
+    return instances > 0
+        ? '${desktopApp.title} [$instances]'
+        : desktopApp.title;
+  }
+
   void _addWindow(DesktopApp desktopApp) {
     final key = UniqueKey();
     final window = Window(
       key: key,
-      title: desktopApp.title,
+      title: _windowTitle(desktopApp),
       app: desktopApp.app,
       whenFocusRequested: () {
         _bringToFront(key);

@@ -29,11 +29,12 @@ class Dock extends StatelessWidget {
             child: ListView.builder(
               itemCount: windowKeys.length,
               scrollDirection: Axis.horizontal,
-              itemBuilder: (_, index) {
+              itemBuilder: (context, index) {
                 final key = windowKeys[index];
+                final title = windows.title(key);
                 final isMinimized = minimizedWindowKeys.contains(key);
                 return _DockItem(
-                  windows[key]!.title,
+                  title,
                   isActive: windows.keys.last == key && !isMinimized,
                   isMinimized: isMinimized,
                   onItemTap: () => onItemTap(key),
@@ -77,4 +78,9 @@ class _DockItem extends StatelessWidget {
           ),
         ),
       );
+}
+
+extension on Map<Key, Window> {
+  String title(Key key) =>
+      entries.singleWhere((entry) => entry.key == key).value.title;
 }

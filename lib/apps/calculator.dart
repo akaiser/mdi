@@ -192,11 +192,11 @@ class _Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _onPressed = onPressed;
+    final onPressed = this.onPressed;
     return Expanded(
       flex: flex,
       child: TextButton(
-        onPressed: _onPressed != null ? () => _onPressed(text) : null,
+        onPressed: onPressed != null ? () => onPressed(text) : null,
         style: ButtonStyle(
           padding: MaterialStateProperty.all(EdgeInsets.zero),
           foregroundColor: MaterialStateProperty.all(_textColor),

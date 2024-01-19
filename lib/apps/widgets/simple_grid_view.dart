@@ -5,9 +5,6 @@ class SimpleGridView extends StatelessWidget {
     required this.columnCount,
     required this.rowCount,
     required this.cellBuilder,
-    this.cellPadding,
-    this.gridBackgroundColor,
-    this.cellBackgroundColor,
     super.key,
   })  : assert(columnCount > 0, 'columnCount must be greater than 0'),
         assert(rowCount > 0, 'rowCount must be greater than 0');
@@ -20,65 +17,20 @@ class SimpleGridView extends StatelessWidget {
     int yIndex,
   ) cellBuilder;
 
-  final double? cellPadding;
-  final Color? gridBackgroundColor;
-  final Color? cellBackgroundColor;
-
   @override
-  Widget build(BuildContext context) {
-    final _cellPadding = cellPadding;
-
-    final grid = Column(
-      children: List.generate(
-        rowCount,
-        (yIndex) => Expanded(
-          child: Row(
-            children: List.generate(
-              columnCount,
-              (xIndex) {
-                final cell = SizedBox.expand(
-                  child: cellBuilder(
-                    context,
-                    xIndex,
-                    yIndex,
-                  ),
-                );
-
-                final _cellBackgroundColor = cellBackgroundColor;
-                final coloredCell = _cellBackgroundColor != null
-                    ? ColoredBox(
-                        color: _cellBackgroundColor,
-                        child: cell,
-                      )
-                    : cell;
-
-                return Expanded(
-                  child: _cellPadding != null
-                      ? Padding(
-                          padding: EdgeInsets.all(_cellPadding),
-                          child: coloredCell,
-                        )
-                      : coloredCell,
-                );
-              },
+  Widget build(BuildContext context) => Column(
+        children: List.generate(
+          rowCount,
+          (yIndex) => Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: List.generate(
+                columnCount,
+                (xIndex) =>
+                    Expanded(child: cellBuilder(context, xIndex, yIndex)),
+              ),
             ),
           ),
         ),
-      ),
-    );
-    final paddedGrid = _cellPadding != null
-        ? Padding(
-            padding: EdgeInsets.all(_cellPadding),
-            child: grid,
-          )
-        : grid;
-
-    final _gridBackgroundColor = gridBackgroundColor;
-    return _gridBackgroundColor != null
-        ? ColoredBox(
-            color: _gridBackgroundColor,
-            child: paddedGrid,
-          )
-        : paddedGrid;
-  }
+      );
 }

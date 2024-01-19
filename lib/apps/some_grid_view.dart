@@ -68,13 +68,17 @@ class _SomeGridViewState extends State<SomeGridView> {
             ),
           ),
           Expanded(
-            child: SimpleGridView(
-              columnCount: _columnCount,
-              rowCount: _rowCount,
-              cellPadding: _cellPadding,
-              cellBackgroundColor: Colors.blueAccent,
-              cellBuilder: (_, xIndex, yIndex) => Center(
-                child: Text('$xIndex:$yIndex'),
+            child: Padding(
+              padding: const EdgeInsets.all(_cellPadding),
+              child: SimpleGridView(
+                columnCount: _columnCount,
+                rowCount: _rowCount,
+                cellBuilder: (context, xIndex, yIndex) => Container(
+                  margin: const EdgeInsets.all(_cellPadding),
+                  alignment: Alignment.center,
+                  color: Colors.blueAccent,
+                  child: Text('$xIndex:$yIndex'),
+                ),
               ),
             ),
           ),
