@@ -7,7 +7,6 @@ const _promptIntro = 'Welcome to Dummy Terminal (v0.0.1)';
 const _promptPrefix = r'user@local ~ $ ';
 const _textStyle = TextStyle(fontSize: 14, color: Colors.white);
 
-const _charRevealDuration = Duration(milliseconds: 200);
 const _cursorBlinkDuration = Duration(milliseconds: 400);
 
 class Terminal extends StatefulWidget {
@@ -31,6 +30,14 @@ class _TerminalState extends State<Terminal> {
     super.dispose();
   }
 
+  void _scrollToBottom() {
+    SchedulerBinding.instance.addPostFrameCallback(
+      (_) async => _scrollController.jumpTo(
+        _scrollController.position.maxScrollExtent,
+      ),
+    );
+  }
+
   void _onKey(RawKeyEvent event) {
     if (event is RawKeyDownEvent) {
       if (event.logicalKey == LogicalKeyboardKey.enter) {
@@ -40,11 +47,7 @@ class _TerminalState extends State<Terminal> {
             ..clear()
             ..add(_promptPrefix);
         });
-        SchedulerBinding.instance.addPostFrameCallback(
-          (_) async => _scrollController.jumpTo(
-            _scrollController.position.maxScrollExtent,
-          ),
-        );
+        _scrollToBottom();
       } else if (event.logicalKey == LogicalKeyboardKey.backspace) {
         if (_chars.length > 1) {
           setState(_chars.removeLast);
@@ -53,6 +56,7 @@ class _TerminalState extends State<Terminal> {
         final character = event.character;
         if (character != null) {
           setState(() => _chars.add(character));
+          //_scrollToBottom();
         }
       }
     }
@@ -69,11 +73,13 @@ class _TerminalState extends State<Terminal> {
             focusNode: _focus,
             autofocus: true,
             onKey: _onKey,
-            child: RawScrollbar(
-              thumbColor: titleBarTextColor,
-              thickness: 5,
-              child: DefaultTextStyle.merge(
-                style: _textStyle,
+            child: DefaultTextStyle.merge(
+              style: _textStyle,
+              child: ScrollbarTheme(
+                data: const ScrollbarThemeData(
+                  thumbColor: MaterialStatePropertyAll(titleBarTextColor),
+                  thickness: MaterialStatePropertyAll(5),
+                ),
                 child: ListView(
                   controller: _scrollController,
                   children: [
@@ -82,7 +88,7 @@ class _TerminalState extends State<Terminal> {
                     ..._lines.map(Text.new),
                     Wrap(
                       children: [
-                        ..._chars.map(_Character.new),
+                        ..._chars.map(Text.new),
                         const _Cursor(),
                       ],
                     ),
@@ -92,19 +98,6 @@ class _TerminalState extends State<Terminal> {
             ),
           ),
         ),
-      );
-}
-
-class _Character extends StatelessWidget {
-  const _Character(this.char);
-
-  final String char;
-
-  @override
-  Widget build(BuildContext context) => _Animated(
-        _charRevealDuration,
-        onInit: (controller) => controller.forward(),
-        child: Text(char),
       );
 }
 
