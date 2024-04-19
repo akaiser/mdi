@@ -1,12 +1,14 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 
-class DesktopApp {
+class DesktopApp extends Equatable {
   const DesktopApp(
     this.title,
     this.icon,
     this.app, {
     this.width,
     this.height,
+    this.isFolder = false,
     this.isFixedSize = false,
   });
 
@@ -16,5 +18,17 @@ class DesktopApp {
 
   final double? width;
   final double? height;
+  final bool isFolder;
   final bool isFixedSize;
+
+  @override
+  List<Object?> get props => [
+        title,
+        icon,
+        app,
+        width,
+        height,
+        isFolder,
+        isFixedSize,
+      ];
 }

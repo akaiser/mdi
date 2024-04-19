@@ -35,6 +35,7 @@ class DesktopItems extends StatelessWidget {
                       ),
                     ),
                   ),
+                  isFolder: true,
                 ),
               )
               .map(

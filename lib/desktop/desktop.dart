@@ -40,7 +40,7 @@ class _DesktopState extends State<Desktop> {
     super.dispose();
   }
 
-  void _bringToFront(Key key) {
+  void _bringToFrontIfNeeded(Key key) {
     if (_windows.keys.last != key) {
       final window = _windows.remove(key);
       if (window != null) {
@@ -50,13 +50,13 @@ class _DesktopState extends State<Desktop> {
     }
   }
 
-  void _unMinimize(Key key) {
+  void _unMinimizeIfNeeded(Key key) {
     if (_minimizedWindowKeys.contains(key)) {
       _unHideWindowNotifier.sink.add(key);
       _minimizedWindowKeys.remove(key);
       _shouldRebuild = true;
     }
-    _bringToFront(key);
+    _bringToFrontIfNeeded(key);
   }
 
   void _rebuildOnChange() {
@@ -66,23 +66,46 @@ class _DesktopState extends State<Desktop> {
   }
 
   String _windowTitle(DesktopApp desktopApp) {
-    final instances = _windows.entries
-        .where((entry) => entry.value.title == desktopApp.title)
-        .length;
+    var instances = 0;
+    String title;
+    bool windowExists;
 
-    return instances > 0
-        ? '${desktopApp.title} [$instances]'
-        : desktopApp.title;
+    do {
+      title = instances == 0
+          ? desktopApp.title
+          : '${desktopApp.title} [$instances]';
+
+      windowExists = _windows.windowByTitle(title) != null;
+
+      if (windowExists) {
+        instances++;
+      }
+    } while (windowExists);
+
+    return title;
   }
 
   void _addWindow(DesktopApp desktopApp) {
+    if (desktopApp.isFolder) {
+      final existingWindow = _windows.windowByTitle(desktopApp.title);
+
+      if (existingWindow != null) {
+        final key = existingWindow.key;
+        if (key != null) {
+          _unMinimizeIfNeeded(key);
+          _rebuildOnChange();
+          return;
+        }
+      }
+    }
+
     final key = UniqueKey();
     final window = Window(
       key: key,
       title: _windowTitle(desktopApp),
       app: desktopApp.app,
       whenFocusRequested: () {
-        _bringToFront(key);
+        _bringToFrontIfNeeded(key);
         _rebuildOnChange();
       },
       onCloseTap: () => setState(() {
@@ -124,7 +147,7 @@ class _DesktopState extends State<Desktop> {
               minimizedWindowKeys: _minimizedWindowKeys,
               windows: _windows,
               onItemTap: (key) {
-                _unMinimize(key);
+                _unMinimizeIfNeeded(key);
                 _rebuildOnChange();
               },
             ),
@@ -132,4 +155,10 @@ class _DesktopState extends State<Desktop> {
       ],
     );
   }
+}
+
+extension on Map<Key, Window> {
+  Window? windowByTitle(String title) => values //
+      .where((window) => window.title == title)
+      .firstOrNull;
 }

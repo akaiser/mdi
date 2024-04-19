@@ -13,35 +13,40 @@ class UseKeyboard extends StatefulWidget {
 }
 
 class _UseKeyboardState extends State<UseKeyboard> {
-  late final _focus = FocusNode();
+  late final _focusNode = FocusNode();
 
   int xCurrent = xCount ~/ 2;
   int yCurrent = yCount ~/ 2;
 
   @override
   void dispose() {
-    _focus.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
-  void _onKey(RawKeyEvent event) {
-    if (event is RawKeyDownEvent) {
-      if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
-        if (yCurrent != 0) {
-          setState(() => yCurrent -= 1);
-        }
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
-        if (yCurrent != yCount - 1) {
-          setState(() => yCurrent += 1);
-        }
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
-        if (xCurrent != 0) {
-          setState(() => xCurrent -= 1);
-        }
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
-        if (xCurrent != xCount - 1) {
-          setState(() => xCurrent += 1);
-        }
+  void _onKeyEvent(KeyEvent event) {
+    if (event is KeyDownEvent) {
+      switch (event.logicalKey) {
+        case LogicalKeyboardKey.arrowUp:
+          if (yCurrent != 0) {
+            setState(() => yCurrent -= 1);
+          }
+          break;
+        case LogicalKeyboardKey.arrowDown:
+          if (yCurrent != yCount - 1) {
+            setState(() => yCurrent += 1);
+          }
+          break;
+        case LogicalKeyboardKey.arrowLeft:
+          if (xCurrent != 0) {
+            setState(() => xCurrent -= 1);
+          }
+          break;
+        case LogicalKeyboardKey.arrowRight:
+          if (xCurrent != xCount - 1) {
+            setState(() => xCurrent += 1);
+          }
+          break;
       }
     }
   }
@@ -50,11 +55,11 @@ class _UseKeyboardState extends State<UseKeyboard> {
   Widget build(BuildContext context) => MouseRegion(
         // TODO(albert): check if this can be done on higher level
         // when window receives focus for example.
-        onEnter: (_) => _focus.requestFocus(),
-        child: RawKeyboardListener(
-          focusNode: _focus,
+        onEnter: (_) => _focusNode.requestFocus(),
+        child: KeyboardListener(
+          focusNode: _focusNode,
           autofocus: true,
-          onKey: _onKey,
+          onKeyEvent: _onKeyEvent,
           child: SimpleGridView(
             columnCount: xCount,
             rowCount: yCount,
