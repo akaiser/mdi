@@ -37,8 +37,8 @@ class _TerminalState extends State<Terminal> {
             style: _textStyle,
             child: ScrollbarTheme(
               data: const ScrollbarThemeData(
-                thumbColor: MaterialStatePropertyAll(titleBarTextColor),
-                thickness: MaterialStatePropertyAll(5),
+                thumbColor: WidgetStatePropertyAll(titleBarTextColor),
+                thickness: WidgetStatePropertyAll(5),
               ),
               child: _Terminal(
                 focusNode: _focusNode,
