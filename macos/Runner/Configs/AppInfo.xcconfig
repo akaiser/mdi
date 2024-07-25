@@ -11,4 +11,4 @@ PRODUCT_NAME = mdi
 PRODUCT_BUNDLE_IDENTIFIER = de.kaiserv.mdi
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 kaiserv.de. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2024 de.kaiserv. All rights reserved.

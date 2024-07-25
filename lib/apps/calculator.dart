@@ -198,16 +198,16 @@ class _Button extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed != null ? () => onPressed(text) : null,
         style: ButtonStyle(
-          padding: MaterialStateProperty.all(EdgeInsets.zero),
-          foregroundColor: MaterialStateProperty.all(_textColor),
-          backgroundColor: MaterialStateProperty.all(buttonColor),
-          side: MaterialStateProperty.all(
+          padding: WidgetStateProperty.all(EdgeInsets.zero),
+          foregroundColor: WidgetStateProperty.all(_textColor),
+          backgroundColor: WidgetStateProperty.all(buttonColor),
+          side: WidgetStateProperty.all(
             const BorderSide(
               width: 0.3,
               color: _backgroundColor,
             ),
           ),
-          shape: MaterialStateProperty.all(const BeveledRectangleBorder()),
+          shape: WidgetStateProperty.all(const BeveledRectangleBorder()),
         ),
         child: Text(
           text,
