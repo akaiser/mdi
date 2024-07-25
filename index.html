@@ -1,79 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <base href="/mdi/">
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
 
-    <meta charset="UTF-8">
-    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-    <meta name="robots" content="all">
-    <meta name="author" content="Albert Kaiser">
-    <meta name="description" content="Wubba Lubba Dub Dub!">
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
 
-    <!-- browser title/tabs stuff -->
-    <meta name="theme-color" content="#000000">
-    <meta name="msapplication-navbutton-color" content="#000000">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#000000">
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
 
-    <!-- iOS meta tags & icons -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="mdi">
-    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/mdi/">
 
-    <link rel="icon" type="image/png" href="favicon.png"/>
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="robots" content="all">
+  <meta name="author" content="Albert Kaiser">
+  <meta name="description" content="Wubba Lubba Dub Dub!">
 
-    <title>MDI</title>
-    <link rel="manifest" href="manifest.json">
-    <style>
-        body {
-            margin: 0;
-            background-color: black;
-            background-image: url("assets/images/monterey.jpg");
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        }
-        #loading {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            margin-top: -20px;
-            text-align: center;
+  <!-- browser title/tabs stuff -->
+  <meta name="theme-color" content="#000000">
+  <meta name="msapplication-navbutton-color" content="#000000">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#000000">
 
-            font: 16px sans-serif;
-            color: white;
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="mdi">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-            /*-webkit-text-fill-color: transparent;
-            -webkit-text-stroke: 1px;*/
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
 
-            -webkit-animation: pulsate 1s ease-out;
-            -webkit-animation-iteration-count: infinite;
-            opacity: 0.2;
-        }
-        @-webkit-keyframes pulsate {
-            0% { opacity: 0.2; }
-            50% { opacity: 1.0; }
-            100% { opacity: 0.2; }
-        }
-    </style>
+  <title>MDI</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      background-image: url("assets/images/monterey.jpg");
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+    #loading {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      margin-top: -20px;
+      text-align: center;
 
-    <script>
-    // The value below is injected by flutter build, do not touch.
-    let serviceWorkerVersion = null;
-    </script>
-    <!-- This script adds the flutter initialization JS code -->
-    <script src="flutter.js" defer></script>
+      font: 16px sans-serif;
+      color: white;
+
+      /*-webkit-text-fill-color: transparent;
+      -webkit-text-stroke: 1px;*/
+
+      -webkit-animation: pulsate 1s ease-out;
+      -webkit-animation-iteration-count: infinite;
+      opacity: 0.2;
+    }
+    @-webkit-keyframes pulsate {
+      0% { opacity: 0.2; }
+      50% { opacity: 1.0; }
+      100% { opacity: 0.2; }
+    }
+  </style>
 </head>
 <body>
-<div id="loading">loading...</div>
-<script>
-    window.addEventListener('load', function () {
-        _flutter.loader.loadEntrypoint({serviceWorker: {serviceWorkerVersion: serviceWorkerVersion}})
-            .then((engineInitializer) => engineInitializer.initializeEngine())
-            .then((appRunner) => appRunner.runApp())
-            .then(() => document.querySelector('#loading').remove());
-    });
-</script>
+  <div id="loading">loading...</div>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
