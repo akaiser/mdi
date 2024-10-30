@@ -14,6 +14,10 @@ class BookmarksBar extends StatelessWidget {
             child: const Text('MDI'),
             onPressed: () => onItemPressed('akaiser.github.io/mdi'),
           ),
+          TextButton(
+            child: const Text('Swipe Overlays'),
+            onPressed: () => onItemPressed('akaiser.github.io/swipe_overlays'),
+          ),
           _MicroStudioButton(
             text: 'MS Roller coaster',
             urlSuffix: 'gilles/roadworks',
