@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mdi/apps/_browser/bookmarks_bar.dart';
+import 'package:mdi/apps/_browser/url_text_field.dart';
 // ignore: depend_on_referenced_packages
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 
 const _httpsSchema = 'https://';
 const _initPage = 'flutter.dev';
-
-// check
-// https://github.com/alibaba/flutter_boost/blob/04f44f66a10ede905f1b67d37556d890c38f89c7/example/lib/case/webview_flutter_demo.dart
 
 class Browser extends StatefulWidget {
   const Browser();
@@ -59,50 +58,41 @@ class _BrowserNewState extends State<Browser> {
   @override
   Widget build(BuildContext context) => Column(
         children: [
+          const SizedBox(height: 8),
           Row(
             children: [
               const SizedBox(width: 8),
               _RefreshButton(onPressed: () => _loadPage(_iFrameSrc)),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(32),
                     ),
-                    child: _TextField(_textController, onSubmitted: _loadPage),
+                    child: UrlTextField(
+                      _httpsSchema,
+                      _textController,
+                      onSubmitted: _loadPage,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 26,
+            child: BookmarksBar(onItemPressed: _loadPage),
+          ),
+          const SizedBox(height: 8),
           Expanded(
             child: WebWebViewWidget(
               PlatformWebViewWidgetCreationParams(controller: _webController),
             ).build(context),
           ),
         ],
-      );
-}
-
-class _TextField extends StatelessWidget {
-  const _TextField(this.textController, {required this.onSubmitted});
-
-  final TextEditingController textController;
-  final ValueChanged<String>? onSubmitted;
-
-  @override
-  Widget build(BuildContext context) => TextField(
-        controller: textController,
-        onSubmitted: onSubmitted,
-        decoration: const InputDecoration(
-          isDense: true,
-          prefix: Text(_httpsSchema),
-          suffixIcon: Icon(Icons.search),
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.only(top: 11, left: 16),
-        ),
       );
 }
 
