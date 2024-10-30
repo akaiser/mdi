@@ -12,7 +12,7 @@ class BookmarksBar extends StatelessWidget {
           const SizedBox(width: 8),
           TextButton(
             child: const Text('MDI'),
-            onPressed: () => onItemPressed('github.com/akaiser/mdi'),
+            onPressed: () => onItemPressed('akaiser.github.io/mdi'),
           ),
           _MicroStudioButton(
             text: 'MS Roller coaster',
