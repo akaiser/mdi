@@ -4,7 +4,7 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
 const RESOURCES = {"flutter.js": "f393d3c16b631f36852323de8e583132",
-"main.dart.js": "de2755c8daa6fbf29b84f64a49085feb",
+"main.dart.js": "d5824f86c5f9352089e7c943f03493d0",
 "assets/FontManifest.json": "2a6f8c536718f72f33483b7e591b1c7f",
 "assets/google_fonts/Roboto-Regular.ttf": "8a36205bd9b83e03af0591a004bc97f4",
 "assets/AssetManifest.bin": "a009317f13730f68966850855a964624",
