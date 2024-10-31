@@ -74442,12 +74442,12 @@ A.cg(new A.bk(a,b,"image resource service",A.b2("image failed to load"),null,!0)
 $S:471}
 A.Ed.prototype={
 G(a){var s=null,r=this.c
-return A.aph(A.b([B.de,A.hP(B.Q4,new A.TU(this),s),A.hP(B.Q2,new A.TV(this),s),new A.m5("MS Roller coaster","gilles/roadworks",r,s),new A.m5("MS Wormhole","TinkerSmith/wormhole/",r,s),new A.m5("MS ChipToy S1","gilles/chiptoys1",r,s),new A.m5("MS Doodle","gilles/doodlemulti",r,s),new A.m5("MS Racing Demo","gilles/racingdemo",r,s),B.de],t.D),s,B.aG)}}
+return A.aph(A.b([B.de,A.hP(B.Q4,new A.TU(this),s),A.hP(B.Q2,new A.TV(this),s),new A.m5("MS Roller coaster","gilles/roadworks/",r,s),new A.m5("MS Wormhole","TinkerSmith/wormhole/",r,s),new A.m5("MS ChipToy S1","gilles/chiptoys1/",r,s),new A.m5("MS Doodle","gilles/doodlemulti/",r,s),new A.m5("MS Racing Demo","gilles/racingdemo/",r,s),B.de],t.D),s,B.aG)}}
 A.TU.prototype={
-$0(){return this.a.c.$1("akaiser.github.io/mdi")},
+$0(){return this.a.c.$1("akaiser.github.io/mdi/")},
 $S:0}
 A.TV.prototype={
-$0(){return this.a.c.$1("akaiser.github.io/swipe_overlays")},
+$0(){return this.a.c.$1("akaiser.github.io/swipe_overlays/")},
 $S:0}
 A.m5.prototype={
 G(a){var s=null
@@ -74530,7 +74530,7 @@ s=new A.a92(s)
 $.SY().n(0,s,r)
 q.e!==$&&A.aY()
 q.e=s
-q.As("flutter.dev")},
+q.As("flutter.dev/")},
 l(){var s=this.d
 s===$&&A.a()
 s.a0$=$.al()
