@@ -12,15 +12,15 @@ class BookmarksBar extends StatelessWidget {
           const SizedBox(width: 8),
           TextButton(
             child: const Text('MDI'),
-            onPressed: () => onItemPressed('akaiser.github.io/mdi'),
+            onPressed: () => onItemPressed('akaiser.github.io/mdi/'),
           ),
           TextButton(
             child: const Text('Swipe Overlays'),
-            onPressed: () => onItemPressed('akaiser.github.io/swipe_overlays'),
+            onPressed: () => onItemPressed('akaiser.github.io/swipe_overlays/'),
           ),
           _MicroStudioButton(
             text: 'MS Roller coaster',
-            urlSuffix: 'gilles/roadworks',
+            urlSuffix: 'gilles/roadworks/',
             onPressed: onItemPressed,
           ),
           _MicroStudioButton(
@@ -30,17 +30,17 @@ class BookmarksBar extends StatelessWidget {
           ),
           _MicroStudioButton(
             text: 'MS ChipToy S1',
-            urlSuffix: 'gilles/chiptoys1',
+            urlSuffix: 'gilles/chiptoys1/',
             onPressed: onItemPressed,
           ),
           _MicroStudioButton(
             text: 'MS Doodle',
-            urlSuffix: 'gilles/doodlemulti',
+            urlSuffix: 'gilles/doodlemulti/',
             onPressed: onItemPressed,
           ),
           _MicroStudioButton(
             text: 'MS Racing Demo',
-            urlSuffix: 'gilles/racingdemo',
+            urlSuffix: 'gilles/racingdemo/',
             onPressed: onItemPressed,
           ),
           const SizedBox(width: 8),

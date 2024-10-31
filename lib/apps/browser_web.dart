@@ -6,7 +6,7 @@ import 'package:webview_flutter_platform_interface/webview_flutter_platform_inte
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 
 const _httpsSchema = 'https://';
-const _initPage = 'flutter.dev';
+const _initPage = 'flutter.dev/';
 
 class Browser extends StatefulWidget {
   const Browser();
