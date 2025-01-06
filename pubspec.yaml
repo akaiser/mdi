@@ -3,11 +3,11 @@ description: Some widgets playground based on a desktop like UI.
 version: 0.0.11
 
 environment:
-  sdk: ">=3.5.0 <4.0.0"
-  flutter: ">=3.24.0"
+  sdk: ^3.6.0
+  flutter: ^3.27.0
 
 dependencies:
-  equatable: ^2.0.5
+  equatable: ^2.0.7
   flutter:
     sdk: flutter
   webview_flutter_web: ^0.2.3+4
@@ -15,7 +15,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lints: ^5.0.0
+  lints: ^5.1.1
 
 flutter:
   assets:
