@@ -13,14 +13,14 @@ class UrlTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextField(
-        controller: textController,
-        onSubmitted: onSubmitted,
-        decoration: InputDecoration(
-          isDense: true,
-          prefix: Text(urlPrefix),
-          suffixIcon: const Icon(Icons.search),
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.only(top: 11, left: 16),
-        ),
-      );
+    controller: textController,
+    onSubmitted: onSubmitted,
+    decoration: InputDecoration(
+      isDense: true,
+      prefix: Text(urlPrefix),
+      suffixIcon: const Icon(Icons.search),
+      border: InputBorder.none,
+      contentPadding: const EdgeInsets.only(top: 11, left: 16),
+    ),
+  );
 }

@@ -23,12 +23,12 @@ class DesktopApp extends Equatable {
 
   @override
   List<Object?> get props => [
-        title,
-        icon,
-        app,
-        width,
-        height,
-        isFolder,
-        isFixedSize,
-      ];
+    title,
+    icon,
+    app,
+    width,
+    height,
+    isFolder,
+    isFixedSize,
+  ];
 }

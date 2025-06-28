@@ -53,21 +53,21 @@ class _UseKeyboardState extends State<UseKeyboard> {
 
   @override
   Widget build(BuildContext context) => MouseRegion(
-        // TODO(albert): check if this can be done on higher level
-        // when window receives focus for example.
-        onEnter: (_) => _focusNode.requestFocus(),
-        child: KeyboardListener(
-          focusNode: _focusNode,
-          autofocus: true,
-          onKeyEvent: _onKeyEvent,
-          child: SimpleGridView(
-            columnCount: xCount,
-            rowCount: yCount,
-            cellBuilder: (context, xIndex, yIndex) =>
-                xIndex == xCurrent && yIndex == yCurrent
-                    ? const ColoredBox(color: Colors.red)
-                    : const SizedBox(),
-          ),
-        ),
-      );
+    // TODO(albert): check if this can be done on higher level
+    // when window receives focus for example.
+    onEnter: (_) => _focusNode.requestFocus(),
+    child: KeyboardListener(
+      focusNode: _focusNode,
+      autofocus: true,
+      onKeyEvent: _onKeyEvent,
+      child: SimpleGridView(
+        columnCount: xCount,
+        rowCount: yCount,
+        cellBuilder: (context, xIndex, yIndex) =>
+            xIndex == xCurrent && yIndex == yCurrent
+            ? const ColoredBox(color: Colors.red)
+            : const SizedBox(),
+      ),
+    ),
+  );
 }

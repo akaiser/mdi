@@ -10,10 +10,10 @@ class DesktopItems extends StatelessWidget {
     required this.onItemTap,
     super.key,
   }) : assert(
-          // TODO(albert): tests!
-          groupedApps.length > 0 || standaloneApps.length > 0,
-          'one should provide apps!',
-        );
+         // TODO(albert): tests!
+         groupedApps.length > 0 || standaloneApps.length > 0,
+         'one should provide apps!',
+       );
 
   final Map<String, List<DesktopApp>> groupedApps;
   final List<DesktopApp> standaloneApps;
@@ -21,37 +21,33 @@ class DesktopItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => _DesktopItems(
-        children: [
-          ...groupedApps.entries
-              .map(
-                (entry) => DesktopApp(
-                  entry.key,
-                  Icons.folder,
-                  _DesktopItems(
-                    children: entry.value.map(
-                      (desktopApp) => _DesktopItem(
-                        desktopApp,
-                        onTap: () => onItemTap(desktopApp),
-                      ),
-                    ),
+    children: [
+      ...groupedApps.entries
+          .map(
+            (entry) => DesktopApp(
+              entry.key,
+              Icons.folder,
+              _DesktopItems(
+                children: entry.value.map(
+                  (desktopApp) => _DesktopItem(
+                    desktopApp,
+                    onTap: () => onItemTap(desktopApp),
                   ),
-                  isFolder: true,
-                ),
-              )
-              .map(
-                (desktopApp) => _DesktopItem(
-                  desktopApp,
-                  onTap: () => onItemTap(desktopApp),
                 ),
               ),
-          ...standaloneApps.map(
-            (desktopApp) => _DesktopItem(
-              desktopApp,
-              onTap: () => onItemTap(desktopApp),
+              isFolder: true,
             ),
+          )
+          .map(
+            (desktopApp) =>
+                _DesktopItem(desktopApp, onTap: () => onItemTap(desktopApp)),
           ),
-        ],
-      );
+      ...standaloneApps.map(
+        (desktopApp) =>
+            _DesktopItem(desktopApp, onTap: () => onItemTap(desktopApp)),
+      ),
+    ],
+  );
 }
 
 class _DesktopItems extends StatelessWidget {
@@ -61,20 +57,17 @@ class _DesktopItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(desktopItemSpacing),
-        child: Wrap(
-          spacing: desktopItemSpacing,
-          runSpacing: desktopItemSpacing,
-          children: [...children],
-        ),
-      );
+    padding: const EdgeInsets.all(desktopItemSpacing),
+    child: Wrap(
+      spacing: desktopItemSpacing,
+      runSpacing: desktopItemSpacing,
+      children: [...children],
+    ),
+  );
 }
 
 class _DesktopItem extends StatelessWidget {
-  const _DesktopItem(
-    this.desktopApp, {
-    required this.onTap,
-  });
+  const _DesktopItem(this.desktopApp, {required this.onTap});
 
   final DesktopApp desktopApp;
   final VoidCallback onTap;
@@ -83,31 +76,22 @@ class _DesktopItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-        key: _itemKey,
-        onTap: onTap,
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: Column(
-            children: [
-              Icon(
-                desktopApp.icon,
-                color: Colors.lightBlue,
-                size: desktopIconSize,
-              ),
-              Text(
-                desktopApp.title,
-                style: context.tt.bodyMedium?.copyWith(
-                  shadows: const [
-                    Shadow(
-                      offset: Offset(1, 1),
-                      blurRadius: 6,
-                    ),
-                  ],
-                  color: Colors.white,
-                ),
-              ),
-            ],
+    key: _itemKey,
+    onTap: onTap,
+    child: MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: Column(
+        children: [
+          Icon(desktopApp.icon, color: Colors.lightBlue, size: desktopIconSize),
+          Text(
+            desktopApp.title,
+            style: context.tt.bodyMedium?.copyWith(
+              shadows: const [Shadow(offset: Offset(1, 1), blurRadius: 6)],
+              color: Colors.white,
+            ),
           ),
-        ),
-      );
+        ],
+      ),
+    ),
+  );
 }

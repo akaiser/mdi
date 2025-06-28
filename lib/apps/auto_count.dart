@@ -30,12 +30,12 @@ class _AutoCountState extends State<AutoCount> {
 
   @override
   Widget build(BuildContext context) => Center(
-        child: Text(
-          '$_count',
-          style: const TextStyle(
-            fontSize: 32,
-            color: Color.fromRGBO(255, 255, 255, 1),
-          ),
-        ),
-      );
+    child: Text(
+      '$_count',
+      style: const TextStyle(
+        fontSize: 32,
+        color: Color.fromRGBO(255, 255, 255, 1),
+      ),
+    ),
+  );
 }

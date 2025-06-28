@@ -7,45 +7,45 @@ class BookmarksBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          const SizedBox(width: 8),
-          TextButton(
-            child: const Text('MDI'),
-            onPressed: () => onItemPressed('akaiser.github.io/mdi/'),
-          ),
-          TextButton(
-            child: const Text('Swipe Overlays'),
-            onPressed: () => onItemPressed('akaiser.github.io/swipe_overlays/'),
-          ),
-          _MicroStudioButton(
-            text: 'MS Roller coaster',
-            urlSuffix: 'gilles/roadworks/',
-            onPressed: onItemPressed,
-          ),
-          _MicroStudioButton(
-            text: 'MS Wormhole',
-            urlSuffix: 'TinkerSmith/wormhole/',
-            onPressed: onItemPressed,
-          ),
-          _MicroStudioButton(
-            text: 'MS ChipToy S1',
-            urlSuffix: 'gilles/chiptoys1/',
-            onPressed: onItemPressed,
-          ),
-          _MicroStudioButton(
-            text: 'MS Doodle',
-            urlSuffix: 'gilles/doodlemulti/',
-            onPressed: onItemPressed,
-          ),
-          _MicroStudioButton(
-            text: 'MS Racing Demo',
-            urlSuffix: 'gilles/racingdemo/',
-            onPressed: onItemPressed,
-          ),
-          const SizedBox(width: 8),
-        ],
-      );
+    scrollDirection: Axis.horizontal,
+    children: [
+      const SizedBox(width: 8),
+      TextButton(
+        child: const Text('MDI'),
+        onPressed: () => onItemPressed('akaiser.github.io/mdi/'),
+      ),
+      TextButton(
+        child: const Text('Swipe Overlays'),
+        onPressed: () => onItemPressed('akaiser.github.io/swipe_overlays/'),
+      ),
+      _MicroStudioButton(
+        text: 'MS Roller coaster',
+        urlSuffix: 'gilles/roadworks/',
+        onPressed: onItemPressed,
+      ),
+      _MicroStudioButton(
+        text: 'MS Wormhole',
+        urlSuffix: 'TinkerSmith/wormhole/',
+        onPressed: onItemPressed,
+      ),
+      _MicroStudioButton(
+        text: 'MS ChipToy S1',
+        urlSuffix: 'gilles/chiptoys1/',
+        onPressed: onItemPressed,
+      ),
+      _MicroStudioButton(
+        text: 'MS Doodle',
+        urlSuffix: 'gilles/doodlemulti/',
+        onPressed: onItemPressed,
+      ),
+      _MicroStudioButton(
+        text: 'MS Racing Demo',
+        urlSuffix: 'gilles/racingdemo/',
+        onPressed: onItemPressed,
+      ),
+      const SizedBox(width: 8),
+    ],
+  );
 }
 
 class _MicroStudioButton extends StatelessWidget {
@@ -63,7 +63,7 @@ class _MicroStudioButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextButton(
-        child: Text(text),
-        onPressed: () => onPressed('$_urlPrefix/$urlSuffix'),
-      );
+    child: Text(text),
+    onPressed: () => onPressed('$_urlPrefix/$urlSuffix'),
+  );
 }

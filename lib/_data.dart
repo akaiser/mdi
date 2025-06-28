@@ -13,42 +13,18 @@ import 'package:mdi/desktop/desktop_app.dart';
 
 const groupedApps = <String, List<DesktopApp>>{
   'Games': [
-    DesktopApp(
-      'TikTakToe',
-      Icons.insert_drive_file,
-      TikTakToe(),
-    ),
-    DesktopApp(
-      'Use Keyboard',
-      Icons.keyboard,
-      UseKeyboard(),
-    ),
+    DesktopApp('TikTakToe', Icons.insert_drive_file, TikTakToe()),
+    DesktopApp('Use Keyboard', Icons.keyboard, UseKeyboard()),
   ],
   'Misc': [
-    DesktopApp(
-      'Some Split View',
-      Icons.insert_drive_file,
-      SomeSplitView(),
-    ),
-    DesktopApp(
-      'Some Grid View',
-      Icons.insert_drive_file,
-      SomeGridView(),
-    ),
+    DesktopApp('Some Split View', Icons.insert_drive_file, SomeSplitView()),
+    DesktopApp('Some Grid View', Icons.insert_drive_file, SomeGridView()),
   ],
 };
 
 const standaloneApps = <DesktopApp>[
-  DesktopApp(
-    'Auto Counter',
-    Icons.insert_drive_file,
-    AutoCount(),
-  ),
-  DesktopApp(
-    'Manual Counter',
-    Icons.insert_drive_file,
-    ManualCount(),
-  ),
+  DesktopApp('Auto Counter', Icons.insert_drive_file, AutoCount()),
+  DesktopApp('Manual Counter', Icons.insert_drive_file, ManualCount()),
   DesktopApp(
     'Calculator',
     Icons.insert_drive_file,
@@ -58,14 +34,6 @@ const standaloneApps = <DesktopApp>[
     isFixedSize: true,
   ),
   // TODO(albert): do not forget about the Editor!
-  DesktopApp(
-    'Terminal',
-    Icons.text_snippet,
-    Terminal(),
-  ),
-  DesktopApp(
-    'Browser',
-    Icons.explore,
-    Browser(),
-  ),
+  DesktopApp('Terminal', Icons.text_snippet, Terminal()),
+  DesktopApp('Browser', Icons.explore, Browser()),
 ];

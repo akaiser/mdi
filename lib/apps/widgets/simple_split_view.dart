@@ -20,15 +20,15 @@ class SimpleSplitView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
-        builder: (context, constrains) => _SimpleSplitView(
-          left: left,
-          right: right,
-          dividerWidth: dividerWidth,
-          dividerColor: dividerColor,
-          leftViewVisible: leftViewVisible,
-          leftWidthMax: constrains.maxWidth - dividerWidth,
-        ),
-      );
+    builder: (context, constrains) => _SimpleSplitView(
+      left: left,
+      right: right,
+      dividerWidth: dividerWidth,
+      dividerColor: dividerColor,
+      leftViewVisible: leftViewVisible,
+      leftWidthMax: constrains.maxWidth - dividerWidth,
+    ),
+  );
 }
 
 class _SimpleSplitView extends StatefulWidget {
@@ -74,46 +74,46 @@ class _SimpleSplitViewState extends State<_SimpleSplitView> {
 
   @override
   Widget build(BuildContext context) => Row(
-        children: [
-          if (widget.leftViewVisible)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                ValueListenableBuilder<double>(
-                  valueListenable: _leftWidthNotifier,
-                  builder: (context, leftWidth, child) {
-                    final leftWidthCalculated = _leftWidthCalculated(leftWidth);
-                    return SizedBox(
-                      width: leftWidthCalculated,
-                      child: leftWidthCalculated > 0 ? child : null,
-                    );
-                  },
-                  child: widget.left,
-                ),
-                MouseRegion(
-                  cursor: SystemMouseCursors.resizeLeftRight,
-                  child: GestureDetector(
-                    onPanUpdate: (details) {
-                      final leftWidthCurrent = _leftWidthNotifier.value;
-                      var leftWidthTemp = leftWidthCurrent + details.delta.dx;
-                      if (leftWidthTemp < 0) {
-                        leftWidthTemp = 0;
-                      } else if (leftWidthTemp > widget.leftWidthMax) {
-                        leftWidthTemp = widget.leftWidthMax;
-                      }
-                      if (leftWidthCurrent != leftWidthTemp) {
-                        _leftWidthNotifier.value = leftWidthTemp;
-                      }
-                    },
-                    child: ColoredBox(
-                      color: widget.dividerColor,
-                      child: SizedBox(width: widget.dividerWidth),
-                    ),
-                  ),
-                ),
-              ],
+    children: [
+      if (widget.leftViewVisible)
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ValueListenableBuilder<double>(
+              valueListenable: _leftWidthNotifier,
+              builder: (context, leftWidth, child) {
+                final leftWidthCalculated = _leftWidthCalculated(leftWidth);
+                return SizedBox(
+                  width: leftWidthCalculated,
+                  child: leftWidthCalculated > 0 ? child : null,
+                );
+              },
+              child: widget.left,
             ),
-          Expanded(child: widget.right),
-        ],
-      );
+            MouseRegion(
+              cursor: SystemMouseCursors.resizeLeftRight,
+              child: GestureDetector(
+                onPanUpdate: (details) {
+                  final leftWidthCurrent = _leftWidthNotifier.value;
+                  var leftWidthTemp = leftWidthCurrent + details.delta.dx;
+                  if (leftWidthTemp < 0) {
+                    leftWidthTemp = 0;
+                  } else if (leftWidthTemp > widget.leftWidthMax) {
+                    leftWidthTemp = widget.leftWidthMax;
+                  }
+                  if (leftWidthCurrent != leftWidthTemp) {
+                    _leftWidthNotifier.value = leftWidthTemp;
+                  }
+                },
+                child: ColoredBox(
+                  color: widget.dividerColor,
+                  child: SizedBox(width: widget.dividerWidth),
+                ),
+              ),
+            ),
+          ],
+        ),
+      Expanded(child: widget.right),
+    ],
+  );
 }

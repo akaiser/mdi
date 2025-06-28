@@ -19,31 +19,31 @@ class Dock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Positioned(
-        bottom: 0,
-        left: 0,
-        right: 0,
-        child: ColoredBox(
-          color: dockBackgroundColor,
-          child: SizedBox(
-            height: dockHeight,
-            child: ListView.builder(
-              itemCount: windowKeys.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                final key = windowKeys[index];
-                final title = windows.title(key);
-                final isMinimized = minimizedWindowKeys.contains(key);
-                return _DockItem(
-                  title,
-                  isActive: windows.keys.last == key && !isMinimized,
-                  isMinimized: isMinimized,
-                  onItemTap: () => onItemTap(key),
-                );
-              },
-            ),
-          ),
+    bottom: 0,
+    left: 0,
+    right: 0,
+    child: ColoredBox(
+      color: dockBackgroundColor,
+      child: SizedBox(
+        height: dockHeight,
+        child: ListView.builder(
+          itemCount: windowKeys.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            final key = windowKeys[index];
+            final title = windows.title(key);
+            final isMinimized = minimizedWindowKeys.contains(key);
+            return _DockItem(
+              title,
+              isActive: windows.keys.last == key && !isMinimized,
+              isMinimized: isMinimized,
+              onItemTap: () => onItemTap(key),
+            );
+          },
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class _DockItem extends StatelessWidget {
@@ -61,23 +61,23 @@ class _DockItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextButton(
-        onPressed: onItemTap,
-        style: OutlinedButton.styleFrom(
-          backgroundColor: isActive
-              ? dockItemActiveBackgroundColor
-              : dockItemInactiveBackgroundColor,
-          shape: const RoundedRectangleBorder(),
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-        ),
-        child: Text(
-          title,
-          style: context.tt.bodyMedium?.copyWith(
-            color: isMinimized
-                ? dockItemMinimizedTextColor
-                : dockItemActiveTextColor,
-          ),
-        ),
-      );
+    onPressed: onItemTap,
+    style: OutlinedButton.styleFrom(
+      backgroundColor: isActive
+          ? dockItemActiveBackgroundColor
+          : dockItemInactiveBackgroundColor,
+      shape: const RoundedRectangleBorder(),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+    ),
+    child: Text(
+      title,
+      style: context.tt.bodyMedium?.copyWith(
+        color: isMinimized
+            ? dockItemMinimizedTextColor
+            : dockItemActiveTextColor,
+      ),
+    ),
+  );
 }
 
 extension on Map<Key, Window> {

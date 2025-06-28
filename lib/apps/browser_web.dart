@@ -57,43 +57,40 @@ class _BrowserNewState extends State<Browser> {
 
   @override
   Widget build(BuildContext context) => Column(
+    children: [
+      const SizedBox(height: 8),
+      Row(
         children: [
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              const SizedBox(width: 8),
-              _RefreshButton(onPressed: () => _loadPage(_iFrameSrc)),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: UrlTextField(
-                      _httpsSchema,
-                      _textController,
-                      onSubmitted: _loadPage,
-                    ),
-                  ),
+          const SizedBox(width: 8),
+          _RefreshButton(onPressed: () => _loadPage(_iFrameSrc)),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                child: UrlTextField(
+                  _httpsSchema,
+                  _textController,
+                  onSubmitted: _loadPage,
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          SizedBox(
-            height: 26,
-            child: BookmarksBar(onItemPressed: _loadPage),
-          ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: WebWebViewWidget(
-              PlatformWebViewWidgetCreationParams(controller: _webController),
-            ).build(context),
+            ),
           ),
         ],
-      );
+      ),
+      const SizedBox(height: 8),
+      SizedBox(height: 26, child: BookmarksBar(onItemPressed: _loadPage)),
+      const SizedBox(height: 8),
+      Expanded(
+        child: WebWebViewWidget(
+          PlatformWebViewWidgetCreationParams(controller: _webController),
+        ).build(context),
+      ),
+    ],
+  );
 }
 
 class _RefreshButton extends StatelessWidget {
@@ -103,7 +100,7 @@ class _RefreshButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => IconButton(
-        icon: const Icon(Icons.replay, color: Colors.white),
-        onPressed: onPressed,
-      );
+    icon: const Icon(Icons.replay, color: Colors.white),
+    onPressed: onPressed,
+  );
 }

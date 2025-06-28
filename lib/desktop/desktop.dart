@@ -112,9 +112,7 @@ class _DesktopState extends State<Desktop> {
         _windowKeys.remove(key);
         _windows.remove(key);
       }),
-      onMinimizeTap: () => setState(
-        () => _minimizedWindowKeys.add(key),
-      ),
+      onMinimizeTap: () => setState(() => _minimizedWindowKeys.add(key)),
       unHideWindowStream: _unHideWindowNotifier.stream,
       width: desktopApp.width,
       height: desktopApp.height,
@@ -158,7 +156,8 @@ class _DesktopState extends State<Desktop> {
 }
 
 extension on Map<Key, Window> {
-  Window? windowByTitle(String title) => values //
-      .where((window) => window.title == title)
-      .firstOrNull;
+  Window? windowByTitle(String title) =>
+      values //
+          .where((window) => window.title == title)
+          .firstOrNull;
 }

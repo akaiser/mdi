@@ -7,10 +7,10 @@ class Cursor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => _Animated(
-        _cursorBlinkDuration,
-        onInit: (controller) => controller.repeat(reverse: true),
-        child: const Text('▌'),
-      );
+    _cursorBlinkDuration,
+    onInit: (controller) => controller.repeat(reverse: true),
+    child: const Text('▌'),
+  );
 }
 
 class _Animated extends StatefulWidget {
@@ -48,8 +48,6 @@ class _AnimatedState extends State<_Animated>
   }
 
   @override
-  Widget build(BuildContext context) => FadeTransition(
-        opacity: _controller,
-        child: widget.child,
-      );
+  Widget build(BuildContext context) =>
+      FadeTransition(opacity: _controller, child: widget.child);
 }

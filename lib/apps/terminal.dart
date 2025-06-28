@@ -28,33 +28,30 @@ class _TerminalState extends State<Terminal> {
 
   @override
   Widget build(BuildContext context) => MouseRegion(
-        // TODO(albert): check if this can be done on higher level
-        // when window receives focus for example.
-        onEnter: (_) => _focusNode.requestFocus(),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 6),
-          child: DefaultTextStyle.merge(
-            style: _textStyle,
-            child: ScrollbarTheme(
-              data: const ScrollbarThemeData(
-                thumbColor: WidgetStatePropertyAll(titleBarTextColor),
-                thickness: WidgetStatePropertyAll(5),
-              ),
-              child: _Terminal(
-                focusNode: _focusNode,
-                scrollController: _scrollController,
-              ),
-            ),
+    // TODO(albert): check if this can be done on higher level
+    // when window receives focus for example.
+    onEnter: (_) => _focusNode.requestFocus(),
+    child: Padding(
+      padding: const EdgeInsets.only(left: 6),
+      child: DefaultTextStyle.merge(
+        style: _textStyle,
+        child: ScrollbarTheme(
+          data: const ScrollbarThemeData(
+            thumbColor: WidgetStatePropertyAll(titleBarTextColor),
+            thickness: WidgetStatePropertyAll(5),
+          ),
+          child: _Terminal(
+            focusNode: _focusNode,
+            scrollController: _scrollController,
           ),
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class _Terminal extends StatefulWidget {
-  const _Terminal({
-    required this.focusNode,
-    required this.scrollController,
-  });
+  const _Terminal({required this.focusNode, required this.scrollController});
 
   final FocusNode focusNode;
   final ScrollController scrollController;
@@ -101,21 +98,16 @@ class __TerminalState extends State<_Terminal> {
 
   @override
   Widget build(BuildContext context) => KeyboardListener(
-        focusNode: widget.focusNode,
-        onKeyEvent: _onKeyEvent,
-        child: ListView(
-          controller: widget.scrollController,
-          children: [
-            const Text(_promptIntro),
-            const SizedBox(height: 8),
-            ..._lines.map(Text.new),
-            Wrap(
-              children: [
-                Text(_chars.join()),
-                const Cursor(),
-              ],
-            ),
-          ],
-        ),
-      );
+    focusNode: widget.focusNode,
+    onKeyEvent: _onKeyEvent,
+    child: ListView(
+      controller: widget.scrollController,
+      children: [
+        const Text(_promptIntro),
+        const SizedBox(height: 8),
+        ..._lines.map(Text.new),
+        Wrap(children: [Text(_chars.join()), const Cursor()]),
+      ],
+    ),
+  );
 }

@@ -58,90 +58,70 @@ class _CalculatorState extends State<Calculator> {
 
   @override
   Widget build(BuildContext context) => ColoredBox(
-        color: _backgroundColor,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-              child: _Output(_valueNotifier),
-            ),
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _Button('C', _ButtonType.misc, _addValue),
-                  const _Button('', _ButtonType.misc, null),
-                  const _Button('', _ButtonType.misc, null),
-                  _Button(
-                    _unicodeMappings['/']!,
-                    _ButtonType.operation,
-                    _addValue,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _Button('7', _ButtonType.number, _addValue),
-                  _Button('8', _ButtonType.number, _addValue),
-                  _Button('9', _ButtonType.number, _addValue),
-                  _Button(
-                    _unicodeMappings['*']!,
-                    _ButtonType.operation,
-                    _addValue,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _Button('4', _ButtonType.number, _addValue),
-                  _Button('5', _ButtonType.number, _addValue),
-                  _Button('6', _ButtonType.number, _addValue),
-                  _Button(
-                    _unicodeMappings['-']!,
-                    _ButtonType.operation,
-                    _addValue,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _Button('1', _ButtonType.number, _addValue),
-                  _Button('2', _ButtonType.number, _addValue),
-                  _Button('3', _ButtonType.number, _addValue),
-                  _Button(
-                    _unicodeMappings['+']!,
-                    _ButtonType.operation,
-                    _addValue,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _Button('0', _ButtonType.number, _addValue, flex: 2),
-                  _Button(',', _ButtonType.number, _addValue),
-                  _Button(
-                    _unicodeMappings['=']!,
-                    _ButtonType.operation,
-                    _addValue,
-                  ),
-                ],
-              ),
-            ),
-          ],
+    color: _backgroundColor,
+    child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+          child: _Output(_valueNotifier),
         ),
-      );
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _Button('C', _ButtonType.misc, _addValue),
+              const _Button('', _ButtonType.misc, null),
+              const _Button('', _ButtonType.misc, null),
+              _Button(_unicodeMappings['/']!, _ButtonType.operation, _addValue),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _Button('7', _ButtonType.number, _addValue),
+              _Button('8', _ButtonType.number, _addValue),
+              _Button('9', _ButtonType.number, _addValue),
+              _Button(_unicodeMappings['*']!, _ButtonType.operation, _addValue),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _Button('4', _ButtonType.number, _addValue),
+              _Button('5', _ButtonType.number, _addValue),
+              _Button('6', _ButtonType.number, _addValue),
+              _Button(_unicodeMappings['-']!, _ButtonType.operation, _addValue),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _Button('1', _ButtonType.number, _addValue),
+              _Button('2', _ButtonType.number, _addValue),
+              _Button('3', _ButtonType.number, _addValue),
+              _Button(_unicodeMappings['+']!, _ButtonType.operation, _addValue),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _Button('0', _ButtonType.number, _addValue, flex: 2),
+              _Button(',', _ButtonType.number, _addValue),
+              _Button(_unicodeMappings['=']!, _ButtonType.operation, _addValue),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 class _Output extends StatelessWidget {
@@ -151,27 +131,22 @@ class _Output extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<String>(
-        valueListenable: valueNotifier,
-        builder: (context, value, _) => Text(
-          value,
-          style: const TextStyle(
-            fontSize: 44,
-            color: _textColor,
-            fontWeight: FontWeight.w200,
-          ),
-        ),
-      );
+    valueListenable: valueNotifier,
+    builder: (context, value, _) => Text(
+      value,
+      style: const TextStyle(
+        fontSize: 44,
+        color: _textColor,
+        fontWeight: FontWeight.w200,
+      ),
+    ),
+  );
 }
 
 enum _ButtonType { number, operation, misc }
 
 class _Button extends StatelessWidget {
-  const _Button(
-    this.text,
-    this.buttonType,
-    this.onPressed, {
-    this.flex = 1,
-  });
+  const _Button(this.text, this.buttonType, this.onPressed, {this.flex = 1});
 
   final String text;
   final int flex;
@@ -202,10 +177,7 @@ class _Button extends StatelessWidget {
           foregroundColor: WidgetStateProperty.all(_textColor),
           backgroundColor: WidgetStateProperty.all(buttonColor),
           side: WidgetStateProperty.all(
-            const BorderSide(
-              width: 0.3,
-              color: _backgroundColor,
-            ),
+            const BorderSide(width: 0.3, color: _backgroundColor),
           ),
           shape: WidgetStateProperty.all(const BeveledRectangleBorder()),
         ),
