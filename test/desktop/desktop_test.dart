@@ -11,26 +11,17 @@ import '../widget_tester_ext.dart';
 void main() {
   group('$Desktop', () {
     testWidgets('renders nothing if no apps were passed', (tester) async {
-      await tester.render(
-        const Desktop(
-          groupedApps: {},
-          standaloneApps: [],
-        ),
-      );
+      await tester.render(const Desktop(groupedApps: {}, standaloneApps: []));
 
       expect(find.byType(DesktopItems), findsNothing);
       expect(find.byType(Window), findsNothing);
       expect(find.byType(Dock), findsNothing);
     });
 
-    testWidgets(
-        'renders $DesktopItems but no $Window and $Dock '
+    testWidgets('renders $DesktopItems but no $Window and $Dock '
         'if there are no windows opened', (tester) async {
       await tester.render(
-        const Desktop(
-          groupedApps: groupedApps,
-          standaloneApps: standaloneApps,
-        ),
+        const Desktop(groupedApps: groupedApps, standaloneApps: standaloneApps),
       );
 
       expect(find.byType(DesktopItems), findsOneWidget);
@@ -38,14 +29,10 @@ void main() {
       expect(find.byType(Dock), findsNothing);
     });
 
-    testWidgets(
-        'renders $DesktopItems and one $Window and $Dock '
+    testWidgets('renders $DesktopItems and one $Window and $Dock '
         'if one desktop item was tapped', (tester) async {
       await tester.render(
-        const Desktop(
-          groupedApps: groupedApps,
-          standaloneApps: standaloneApps,
-        ),
+        const Desktop(groupedApps: groupedApps, standaloneApps: standaloneApps),
       );
 
       await tester.tap(find.byKey(const Key('games')));
