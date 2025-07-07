@@ -10,12 +10,9 @@ class BookmarksBar extends StatelessWidget {
     scrollDirection: Axis.horizontal,
     children: [
       const SizedBox(width: 8),
-      TextButton(
-        child: const Text('MDI'),
-        onPressed: () => onItemPressed('akaiser.github.io/mdi/'),
-      ),
-      TextButton(
-        child: const Text('Swipe Overlays'),
+      _Button('MDI', onPressed: () => onItemPressed('akaiser.github.io/mdi/')),
+      _Button(
+        'Swipe Overlays',
         onPressed: () => onItemPressed('akaiser.github.io/swipe_overlays/'),
       ),
       _MicroStudioButton(
@@ -62,8 +59,19 @@ class _MicroStudioButton extends StatelessWidget {
   static const _urlPrefix = 'microstudio.io';
 
   @override
+  Widget build(BuildContext context) =>
+      _Button(text, onPressed: () => onPressed('$_urlPrefix/$urlSuffix'));
+}
+
+class _Button extends StatelessWidget {
+  const _Button(this.text, {required this.onPressed});
+
+  final String text;
+  final VoidCallback onPressed;
+
+  @override
   Widget build(BuildContext context) => TextButton(
-    child: Text(text),
-    onPressed: () => onPressed('$_urlPrefix/$urlSuffix'),
+    child: Text(text, style: const TextStyle(color: Colors.white)),
+    onPressed: onPressed,
   );
 }
