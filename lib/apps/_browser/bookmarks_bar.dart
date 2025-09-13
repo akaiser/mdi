@@ -12,6 +12,10 @@ class BookmarksBar extends StatelessWidget {
       const SizedBox(width: 8),
       _Button('MDI', onPressed: () => onItemPressed('akaiser.github.io/mdi/')),
       _Button(
+        'Velik',
+        onPressed: () => onItemPressed('akaiser.github.io/velik/'),
+      ),
+      _Button(
         'Swipe Overlays',
         onPressed: () => onItemPressed('akaiser.github.io/swipe_overlays/'),
       ),
