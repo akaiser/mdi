@@ -1,21 +1,14 @@
-include: package:lints/recommended.yaml
-
-analyzer:
-  language:
-    strict-casts: true
-    strict-inference: true
-    strict-raw-types: true
+include: package:very_good_analysis/analysis_options.yaml
 
 linter:
   rules:
-    always_use_package_imports: true
-    prefer_const_constructors: true
-    prefer_const_constructors_in_immutables: true
-    prefer_const_declarations: true
-    prefer_const_literals_to_create_immutables: true
+    always_put_required_named_parameters_first: false
+    avoid_multiple_declarations_per_line: false
+    document_ignores: false
+    implicit_call_tearoffs: false
+    no_leading_underscores_for_local_identifiers: false
+    omit_obvious_property_types: true
     prefer_expression_function_bodies: true
-    prefer_final_fields: true
-    prefer_final_in_for_each: true
-    prefer_final_locals: true
-    prefer_single_quotes: true
-    require_trailing_commas: true
+    public_member_api_docs: false
+    sort_pub_dependencies: false
+    use_key_in_widget_constructors: false

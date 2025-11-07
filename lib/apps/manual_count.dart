@@ -8,7 +8,7 @@ class ManualCount extends StatefulWidget {
 }
 
 class _ManualCountState extends State<ManualCount> {
-  int _count = 0;
+  var _count = 0;
 
   @override
   Widget build(BuildContext context) => Column(

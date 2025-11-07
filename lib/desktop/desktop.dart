@@ -36,7 +36,7 @@ class _DesktopState extends State<Desktop> {
 
   @override
   void dispose() {
-    _unHideWindowNotifier.close();
+    unawaited(_unHideWindowNotifier.close());
     super.dispose();
   }
 

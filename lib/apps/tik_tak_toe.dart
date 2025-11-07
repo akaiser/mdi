@@ -3,7 +3,7 @@ import 'package:mdi/apps/widgets/simple_grid_view.dart';
 
 const _columnCount = 3;
 const _rowCount = 3;
-const _boardSize = _columnCount * _rowCount;
+const int _boardSize = _columnCount * _rowCount;
 const _cellPadding = 4.0;
 
 const _winSections = [
@@ -33,7 +33,7 @@ class TikTakToe extends StatefulWidget {
 
 class _TikTakToeState extends State<TikTakToe> {
   final _selection = <String, _Type>{};
-  bool _isCrossTurn = true;
+  var _isCrossTurn = true;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -98,25 +98,29 @@ class _TikTakToeState extends State<TikTakToe> {
 
   Future<void> _showDialog(String text) => Future<void>.delayed(
     _dialogDelay,
-    () => showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        content: Text(text),
-        actions: [
-          TextButton(
-            onPressed: () {
-              setState(() {
-                _selection.clear();
-                _isCrossTurn = true;
-              });
-              Navigator.of(context).pop();
-            },
-            child: const Text('RESTART'),
+    () async {
+      if (mounted) {
+        return showDialog<void>(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => AlertDialog(
+            content: Text(text),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    _selection.clear();
+                    _isCrossTurn = true;
+                  });
+                  Navigator.of(context).pop();
+                },
+                child: const Text('RESTART'),
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
+        );
+      }
+    },
   );
 }
 

@@ -16,8 +16,8 @@ const desktopItemSpacing = 20.0;
 const dockHeight = 32.0;
 const dockBackgroundColor = Color.fromRGBO(30, 30, 30, 0.7);
 const dockItemActiveBackgroundColor = Color.fromRGBO(108, 65, 165, 0.7);
-const dockItemInactiveBackgroundColor = Colors.transparent;
-const dockItemActiveTextColor = Colors.white;
+const Color dockItemInactiveBackgroundColor = Colors.transparent;
+const Color dockItemActiveTextColor = Colors.white;
 const dockItemMinimizedTextColor = Color.fromRGBO(120, 120, 120, 1);
 
 // Window
@@ -26,7 +26,7 @@ const windowTransitionMillis = Duration(milliseconds: 40);
 const windowMinWidth = 84.0;
 const windowMinHeight = 84.0;
 const windowOuterPadding = 4.0;
-const windowOuterPaddingTimes2 = windowOuterPadding * 2;
+const double windowOuterPaddingTimes2 = windowOuterPadding * 2;
 
 const windowBodyColor = Color.fromRGBO(35, 31, 41, 1);
 const windowBodySeparatorColor = Color.fromRGBO(0, 0, 0, 1);

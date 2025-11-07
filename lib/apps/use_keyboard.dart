@@ -31,22 +31,18 @@ class _UseKeyboardState extends State<UseKeyboard> {
           if (yCurrent != 0) {
             setState(() => yCurrent -= 1);
           }
-          break;
         case LogicalKeyboardKey.arrowDown:
           if (yCurrent != yCount - 1) {
             setState(() => yCurrent += 1);
           }
-          break;
         case LogicalKeyboardKey.arrowLeft:
           if (xCurrent != 0) {
             setState(() => xCurrent -= 1);
           }
-          break;
         case LogicalKeyboardKey.arrowRight:
           if (xCurrent != xCount - 1) {
             setState(() => xCurrent += 1);
           }
-          break;
       }
     }
   }

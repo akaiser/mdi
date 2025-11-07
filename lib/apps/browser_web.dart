@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mdi/apps/_browser/bookmarks_bar.dart';
 import 'package:mdi/apps/_browser/url_text_field.dart';
-// ignore: depend_on_referenced_packages
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 
@@ -25,7 +26,7 @@ class _BrowserNewState extends State<Browser> {
     _textController = TextEditingController();
     _webController = WebWebViewController(WebWebViewControllerCreationParams());
 
-    _loadPage(_initPage);
+    unawaited(_loadPage(_initPage));
   }
 
   @override
@@ -34,14 +35,14 @@ class _BrowserNewState extends State<Browser> {
     super.dispose();
   }
 
-  void _loadPage(String value) {
+  Future<void> _loadPage(String value) async {
     if (value.isNotEmpty) {
       var uri = Uri.tryParse(value);
       if (uri != null) {
         if (!uri.hasScheme) {
           uri = Uri.parse('$_httpsSchema$value');
         }
-        _webController.loadRequest(LoadRequestParams(uri: uri));
+        await _webController.loadRequest(LoadRequestParams(uri: uri));
         _textController.text = _iFrameSrc;
       }
     } else {

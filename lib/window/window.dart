@@ -43,9 +43,9 @@ class _WindowState extends State<Window> {
   double _width = 0, _widthLast = 0;
   double _height = 0, _heightLast = 0;
 
-  bool _isMinimized = false, _isMaximized = false;
+  var _isMinimized = false, _isMaximized = false;
 
-  late final StreamSubscription<void> _unHideWindowSubscription;
+  late final StreamSubscription<Key> _unHideWindowSubscription;
 
   (double, double) get _availableSize {
     final screenSize = context.screenSize;
@@ -78,7 +78,7 @@ class _WindowState extends State<Window> {
 
   @override
   void dispose() {
-    _unHideWindowSubscription.cancel();
+    unawaited(_unHideWindowSubscription.cancel());
     super.dispose();
   }
 

@@ -12,10 +12,11 @@ dependencies:
     sdk: flutter
   webview_flutter_web: ^0.2.3+4
 
+  webview_flutter_platform_interface: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lints: ^6.0.0
+  very_good_analysis: ^10.0.0
 
 flutter:
   assets:

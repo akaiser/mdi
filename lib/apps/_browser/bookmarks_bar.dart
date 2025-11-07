@@ -75,7 +75,7 @@ class _Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextButton(
-    child: Text(text, style: const TextStyle(color: Colors.white)),
     onPressed: onPressed,
+    child: Text(text, style: const TextStyle(color: Colors.white)),
   );
 }
