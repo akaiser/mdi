@@ -7,7 +7,6 @@ linter:
     document_ignores: false
     implicit_call_tearoffs: false
     no_leading_underscores_for_local_identifiers: false
-    omit_obvious_property_types: true
     prefer_expression_function_bodies: true
     public_member_api_docs: false
     sort_pub_dependencies: false
