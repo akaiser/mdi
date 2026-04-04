@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-flutter
       - name: Build
-        run: flutter build web --no-web-resources-cdn --base-href /mdi/
+        run: flutter build web --wasm --no-web-resources-cdn --base-href /mdi/
       - name: Upload
         uses: peaceiris/actions-gh-pages@v4
         with:
