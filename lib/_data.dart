@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show Icons;
 import 'package:mdi/apps/auto_count.dart';
 import 'package:mdi/apps/browser_na.dart'
-    if (dart.library.html) 'package:mdi/apps/browser_web.dart';
+    if (dart.library.js_interop) 'package:mdi/apps/browser_web.dart';
 import 'package:mdi/apps/calculator.dart';
 import 'package:mdi/apps/manual_count.dart';
 import 'package:mdi/apps/some_grid_view.dart';
