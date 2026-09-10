@@ -5,9 +5,7 @@ import 'package:mdi/apps/widgets/simple_grid_view.dart';
 const xCount = 41;
 const yCount = 31;
 
-class UseKeyboard extends StatefulWidget {
-  const UseKeyboard();
-
+class const UseKeyboard({super.key}) extends StatefulWidget {
   @override
   State<UseKeyboard> createState() => _UseKeyboardState();
 }

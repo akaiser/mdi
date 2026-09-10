@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
 
-class UrlTextField extends StatelessWidget {
-  const UrlTextField(
-    this.urlPrefix,
-    this.textController, {
-    required this.onSubmitted,
-  });
-
-  final String urlPrefix;
-  final TextEditingController textController;
-  final ValueChanged<String>? onSubmitted;
-
+class const UrlTextField(
+  final String _urlPrefix,
+  final TextEditingController _textController, {
+  required final ValueChanged<String>? _onSubmitted,
+  super.key,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) => TextField(
-    controller: textController,
-    onSubmitted: onSubmitted,
+    controller: _textController,
+    onSubmitted: _onSubmitted,
     decoration: InputDecoration(
       isDense: true,
-      prefix: Text(urlPrefix),
+      prefix: Text(_urlPrefix),
       suffixIcon: const Icon(Icons.search),
       border: InputBorder.none,
-      contentPadding: const EdgeInsets.only(top: 11, left: 16),
+      contentPadding: const .only(top: 11, left: 16),
     ),
   );
 }

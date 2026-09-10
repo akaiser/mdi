@@ -1,81 +1,72 @@
 import 'package:flutter/material.dart';
 
-class BookmarksBar extends StatelessWidget {
-  const BookmarksBar({required this.onItemPressed});
-
-  final void Function(String) onItemPressed;
-
+class const BookmarksBar({
+  required final ValueSetter<String> _onItemPressed,
+  super.key,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListView(
-    scrollDirection: Axis.horizontal,
+    scrollDirection: .horizontal,
     children: [
       const SizedBox(width: 8),
-      _Button('MDI', onPressed: () => onItemPressed('akaiser.github.io/mdi/')),
+      _Button('MDI', onPressed: () => _onItemPressed('akaiser.github.io/mdi/')),
       _Button(
         'Velik',
-        onPressed: () => onItemPressed('akaiser.github.io/velik/'),
+        onPressed: () => _onItemPressed('akaiser.github.io/velik/'),
       ),
       _Button(
         'Swipe Overlays',
-        onPressed: () => onItemPressed('akaiser.github.io/swipe_overlays/'),
+        onPressed: () => _onItemPressed('akaiser.github.io/swipe_overlays/'),
       ),
       _MicroStudioButton(
         text: 'MS Roller coaster',
         urlSuffix: 'gilles/roadworks/',
-        onPressed: onItemPressed,
+        onPressed: _onItemPressed,
       ),
       _MicroStudioButton(
         text: 'MS Wormhole',
         urlSuffix: 'TinkerSmith/wormhole/',
-        onPressed: onItemPressed,
+        onPressed: _onItemPressed,
       ),
       _MicroStudioButton(
         text: 'MS ChipToy S1',
         urlSuffix: 'gilles/chiptoys1/',
-        onPressed: onItemPressed,
+        onPressed: _onItemPressed,
       ),
       _MicroStudioButton(
         text: 'MS Doodle',
         urlSuffix: 'gilles/doodlemulti/',
-        onPressed: onItemPressed,
+        onPressed: _onItemPressed,
       ),
       _MicroStudioButton(
         text: 'MS Racing Demo',
         urlSuffix: 'gilles/racingdemo/',
-        onPressed: onItemPressed,
+        onPressed: _onItemPressed,
       ),
       const SizedBox(width: 8),
     ],
   );
 }
 
-class _MicroStudioButton extends StatelessWidget {
-  const _MicroStudioButton({
-    required this.text,
-    required this.urlSuffix,
-    required this.onPressed,
-  });
-
-  final String text;
-  final String urlSuffix;
-  final void Function(String) onPressed;
-
+class const _MicroStudioButton({
+  required final String _text,
+  required final String _urlSuffix,
+  required final void Function(String) _onPressed,
+}) extends StatelessWidget {
   static const _urlPrefix = 'microstudio.io';
 
   @override
   Widget build(BuildContext context) =>
-      _Button(text, onPressed: () => onPressed('$_urlPrefix/$urlSuffix'));
+      _Button(_text, onPressed: () => _onPressed('$_urlPrefix/$_urlSuffix'));
 }
 
-class _Button extends StatelessWidget {
-  const _Button(this.text, {required this.onPressed});
-
-  final String text;
-  final VoidCallback onPressed;
-
+class const _Button(
+  final String _text, {
+  required final VoidCallback _onPressed,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) => TextButton(
-    onPressed: onPressed,
-    child: Text(text, style: const TextStyle(color: Colors.white)),
+    onPressed: _onPressed,
+    child: Text(_text, style: const TextStyle(color: Colors.white)),
   );
 }

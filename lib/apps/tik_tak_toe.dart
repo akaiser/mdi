@@ -24,9 +24,7 @@ enum _Type { X, O }
 
 const _dialogDelay = Duration(milliseconds: 300);
 
-class TikTakToe extends StatefulWidget {
-  const TikTakToe({super.key});
-
+class const TikTakToe({super.key}) extends StatefulWidget {
   @override
   State<TikTakToe> createState() => _TikTakToeState();
 }
@@ -37,7 +35,7 @@ class _TikTakToeState extends State<TikTakToe> {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(_cellPadding),
+    padding: const .all(_cellPadding),
     child: SimpleGridView(
       columnCount: _columnCount,
       rowCount: _rowCount,
@@ -87,52 +85,46 @@ class _TikTakToeState extends State<TikTakToe> {
         }
       }
       if (foundType != null) {
-        return _showDialog('The Winner is: ${foundType.name}');
+        return await _showDialog('The Winner is: ${foundType.name}');
       }
     }
 
     if (_selection.length == _boardSize) {
-      return _showDialog("It's a draw!");
+      return await _showDialog("It's a draw!");
     }
   }
 
-  Future<void> _showDialog(String text) => Future<void>.delayed(
-    _dialogDelay,
-    () async {
-      if (mounted) {
-        return showDialog<void>(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => AlertDialog(
-            content: Text(text),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    _selection.clear();
-                    _isCrossTurn = true;
-                  });
-                  Navigator.of(context).pop();
-                },
-                child: const Text('RESTART'),
-              ),
-            ],
-          ),
-        );
-      }
-    },
-  );
+  Future<void> _showDialog(String text) =>
+      Future<void>.delayed(_dialogDelay, () {
+        if (mounted) {
+          return showDialog<void>(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => AlertDialog(
+              content: Text(text),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _selection.clear();
+                      _isCrossTurn = true;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('RESTART'),
+                ),
+              ],
+            ),
+          );
+        }
+      });
 }
 
-class _Cell extends StatelessWidget {
-  const _Cell({required this.child});
-
-  final Widget child;
-
+class const _Cell({required final Widget _child}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
-    margin: const EdgeInsets.all(_cellPadding),
+    margin: const .all(_cellPadding),
     color: Colors.black,
-    child: child,
+    child: _child,
   );
 }

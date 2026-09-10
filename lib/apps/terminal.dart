@@ -8,9 +8,7 @@ const _promptIntro = 'Welcome to Dummy Terminal (v0.0.1)';
 const _promptPrefix = r'user@local ~ $ ';
 const _textStyle = TextStyle(fontSize: 14, color: Colors.white);
 
-class Terminal extends StatefulWidget {
-  const Terminal({super.key});
-
+class const Terminal({super.key}) extends StatefulWidget {
   @override
   State<Terminal> createState() => _TerminalState();
 }
@@ -32,7 +30,7 @@ class _TerminalState extends State<Terminal> {
     // when window receives focus for example.
     onEnter: (_) => _focusNode.requestFocus(),
     child: Padding(
-      padding: const EdgeInsets.only(left: 6),
+      padding: const .only(left: 6),
       child: DefaultTextStyle.merge(
         style: _textStyle,
         child: ScrollbarTheme(
@@ -50,12 +48,10 @@ class _TerminalState extends State<Terminal> {
   );
 }
 
-class _Terminal extends StatefulWidget {
-  const _Terminal({required this.focusNode, required this.scrollController});
-
-  final FocusNode focusNode;
-  final ScrollController scrollController;
-
+class const _Terminal({
+  required final FocusNode _focusNode,
+  required final ScrollController _scrollController,
+}) extends StatefulWidget {
   @override
   State<_Terminal> createState() => __TerminalState();
 }
@@ -66,8 +62,8 @@ class __TerminalState extends State<_Terminal> {
 
   void _scrollToBottom() {
     SchedulerBinding.instance.addPostFrameCallback(
-      (_) async => widget.scrollController.jumpTo(
-        widget.scrollController.position.maxScrollExtent,
+      (_) async => widget._scrollController.jumpTo(
+        widget._scrollController.position.maxScrollExtent,
       ),
     );
   }
@@ -98,10 +94,10 @@ class __TerminalState extends State<_Terminal> {
 
   @override
   Widget build(BuildContext context) => KeyboardListener(
-    focusNode: widget.focusNode,
+    focusNode: widget._focusNode,
     onKeyEvent: _onKeyEvent,
     child: ListView(
-      controller: widget.scrollController,
+      controller: widget._scrollController,
       children: [
         const Text(_promptIntro),
         const SizedBox(height: 8),

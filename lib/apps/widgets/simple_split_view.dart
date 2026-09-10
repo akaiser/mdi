@@ -1,55 +1,34 @@
 import 'package:flutter/widgets.dart';
 
-class SimpleSplitView extends StatelessWidget {
-  const SimpleSplitView({
-    required this.left,
-    required this.right,
-    this.dividerWidth = 4,
-    this.dividerColor = const Color.fromRGBO(78, 74, 82, 1),
-    this.leftViewVisible = true,
-    super.key,
-  });
-
-  final Widget left;
-  final Widget right;
-
-  final double dividerWidth;
-  final Color dividerColor;
-
-  final bool leftViewVisible;
-
+class const SimpleSplitView({
+  required final Widget _left,
+  required final Widget _right,
+  final double _dividerWidth = 4,
+  final Color _dividerColor = const Color.fromRGBO(78, 74, 82, 1),
+  final bool _leftViewVisible = true,
+  super.key,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constrains) => _SimpleSplitView(
-      left: left,
-      right: right,
-      dividerWidth: dividerWidth,
-      dividerColor: dividerColor,
-      leftViewVisible: leftViewVisible,
-      leftWidthMax: constrains.maxWidth - dividerWidth,
+      left: _left,
+      right: _right,
+      dividerWidth: _dividerWidth,
+      dividerColor: _dividerColor,
+      leftViewVisible: _leftViewVisible,
+      leftWidthMax: constrains.maxWidth - _dividerWidth,
     ),
   );
 }
 
-class _SimpleSplitView extends StatefulWidget {
-  const _SimpleSplitView({
-    required this.left,
-    required this.right,
-    required this.dividerWidth,
-    required this.dividerColor,
-    required this.leftViewVisible,
-    required this.leftWidthMax,
-  }) : leftWidthOnInit = leftWidthMax / 3.5;
-
-  final Widget left;
-  final Widget right;
-  final double dividerWidth;
-  final Color dividerColor;
-  final bool leftViewVisible;
-  final double leftWidthMax;
-
-  final double leftWidthOnInit;
-
+class const _SimpleSplitView({
+  required final Widget _left,
+  required final Widget _right,
+  required final double _dividerWidth,
+  required final Color _dividerColor,
+  required final bool _leftViewVisible,
+  required final double _leftWidthMax,
+}) extends StatefulWidget {
   @override
   _SimpleSplitViewState createState() => _SimpleSplitViewState();
 }
@@ -60,7 +39,7 @@ class _SimpleSplitViewState extends State<_SimpleSplitView> {
   @override
   void initState() {
     super.initState();
-    _leftWidthNotifier = ValueNotifier(widget.leftWidthOnInit);
+    _leftWidthNotifier = ValueNotifier(widget._leftWidthMax / 3.5);
   }
 
   @override
@@ -70,14 +49,14 @@ class _SimpleSplitViewState extends State<_SimpleSplitView> {
   }
 
   double _leftWidthCalculated(double leftWidth) =>
-      widget.leftWidthMax - leftWidth < 0 ? widget.leftWidthMax : leftWidth;
+      widget._leftWidthMax - leftWidth < 0 ? widget._leftWidthMax : leftWidth;
 
   @override
   Widget build(BuildContext context) => Row(
     children: [
-      if (widget.leftViewVisible)
+      if (widget._leftViewVisible)
         Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: .stretch,
           children: [
             ValueListenableBuilder<double>(
               valueListenable: _leftWidthNotifier,
@@ -88,7 +67,7 @@ class _SimpleSplitViewState extends State<_SimpleSplitView> {
                   child: leftWidthCalculated > 0 ? child : null,
                 );
               },
-              child: widget.left,
+              child: widget._left,
             ),
             MouseRegion(
               cursor: SystemMouseCursors.resizeLeftRight,
@@ -98,22 +77,22 @@ class _SimpleSplitViewState extends State<_SimpleSplitView> {
                   var leftWidthTemp = leftWidthCurrent + details.delta.dx;
                   if (leftWidthTemp < 0) {
                     leftWidthTemp = 0;
-                  } else if (leftWidthTemp > widget.leftWidthMax) {
-                    leftWidthTemp = widget.leftWidthMax;
+                  } else if (leftWidthTemp > widget._leftWidthMax) {
+                    leftWidthTemp = widget._leftWidthMax;
                   }
                   if (leftWidthCurrent != leftWidthTemp) {
                     _leftWidthNotifier.value = leftWidthTemp;
                   }
                 },
                 child: ColoredBox(
-                  color: widget.dividerColor,
-                  child: SizedBox(width: widget.dividerWidth),
+                  color: widget._dividerColor,
+                  child: SizedBox(width: widget._dividerWidth),
                 ),
               ),
             ),
           ],
         ),
-      Expanded(child: widget.right),
+      Expanded(child: widget._right),
     ],
   );
 }

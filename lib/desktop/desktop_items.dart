@@ -3,26 +3,23 @@ import 'package:mdi/_extensions/build_context_ext.dart';
 import 'package:mdi/_prefs.dart';
 import 'package:mdi/desktop/desktop_app.dart';
 
-class DesktopItems extends StatelessWidget {
-  const DesktopItems({
-    required this.groupedApps,
-    required this.standaloneApps,
-    required this.onItemTap,
-    super.key,
-  }) : assert(
-         // TODO(albert): tests!
-         groupedApps.length > 0 || standaloneApps.length > 0,
-         'one should provide apps!',
-       );
-
-  final Map<String, List<DesktopApp>> groupedApps;
-  final List<DesktopApp> standaloneApps;
-  final ValueSetter<DesktopApp> onItemTap;
+class const DesktopItems({
+  required final Map<String, List<DesktopApp>> _groupedApps,
+  required final List<DesktopApp> _standaloneApps,
+  required final ValueSetter<DesktopApp> _onItemTap,
+  super.key,
+}) extends StatelessWidget {
+  this
+    : assert(
+        // TODO(albert): tests!
+        _groupedApps.length > 0 || _standaloneApps.length > 0,
+        'one should provide apps!',
+      );
 
   @override
   Widget build(BuildContext context) => _DesktopItems(
     children: [
-      ...groupedApps.entries
+      ..._groupedApps.entries
           .map(
             (entry) => DesktopApp(
               entry.key,
@@ -31,7 +28,7 @@ class DesktopItems extends StatelessWidget {
                 children: entry.value.map(
                   (desktopApp) => _DesktopItem(
                     desktopApp,
-                    onTap: () => onItemTap(desktopApp),
+                    onTap: () => _onItemTap(desktopApp),
                   ),
                 ),
               ),
@@ -40,51 +37,50 @@ class DesktopItems extends StatelessWidget {
           )
           .map(
             (desktopApp) =>
-                _DesktopItem(desktopApp, onTap: () => onItemTap(desktopApp)),
+                _DesktopItem(desktopApp, onTap: () => _onItemTap(desktopApp)),
           ),
-      ...standaloneApps.map(
+      ..._standaloneApps.map(
         (desktopApp) =>
-            _DesktopItem(desktopApp, onTap: () => onItemTap(desktopApp)),
+            _DesktopItem(desktopApp, onTap: () => _onItemTap(desktopApp)),
       ),
     ],
   );
 }
 
-class _DesktopItems extends StatelessWidget {
-  const _DesktopItems({required this.children});
-
-  final Iterable<Widget> children;
-
+class const _DesktopItems({required final Iterable<Widget> _children})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(desktopItemSpacing),
+    padding: const .all(desktopItemSpacing),
     child: Wrap(
       spacing: desktopItemSpacing,
       runSpacing: desktopItemSpacing,
-      children: [...children],
+      children: [..._children],
     ),
   );
 }
 
-class _DesktopItem extends StatelessWidget {
-  const _DesktopItem(this.desktopApp, {required this.onTap});
-
-  final DesktopApp desktopApp;
-  final VoidCallback onTap;
-
-  Key get _itemKey => Key(desktopApp.title.toLowerCase().split(' ').join('-'));
+class const _DesktopItem(
+  final DesktopApp _desktopApp, {
+  required final VoidCallback _onTap,
+}) extends StatelessWidget {
+  Key get _itemKey => Key(_desktopApp.title.toLowerCase().split(' ').join('-'));
 
   @override
   Widget build(BuildContext context) => GestureDetector(
     key: _itemKey,
-    onTap: onTap,
+    onTap: _onTap,
     child: MouseRegion(
       cursor: SystemMouseCursors.click,
       child: Column(
         children: [
-          Icon(desktopApp.icon, color: Colors.lightBlue, size: desktopIconSize),
+          Icon(
+            _desktopApp.icon,
+            color: Colors.lightBlue,
+            size: desktopIconSize,
+          ),
           Text(
-            desktopApp.title,
+            _desktopApp.title,
             style: context.tt.bodyMedium?.copyWith(
               shadows: const [Shadow(offset: Offset(1, 1), blurRadius: 6)],
               color: Colors.white,

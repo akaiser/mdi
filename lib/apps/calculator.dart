@@ -15,9 +15,7 @@ const _unicodeMappings = {
   '=': '\u003d',
 };
 
-class Calculator extends StatefulWidget {
-  const Calculator({super.key});
-
+class const Calculator({super.key}) extends StatefulWidget {
   @override
   State<Calculator> createState() => _CalculatorState();
 }
@@ -56,12 +54,12 @@ class _CalculatorState extends State<Calculator> {
     child: Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+          padding: const .symmetric(horizontal: 10, vertical: 2),
           child: _Output(_valueNotifier),
         ),
         Expanded(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: .stretch,
             children: [
               _Button('C', _ButtonType.misc, _addValue),
               const _Button('', _ButtonType.misc, null),
@@ -72,7 +70,7 @@ class _CalculatorState extends State<Calculator> {
         ),
         Expanded(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: .stretch,
             children: [
               _Button('7', _ButtonType.number, _addValue),
               _Button('8', _ButtonType.number, _addValue),
@@ -83,7 +81,7 @@ class _CalculatorState extends State<Calculator> {
         ),
         Expanded(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: .stretch,
             children: [
               _Button('4', _ButtonType.number, _addValue),
               _Button('5', _ButtonType.number, _addValue),
@@ -94,7 +92,7 @@ class _CalculatorState extends State<Calculator> {
         ),
         Expanded(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: .stretch,
             children: [
               _Button('1', _ButtonType.number, _addValue),
               _Button('2', _ButtonType.number, _addValue),
@@ -105,7 +103,7 @@ class _CalculatorState extends State<Calculator> {
         ),
         Expanded(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: .stretch,
             children: [
               _Button('0', _ButtonType.number, _addValue, flex: 2),
               _Button(',', _ButtonType.number, _addValue),
@@ -118,20 +116,17 @@ class _CalculatorState extends State<Calculator> {
   );
 }
 
-class _Output extends StatelessWidget {
-  const _Output(this.valueNotifier);
-
-  final ValueNotifier<String> valueNotifier;
-
+class const _Output(final ValueNotifier<String> _valueNotifier)
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<String>(
-    valueListenable: valueNotifier,
+    valueListenable: _valueNotifier,
     builder: (context, value, _) => Text(
       value,
       style: const TextStyle(
         fontSize: 44,
         color: _textColor,
-        fontWeight: FontWeight.w200,
+        fontWeight: .w200,
       ),
     ),
   );
@@ -139,49 +134,37 @@ class _Output extends StatelessWidget {
 
 enum _ButtonType { number, operation, misc }
 
-class _Button extends StatelessWidget {
-  const _Button(this.text, this.buttonType, this.onPressed, {this.flex = 1});
-
-  final String text;
-  final int flex;
-  final _ButtonType? buttonType;
-  final ValueSetter<String>? onPressed;
-
-  Color get buttonColor {
-    switch (buttonType) {
-      case null:
-      case _ButtonType.number:
-        return _buttonColorNumber;
-      case _ButtonType.operation:
-        return _buttonColorOperation;
-      case _ButtonType.misc:
-        return _buttonColorMisc;
-    }
-  }
+class const _Button(
+  final String _text,
+  final _ButtonType? _buttonType,
+  final ValueSetter<String>? _onPressed, {
+  final int _flex = 1,
+}) extends StatelessWidget {
+  Color get buttonColor => switch (_buttonType) {
+    null || _ButtonType.number => _buttonColorNumber,
+    _ButtonType.operation => _buttonColorOperation,
+    _ButtonType.misc => _buttonColorMisc,
+  };
 
   @override
   Widget build(BuildContext context) {
-    final onPressed = this.onPressed;
+    final onPressed = _onPressed;
     return Expanded(
-      flex: flex,
+      flex: _flex,
       child: TextButton(
-        onPressed: onPressed != null ? () => onPressed(text) : null,
+        onPressed: onPressed != null ? () => onPressed(_text) : null,
         style: ButtonStyle(
-          padding: WidgetStateProperty.all(EdgeInsets.zero),
-          foregroundColor: WidgetStateProperty.all(_textColor),
-          backgroundColor: WidgetStateProperty.all(buttonColor),
-          side: WidgetStateProperty.all(
-            const BorderSide(width: 0.3, color: _backgroundColor),
-          ),
-          shape: WidgetStateProperty.all(const BeveledRectangleBorder()),
+          padding: .all(EdgeInsets.zero),
+          foregroundColor: .all(_textColor),
+          backgroundColor: .all(buttonColor),
+          side: .all(const BorderSide(width: 0.3, color: _backgroundColor)),
+          shape: .all(const BeveledRectangleBorder()),
         ),
         child: Text(
-          text,
+          _text,
           style: TextStyle(
-            fontSize: buttonType == _ButtonType.operation ? 24 : 20,
-            fontWeight: buttonType == _ButtonType.operation
-                ? FontWeight.normal
-                : FontWeight.w300,
+            fontSize: _buttonType == .operation ? 24 : 20,
+            fontWeight: _buttonType == .operation ? .normal : .w300,
           ),
         ),
       ),

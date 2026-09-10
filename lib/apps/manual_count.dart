@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ManualCount extends StatefulWidget {
-  const ManualCount({super.key});
-
+class const ManualCount({super.key}) extends StatefulWidget {
   @override
   State<ManualCount> createState() => _ManualCountState();
 }
@@ -12,8 +10,8 @@ class _ManualCountState extends State<ManualCount> {
 
   @override
   Widget build(BuildContext context) => Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    mainAxisSize: MainAxisSize.min,
+    mainAxisAlignment: .center,
+    mainAxisSize: .min,
     children: [
       Text(
         '$_count',

@@ -3,9 +3,7 @@ import 'package:mdi/apps/widgets/simple_grid_view.dart';
 
 const _cellPadding = 4.0;
 
-class SomeGridView extends StatefulWidget {
-  const SomeGridView({super.key});
-
+class const SomeGridView({super.key}) extends StatefulWidget {
   @override
   State<SomeGridView> createState() => _SomeGridViewState();
 }
@@ -18,7 +16,7 @@ class _SomeGridViewState extends State<SomeGridView> {
   Widget build(BuildContext context) => Column(
     children: [
       Padding(
-        padding: const EdgeInsets.only(
+        padding: const .only(
           left: _cellPadding * 2,
           top: _cellPadding * 2,
           right: _cellPadding * 2,
@@ -28,7 +26,7 @@ class _SomeGridViewState extends State<SomeGridView> {
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   TextButton(
                     onPressed: () {
@@ -46,7 +44,7 @@ class _SomeGridViewState extends State<SomeGridView> {
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   TextButton(
                     onPressed: () {
@@ -69,13 +67,13 @@ class _SomeGridViewState extends State<SomeGridView> {
       ),
       Expanded(
         child: Padding(
-          padding: const EdgeInsets.all(_cellPadding),
+          padding: const .all(_cellPadding),
           child: SimpleGridView(
             columnCount: _columnCount,
             rowCount: _rowCount,
             cellBuilder: (context, xIndex, yIndex) => Container(
-              margin: const EdgeInsets.all(_cellPadding),
-              alignment: Alignment.center,
+              margin: const .all(_cellPadding),
+              alignment: .center,
               color: Colors.blueAccent,
               child: Text('$xIndex:$yIndex'),
             ),

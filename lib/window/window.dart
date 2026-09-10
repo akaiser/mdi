@@ -7,31 +7,18 @@ import 'package:mdi/_extensions/build_context_ext.dart';
 import 'package:mdi/_prefs.dart';
 import 'package:mdi/window/title_bar.dart';
 
-class Window extends StatefulWidget {
-  const Window({
-    required Key key,
-    required this.title,
-    required this.app,
-    required this.whenFocusRequested,
-    required this.onCloseTap,
-    required this.onMinimizeTap,
-    required this.unHideWindowStream,
-    required this.width,
-    required this.height,
-    required this.isFixedSize,
-  }) : super(key: key);
-
-  final String title;
-  final Widget app;
-  final VoidCallback whenFocusRequested;
-  final VoidCallback onCloseTap;
-  final VoidCallback onMinimizeTap;
-  final Stream<Key> unHideWindowStream;
-
-  final double? width;
-  final double? height;
-  final bool isFixedSize;
-
+class const Window({
+  required final String title,
+  required final Widget _app,
+  required final VoidCallback _whenFocusRequested,
+  required final VoidCallback _onCloseTap,
+  required final VoidCallback _onMinimizeTap,
+  required final Stream<Key> _unHideWindowStream,
+  required final double? _width,
+  required final double? _height,
+  required final bool _isFixedSize,
+  required super.key,
+}) extends StatefulWidget {
   @override
   State<Window> createState() => _WindowState();
 }
@@ -59,15 +46,15 @@ class _WindowState extends State<Window> {
   void initState() {
     super.initState();
 
-    _unHideWindowSubscription = widget.unHideWindowStream
+    _unHideWindowSubscription = widget._unHideWindowStream
         .where((event) => widget.key == event)
         .listen((_) => _toggleMinimize());
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       final (availableWidth, availableHeight) = _availableSize;
       setState(() {
-        _width = widget.width ?? availableWidth * 0.6;
-        _height = widget.height ?? availableHeight * 0.6;
+        _width = widget._width ?? availableWidth * 0.6;
+        _height = widget._height ?? availableHeight * 0.6;
         _checkMinSize();
 
         _dx = _random.nextDouble() * (availableWidth - _width);
@@ -117,7 +104,7 @@ class _WindowState extends State<Window> {
   void _toggleMinimize() {
     setState(() => _isMinimized = !_isMinimized);
     if (_isMinimized) {
-      widget.onMinimizeTap();
+      widget._onMinimizeTap();
     }
   }
 
@@ -158,27 +145,27 @@ class _WindowState extends State<Window> {
         maintainState: true,
         visible: !_isMinimized,
         child: Listener(
-          onPointerDown: (_) => widget.whenFocusRequested(),
+          onPointerDown: (_) => widget._whenFocusRequested(),
           child: Stack(
             children: [
               AnimatedContainer(
                 width: _width,
                 height: _height,
                 duration: windowTransitionMillis,
-                padding: const EdgeInsets.all(windowOuterPadding),
+                padding: const .all(windowOuterPadding),
                 child: _WindowDecoration(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    crossAxisAlignment: .stretch,
                     children: [
                       TitleBar(
                         widget.title,
-                        isFixedSizeWindow: widget.isFixedSize,
+                        isFixedSizeWindow: widget._isFixedSize,
                         isMaximizedWindow: _isMaximized,
                         onTitleBarDrag: (dx, dy) => setState(() {
                           _dx += dx;
                           _dy += dy;
                         }),
-                        onCloseTap: widget.onCloseTap,
+                        onCloseTap: widget._onCloseTap,
                         onMinimizeTap: _toggleMinimize,
                         onToggleMaximizeTap: _toggleMaximize,
                       ),
@@ -189,14 +176,14 @@ class _WindowState extends State<Window> {
                       Expanded(
                         child: ColoredBox(
                           color: windowBodyColor,
-                          child: widget.app,
+                          child: widget._app,
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              if (!widget.isFixedSize) ...[
+              if (!widget._isFixedSize) ...[
                 // left
                 _BorderDragArea(
                   onHorizontalDragUpdate: (details) =>
@@ -266,56 +253,37 @@ class _WindowState extends State<Window> {
   }
 }
 
-class _WindowDecoration extends StatelessWidget {
-  const _WindowDecoration({required this.child});
-
-  final Widget child;
-
+class const _WindowDecoration({required final Widget child})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
     decoration: windowDecoration,
     child: Padding(
-      padding: const EdgeInsets.all(1),
+      padding: const .all(1),
       child: ClipRRect(borderRadius: windowBorderRadius, child: child),
     ),
   );
 }
 
-abstract class _DragArea extends StatelessWidget {
-  const _DragArea(this.left, this.top, this.right, this.bottom, Key? key)
-    : super(key: key);
-
-  final double? left;
-  final double? top;
-  final double? right;
-  final double? bottom;
-}
-
-class _BorderDragArea extends _DragArea {
-  const _BorderDragArea({
-    this.onHorizontalDragUpdate,
-    this.onVerticalDragUpdate,
-    double? left = 0,
-    double? top = 0,
-    double? right = 0,
-    double? bottom = 0,
-    Key? key,
-  }) : super(left, top, right, bottom, key);
-
-  final GestureDragUpdateCallback? onHorizontalDragUpdate;
-  final GestureDragUpdateCallback? onVerticalDragUpdate;
-
+class const _BorderDragArea({
+  final GestureDragUpdateCallback? _onHorizontalDragUpdate,
+  final GestureDragUpdateCallback? _onVerticalDragUpdate,
+  final double? _left = 0,
+  final double? _top = 0,
+  final double? _right = 0,
+  final double? _bottom = 0,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final isHorizontal = right == null || left == null;
+    final isHorizontal = _right == null || _left == null;
     return Positioned(
-      left: left,
-      top: top,
-      right: right,
-      bottom: bottom,
+      left: _left,
+      top: _top,
+      right: _right,
+      bottom: _bottom,
       child: GestureDetector(
-        onHorizontalDragUpdate: onHorizontalDragUpdate,
-        onVerticalDragUpdate: onVerticalDragUpdate,
+        onHorizontalDragUpdate: _onHorizontalDragUpdate,
+        onVerticalDragUpdate: _onVerticalDragUpdate,
         child: MouseRegion(
           cursor: isHorizontal
               ? SystemMouseCursors.resizeLeftRight
@@ -330,28 +298,24 @@ class _BorderDragArea extends _DragArea {
   }
 }
 
-class _CornerDragArea extends _DragArea {
-  const _CornerDragArea({
-    required this.onPanUpdate,
-    double? left = 0,
-    double? top = 0,
-    double? right = 0,
-    double? bottom = 0,
-    Key? key,
-  }) : super(left, top, right, bottom, key);
-
-  final GestureDragUpdateCallback onPanUpdate;
-
+class const _CornerDragArea({
+  required final GestureDragUpdateCallback _onPanUpdate,
+  final double? _left = 0,
+  final double? _top = 0,
+  final double? _right = 0,
+  final double? _bottom = 0,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Positioned(
-    left: left,
-    top: top,
-    right: right,
-    bottom: bottom,
+    left: _left,
+    top: _top,
+    right: _right,
+    bottom: _bottom,
     child: GestureDetector(
-      onPanUpdate: onPanUpdate,
+      onPanUpdate: _onPanUpdate,
       child: MouseRegion(
-        cursor: bottom == null && right == null || top == null && left == null
+        cursor:
+            _bottom == null && _right == null || _top == null && _left == null
             ? SystemMouseCursors.resizeUpLeftDownRight
             : SystemMouseCursors.resizeUpRightDownLeft,
         child: const SizedBox(height: 12, width: 12),

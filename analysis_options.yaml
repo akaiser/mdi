@@ -1,13 +1,19 @@
 include: package:very_good_analysis/analysis_options.yaml
 
+analyzer:
+  exclude:
+    - build/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
+    - android/**
+
 linter:
   rules:
-    always_put_required_named_parameters_first: false
     avoid_multiple_declarations_per_line: false
     document_ignores: false
     implicit_call_tearoffs: false
-    no_leading_underscores_for_local_identifiers: false
     prefer_expression_function_bodies: true
     public_member_api_docs: false
     sort_pub_dependencies: false
-    use_key_in_widget_constructors: false

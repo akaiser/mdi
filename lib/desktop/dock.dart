@@ -3,20 +3,13 @@ import 'package:mdi/_extensions/build_context_ext.dart';
 import 'package:mdi/_prefs.dart';
 import 'package:mdi/window/window.dart';
 
-class Dock extends StatelessWidget {
-  const Dock({
-    required this.windowKeys,
-    required this.minimizedWindowKeys,
-    required this.windows,
-    required this.onItemTap,
-    super.key,
-  });
-
-  final List<Key> windowKeys;
-  final List<Key> minimizedWindowKeys;
-  final Map<Key, Window> windows;
-  final ValueSetter<Key> onItemTap;
-
+class const Dock({
+  required final List<Key> _windowKeys,
+  required final List<Key> _minimizedWindowKeys,
+  required final Map<Key, Window> _windows,
+  required final ValueSetter<Key> _onItemTap,
+  super.key,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Positioned(
     bottom: 0,
@@ -27,17 +20,17 @@ class Dock extends StatelessWidget {
       child: SizedBox(
         height: dockHeight,
         child: ListView.builder(
-          itemCount: windowKeys.length,
-          scrollDirection: Axis.horizontal,
+          itemCount: _windowKeys.length,
+          scrollDirection: .horizontal,
           itemBuilder: (context, index) {
-            final key = windowKeys[index];
-            final title = windows.title(key);
-            final isMinimized = minimizedWindowKeys.contains(key);
+            final key = _windowKeys[index];
+            final title = _windows.title(key);
+            final isMinimized = _minimizedWindowKeys.contains(key);
             return _DockItem(
               title,
-              isActive: windows.keys.last == key && !isMinimized,
+              isActive: _windows.keys.last == key && !isMinimized,
               isMinimized: isMinimized,
-              onItemTap: () => onItemTap(key),
+              onItemTap: () => _onItemTap(key),
             );
           },
         ),
@@ -46,33 +39,26 @@ class Dock extends StatelessWidget {
   );
 }
 
-class _DockItem extends StatelessWidget {
-  const _DockItem(
-    this.title, {
-    required this.isActive,
-    required this.isMinimized,
-    required this.onItemTap,
-  });
-
-  final String title;
-  final bool isActive;
-  final bool isMinimized;
-  final VoidCallback onItemTap;
-
+class const _DockItem(
+  final String _title, {
+  required final bool _isActive,
+  required final bool _isMinimized,
+  required final VoidCallback _onItemTap,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) => TextButton(
-    onPressed: onItemTap,
+    onPressed: _onItemTap,
     style: OutlinedButton.styleFrom(
-      backgroundColor: isActive
+      backgroundColor: _isActive
           ? dockItemActiveBackgroundColor
           : dockItemInactiveBackgroundColor,
       shape: const RoundedRectangleBorder(),
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const .symmetric(horizontal: 8),
     ),
     child: Text(
-      title,
+      _title,
       style: context.tt.bodyMedium?.copyWith(
-        color: isMinimized
+        color: _isMinimized
             ? dockItemMinimizedTextColor
             : dockItemActiveTextColor,
       ),

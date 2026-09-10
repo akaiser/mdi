@@ -9,9 +9,7 @@ import 'package:webview_flutter_web/webview_flutter_web.dart';
 const _httpsSchema = 'https://';
 const _initPage = 'flutter.dev/';
 
-class Browser extends StatefulWidget {
-  const Browser();
-
+class const Browser({super.key}) extends StatefulWidget {
   @override
   State<Browser> createState() => _BrowserNewState();
 }
@@ -66,7 +64,7 @@ class _BrowserNewState extends State<Browser> {
           _RefreshButton(onPressed: () => _loadPage(_iFrameSrc)),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const .symmetric(horizontal: 8),
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -94,14 +92,11 @@ class _BrowserNewState extends State<Browser> {
   );
 }
 
-class _RefreshButton extends StatelessWidget {
-  const _RefreshButton({required this.onPressed});
-
-  final VoidCallback onPressed;
-
+class const _RefreshButton({required final VoidCallback _onPressed})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) => IconButton(
     icon: const Icon(Icons.replay, color: Colors.white),
-    onPressed: onPressed,
+    onPressed: _onPressed,
   );
 }

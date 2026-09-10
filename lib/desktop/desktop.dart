@@ -6,16 +6,11 @@ import 'package:mdi/desktop/desktop_items.dart';
 import 'package:mdi/desktop/dock.dart';
 import 'package:mdi/window/window.dart';
 
-class Desktop extends StatefulWidget {
-  const Desktop({
-    required this.groupedApps,
-    required this.standaloneApps,
-    super.key,
-  });
-
-  final Map<String, List<DesktopApp>> groupedApps;
-  final List<DesktopApp> standaloneApps;
-
+class const Desktop({
+  required final Map<String, List<DesktopApp>> _groupedApps,
+  required final List<DesktopApp> _standaloneApps,
+  super.key,
+}) extends StatefulWidget {
   @override
   State<Desktop> createState() => _DesktopState();
 }
@@ -126,10 +121,10 @@ class _DesktopState extends State<Desktop> {
 
   @override
   Widget build(BuildContext context) {
-    final groupedApps = widget.groupedApps;
-    final standaloneApps = widget.standaloneApps;
+    final groupedApps = widget._groupedApps;
+    final standaloneApps = widget._standaloneApps;
     return Stack(
-      fit: StackFit.expand,
+      fit: .expand,
       children: [
         if (groupedApps.isNotEmpty || standaloneApps.isNotEmpty)
           DesktopItems(
@@ -157,7 +152,5 @@ class _DesktopState extends State<Desktop> {
 
 extension on Map<Key, Window> {
   Window? windowByTitle(String title) =>
-      values //
-          .where((window) => window.title == title)
-          .firstOrNull;
+      values.where((window) => window.title == title).firstOrNull;
 }

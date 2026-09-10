@@ -7,7 +7,7 @@ import 'package:mdi/_prefs.dart';
 import 'package:mdi/_util/image.dart';
 import 'package:mdi/desktop/desktop.dart';
 
-Future<void> main() async => runZonedGuarded<Future<void>>(
+Future<void> main() async => await runZonedGuarded<Future<void>>(
   () async {
     WidgetsFlutterBinding.ensureInitialized();
     await precache(mainBackgroundImage);
@@ -17,17 +17,14 @@ Future<void> main() async => runZonedGuarded<Future<void>>(
       log('Some explosion here...', error: error, stackTrace: stack),
 );
 
-class _App extends MaterialApp {
-  const _App()
+class const _App() extends MaterialApp {
+  this
     : super(
         title: appName,
         home: const Scaffold(
           body: DecoratedBox(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: mainBackgroundImage,
-              ),
+              image: DecorationImage(fit: .cover, image: mainBackgroundImage),
             ),
             child: SafeArea(
               child: Desktop(
