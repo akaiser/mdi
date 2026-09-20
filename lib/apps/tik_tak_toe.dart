@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mdi/apps/widgets/simple_grid_view.dart';
 
 const _columnCount = 3;

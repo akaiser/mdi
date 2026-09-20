@@ -1,7 +1,7 @@
 import 'dart:async' show Future, runZonedGuarded;
 import 'dart:developer' show log;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mdi/_data.dart';
 import 'package:mdi/_prefs.dart';
 import 'package:mdi/_util/image.dart';

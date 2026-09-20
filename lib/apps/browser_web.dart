@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mdi/apps/_browser/bookmarks_bar.dart';
 import 'package:mdi/apps/_browser/url_text_field.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
