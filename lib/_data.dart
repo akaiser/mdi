@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show Icons;
+import 'package:material_ui/material_ui.dart' show Icons;
 import 'package:mdi/apps/auto_count.dart';
 import 'package:mdi/apps/browser_na.dart'
     if (dart.library.js_interop) 'package:mdi/apps/browser_web.dart';

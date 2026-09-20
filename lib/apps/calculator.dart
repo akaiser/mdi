@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 const _backgroundColor = Color.fromRGBO(42, 31, 62, 1);
 const _textColor = Color.fromRGBO(255, 255, 255, 1);
