@@ -13,7 +13,7 @@ dependencies:
   webview_flutter_web: ^0.2.3+4
 
   webview_flutter_platform_interface: any
-  material_ui: ^1.3.0
+  material_ui: ^1.7.0
 
 dev_dependencies:
   flutter_test:
